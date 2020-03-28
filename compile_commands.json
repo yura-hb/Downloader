@@ -14,5 +14,21 @@
    "hayeuyur/main.o"
   ],
   "file": "src/main.cpp"
+ },
+ {
+  "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
+  "arguments": [
+   "clang++",
+   "-Wall",
+   "-pedantic",
+   "-g",
+   "-fsanitize=address,leak",
+   "-Wno-long-long",
+   "-c",
+   "src/ServerConnector.cpp",
+   "-o",
+   "hayeuyur/ServerConnector.o"
+  ],
+  "file": "src/ServerConnector.cpp"
  }
 ]

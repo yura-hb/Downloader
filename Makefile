@@ -11,11 +11,11 @@ OUTPUT = $(OUTPUT_PATH)/%.o
 PROGRAM_PATH = $(OUTPUT_PATH)/$(PROGRAM_NAME)
 
 
-MODULES = main.o
+MODULES = $(OUTPUT_PATH)/main.o $(OUTPUT_PATH)/ServerConnector.o
 
 all: compile
 
-compile: $(OUTPUT_PATH)/$(MODULES)
+compile: $(MODULES)
 	$(CXX) $(FLAGS) -o $(PROGRAM_PATH) $^
 
 run: compile
