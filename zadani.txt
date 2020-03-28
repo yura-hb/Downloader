@@ -1,0 +1,18 @@
+Jednoduchý downloader
+
+Napište program podobný nástroji wget --mirror, který na příkazové řádce z URL (HTTP) vytvoří lokální kopii. Musí podporovat:
+
+převedení všech URL tak, aby odkazovaly na správné soubory na disku
+prochází stránky rekurzivně (bez opakovaného stahování)
+umožňuje omezit hloubku rekurzivního procházení (hodnotou, omezením na podporované URL)
+Downloader navíc umožňuje upravovat ukládané html a to následujícími způsoby:
+
+Odkazy na obrázky mohou vést na původní url, nebo na obrázek uložený na disku
+Odkazy na stránku, která má větší hloubku, mohou vést buď na původní URL, nebo na stránku na disku, která uživateli oznámí, že stránka neexistuje
+Volitelně: Vícevláknové stahování, podpora HTTPS
+
+Kde lze využít polymorfismus? (doporučené)
+
+Zpracování souborů: HTML stránka (potřebuje určité úpravy), obrázek (prostě se stáhne), CSS (úpravy nepotřebuje, ale mohou tam být obrázky), ...
+Úprava HTML tagů: upravení tagů s obrázky, opravení odkazů, ...
+Styl procházení: BFS, DFS, HTML pages first (přednost HTML stránky před obrázky), ...
