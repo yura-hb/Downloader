@@ -5,7 +5,6 @@
 #include <cstdio>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include"ServerConnector.h"
 
 
 using namespace std;

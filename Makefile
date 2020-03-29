@@ -1,6 +1,6 @@
 CXX = clang++
 LD = g++
-FLAGS = -Wall -pedantic -g -fsanitize=address,leak -Wno-long-long
+FLAGS = -std=c++14 -Wall -pedantic -g -fsanitize=address,leak -Wno-long-long
 
 SRC_PATH = src
 OUTPUT_PATH = hayeuyur
@@ -11,7 +11,7 @@ OUTPUT = $(OUTPUT_PATH)/%.o
 PROGRAM_PATH = $(OUTPUT_PATH)/$(PROGRAM_NAME)
 
 
-MODULES = $(OUTPUT_PATH)/main.o $(OUTPUT_PATH)/ServerConnector.o
+MODULES = $(OUTPUT_PATH)/main.o $(OUTPUT_PATH)/Socket.o $(OUTPUT_PATH)/HTTPClient.o
 
 all: compile
 
