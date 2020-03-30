@@ -105,7 +105,7 @@ bool Socket::read(std::string &str, const uint32_t &size, uint32_t &readBytesSiz
 //
 
 void Socket::setupHints() {
-  ::memset(&hints, 0, sizeof(hints));
+  memset(&hints, 0, sizeof(hints));
   hints.ai_family = AF_UNSPEC;
   hints.ai_socktype = SOCK_STREAM;
 }
