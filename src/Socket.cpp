@@ -81,10 +81,11 @@ bool Socket::read(std::string &str, const uint32_t &size, uint32_t &readBytesSiz
 
   int readResult = 0;
   str = ""; readBytesSize = 0;
-  char *buffer = new char[size];
+  std::cout << size << std::endl;
+  char *buffer = new char[size + 1];
 
   while (readBytesSize < size) {
-    readResult = ::read(socketFileDescriptor, buffer + readBytesSize, size - readBytesSize);
+    readResult = ::recv(socketFileDescriptor, buffer + readBytesSize, size - readBytesSize, 0);
     if (readResult == -1) {
       str = buffer;
       delete []buffer;
@@ -95,7 +96,9 @@ bool Socket::read(std::string &str, const uint32_t &size, uint32_t &readBytesSiz
     readBytesSize += readResult;
   }
 
-  str = buffer;
+  buffer[size] = '\0';
+
+  str = std::string(buffer);
   delete []buffer;
 
   return true;
