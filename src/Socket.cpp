@@ -87,8 +87,8 @@ bool Socket::read(char * &str, const uint32_t &size, uint32_t &readBytesSize) co
     return false;
   }
 
-  str[readBytesSize + 1] = '\0';
   readBytesSize = readResult;
+  str[readBytesSize] = '\0';
   return true;
 }
 

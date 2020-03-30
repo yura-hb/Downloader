@@ -1,4 +1,4 @@
-CXX = clang++
+CXX = g++
 LD = g++
 FLAGS = -std=c++14 -Wall -pedantic -g -fsanitize=address,leak -Wno-long-long
 

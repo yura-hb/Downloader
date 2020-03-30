@@ -18,8 +18,6 @@ int main() {
 
   rec.receivePage(buffer, socket);
 
-  std::cout << std::hex << buffer << std::endl;
-
   socket.disconnect();
 
   return 0;
