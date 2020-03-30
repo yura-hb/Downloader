@@ -1,6 +1,11 @@
 #include "Socket.hpp"
 
-Socket::Socket(const char *hostname, const char *port): hostname(hostname), port(port) {}
+Socket::Socket(const char * hostname, const char *port): hostname(hostname), port(port) {}
+Socket::~Socket() {
+  if (isConnected())
+    disconnect();
+  freeAddrInfo();
+}
 
 bool Socket::connect() {
   if (!loadAddrInfo())
@@ -21,8 +26,8 @@ bool Socket::connect() {
 
     break;
   }
-
-  freeaddrinfo(info);
+  std::cout << "Free info" << std::endl;
+  freeAddrInfo();
 
   if (item == nullptr) {
     socketFileDescriptor = EMPTY_SOCKET;
@@ -106,16 +111,26 @@ void Socket::setupHints() {
 }
 
 bool Socket::loadAddrInfo() {
+  freeAddrInfo();
+
   setupHints();
 
   int status = 0;
 
   if ((status = getaddrinfo(hostname, port, &hints, &info)) == -1) {
+    freeAddrInfo();
     logError(GAI_ERROR, gai_strerror(status));
     return false;
   }
 
   return true;
+}
+
+void Socket::freeAddrInfo() {
+  if (info != nullptr)
+    freeaddrinfo(info);
+
+  info = nullptr;
 }
 
 bool Socket::isConnected() const {

@@ -71,7 +71,7 @@ class Socket {
   private:
     const char *hostname, *port;
     //  - Server-side logic
-    struct addrinfo hints, *info;
+    struct addrinfo hints, *info = nullptr;
     int socketFileDescriptor;
     //  - Constants
     static const int EMPTY_SOCKET = -1;
@@ -79,6 +79,7 @@ class Socket {
     void logError(SocketError error, std::string info = "") const;
     void setupHints();
     bool loadAddrInfo();
+    void freeAddrInfo();
     bool isConnected() const;
 };
 
