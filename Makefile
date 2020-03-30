@@ -1,4 +1,4 @@
-CXX = g++
+CXX = clang++
 LD = g++
 FLAGS = -std=c++14 -Wall -pedantic -g -fsanitize=address,leak -Wno-long-long
 
@@ -11,7 +11,7 @@ OUTPUT = $(OUTPUT_PATH)/%.o
 PROGRAM_PATH = $(OUTPUT_PATH)/$(PROGRAM_NAME)
 
 
-MODULES = $(OUTPUT_PATH)/main.o $(OUTPUT_PATH)/Socket.o $(OUTPUT_PATH)/HTTPClient.o $(OUTPUT_PATH)/Receiver.o
+MODULES = $(OUTPUT_PATH)/main.o $(OUTPUT_PATH)/Socket.o $(OUTPUT_PATH)/HTTPClient.o $(OUTPUT_PATH)/Receiver.o $(OUTPUT_PATH)/HTTPRequest.o
 
 
 all: compile
