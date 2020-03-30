@@ -26,6 +26,7 @@ bool Socket::connect() {
 
     break;
   }
+
   freeAddrInfo();
 
   if (item == nullptr) {
@@ -134,7 +135,7 @@ void Socket::freeAddrInfo() {
 }
 
 bool Socket::isConnected() const {
-  return socketFileDescriptor == EMPTY_SOCKET;
+  return socketFileDescriptor != EMPTY_SOCKET;
 }
 
 void Socket::logError(Socket::SocketError error, std::string info) const {
