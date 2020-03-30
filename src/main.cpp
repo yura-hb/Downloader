@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Socket.hpp"
+#include "Receiver.hpp"
 
 int main() {
   Socket socket("google.com", "80");
@@ -13,11 +14,11 @@ int main() {
 
   std::string buffer = "";
 
-  size = 0;
+  Receiver rec;
 
-  socket.read(buffer, 1024, size);
+  rec.receivePage(buffer, socket);
 
-  std::cout << buffer << std::endl;
+  std::cout << std::hex << buffer << std::endl;
 
   socket.disconnect();
 

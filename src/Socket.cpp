@@ -75,32 +75,20 @@ bool Socket::send(const std::string &message, uint32_t &sent) const {
   return true;
 }
 
-bool Socket::read(std::string &str, const uint32_t &size, uint32_t &readBytesSize) const {
+bool Socket::read(char * &str, const uint32_t &size, uint32_t &readBytesSize) const {
   if (!isConnected())
     return false;
 
-  int readResult = 0;
-  str = ""; readBytesSize = 0;
-  std::cout << size << std::endl;
-  char *buffer = new char[size + 1];
+  readBytesSize = 0;
+  int readResult = recv(socketFileDescriptor, str, size, 0);
 
-  while (readBytesSize < size) {
-    readResult = ::recv(socketFileDescriptor, buffer + readBytesSize, size - readBytesSize, 0);
-    if (readResult == -1) {
-      str = buffer;
-      delete []buffer;
-
-      logError(DOWNLOAD_ERROR, str);
-      return false;
-    }
-    readBytesSize += readResult;
+  if (readResult == -1) {
+    logError(DOWNLOAD_ERROR, str);
+    return false;
   }
 
-  buffer[size] = '\0';
-
-  str = std::string(buffer);
-  delete []buffer;
-
+  str[readBytesSize + 1] = '\0';
+  readBytesSize = readResult;
   return true;
 }
 
