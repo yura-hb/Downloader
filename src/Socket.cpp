@@ -26,7 +26,6 @@ bool Socket::connect() {
 
     break;
   }
-  std::cout << "Free info" << std::endl;
   freeAddrInfo();
 
   if (item == nullptr) {
@@ -56,7 +55,8 @@ bool Socket::send(const std::string &message, uint32_t &sent) const {
   if (!isConnected())
     return false;
 
-  uint32_t size = message.size(), result = 0;
+  uint32_t size = message.size();
+  int result = 0;
   const char *buf = message.c_str();
 
   sent = 0;
@@ -78,7 +78,7 @@ bool Socket::read(std::string &str, const uint32_t &size, uint32_t &readBytesSiz
   if (!isConnected())
     return false;
 
-  uint32_t readResult = 0;
+  int readResult = 0;
   str = ""; readBytesSize = 0;
   char *buffer = new char[size];
 
@@ -105,7 +105,7 @@ bool Socket::read(std::string &str, const uint32_t &size, uint32_t &readBytesSiz
 //
 
 void Socket::setupHints() {
-  std::memset(&hints, 0, sizeof(hints));
+  ::memset(&hints, 0, sizeof(hints));
   hints.ai_family = AF_UNSPEC;
   hints.ai_socktype = SOCK_STREAM;
 }
