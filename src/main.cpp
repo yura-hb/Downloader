@@ -6,7 +6,7 @@ int main() {
 
   socket.connect();
 
-  std::string message = "GET google.com\n";
+  std::string message = "GET\n";
   uint32_t size = message.size();
 
   socket.send(message, size);
