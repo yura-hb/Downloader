@@ -17,21 +17,28 @@ struct URL {
 
   Protocol protocol = Protocol::undefined;
   std::string domain = "";
+  std::string port = "";
   std::string query = "";
   std::string parameters = "";
 
   URL(const std::string &url);
-
-  bool isValid();
-
+  /**
+   * Convert url to the standart request format
+   */
+  std::string requestUrl() const;
+  /**
+   * Validates string
+   */
+  bool isValid() const;
   private:
     /**
      * REGEX description:
      *
      *  1. First group - optional protocol http, ftp, https
      *  2. Server domain group
-     *  3. Query - with ending ? symbol
-     *  4. Parameters
+     *  3. Port
+     *  4. Query
+     *  5. Parameters
      *
      */
     const std::string regexString = "^(http\\:\\/\\/|https\\:\\/\\/|ftp\\:\\/\\/)?([a-z0-9\\.]+)(\\:[0-9]+)?(\\/[^?]+)?[\\?]?(.*)?$";

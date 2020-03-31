@@ -4,7 +4,30 @@ URL::URL(const std::string &url) {
   parse(url);
 }
 
-bool URL::isValid() {
+std::string URL::requestUrl() const {
+  std::string result = "";
+
+  switch (protocol) {
+    case Protocol::http:
+      result += "http://";
+      break;
+    case Protocol::https:
+      result += "https://";
+      break;
+    case Protocol::ftp:
+      result += "ftp://";
+    case Protocol::undefined:
+      result += "";
+  }
+
+  result += port +  domain + query;
+
+  if (parameters != "")
+    result += "?" + parameters;
+  return result;
+}
+
+bool URL::isValid() const {
   return protocol != Protocol::undefined && !domain.empty() && domain.find(".") != domain.npos;
 }
 
@@ -27,6 +50,7 @@ void URL::parse(const std::string &url) {
       }
 
       domain = match.str(2);
+      port = match.str(3);
       query = match.str(4).empty() ? "/" : match.str(4);
       parameters = match.str(5);
     }

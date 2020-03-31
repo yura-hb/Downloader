@@ -6,7 +6,7 @@ int main() {
   HTTPClient client;
 
   std::string buf = "";
-  std::string url = "http://en.cppreference.com/w/cpp/string/basic_string/find";
+  std::string url = "www.google.com";
 
   client.loadPage(url, buf);
 

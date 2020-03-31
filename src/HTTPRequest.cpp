@@ -1,8 +1,9 @@
 #include "HTTPRequest.hpp"
 
 std::string HTTPRequest::createRequest() {
-  return convertTypeToString() + " " + url.domain + " " + convertVersionToString() + "\n\n";
+  return convertTypeToString() + " " + url.query + " " + convertVersionToString() + "\r\n" + "Host: " + url.domain + "\r\n\r\n";
 }
+
 std::string HTTPRequest::convertTypeToString() {
   switch (type) {
     case HEAD:
