@@ -34,7 +34,7 @@ struct URL {
      *  4. Parameters
      *
      */
-    const std::string regexString = "^(http\\:\\/\\/|https\\:\\/\\/|ftp\\:\\/\\/)?([a-z0-9\\.]+)(\\:[0-9]+)?(\\/.+\\?)?(.*)+$";
+    const std::string regexString = "^(http\\:\\/\\/|https\\:\\/\\/|ftp\\:\\/\\/)?([a-z0-9\\.]+)(\\:[0-9]+)?(\\/[^?]+)?[\\?]?(.*)?$";
 
     void parse(const std::string &str);
 };

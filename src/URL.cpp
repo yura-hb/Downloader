@@ -12,9 +12,7 @@ void URL::parse(const std::string &url) {
   try {
     std::regex regex(regexString);
     std::smatch match;
-    std::cout << "start parsing" << std::endl;
     if (std::regex_search(url, match, regex) && match.size() == 6) {
-      std:: cout << match.size() << std::endl;
 
       std::string protocolMatch = match.str(1);
 
@@ -28,18 +26,10 @@ void URL::parse(const std::string &url) {
         protocol = Protocol::http;
       }
 
-      for (const auto &r: match) {
-        std::cout << r << std::endl;
-      }
-
       domain = match.str(2);
       query = match.str(4).empty() ? "/" : match.str(4);
-      parameters = match.str(6);
-
-      std::cout << domain << " " << query << " " << parameters << std::endl;
+      parameters = match.str(5);
     }
-
-      std:: cout << match.size() << std::endl;
   } catch (std::regex_error& error) {
     std::cerr << "URL: parse error" << error.code() << std::endl;
   }
