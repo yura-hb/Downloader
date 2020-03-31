@@ -1,7 +1,7 @@
 #include "HTTPRequest.hpp"
 
 std::string HTTPRequest::createRequest() {
-  return convertTypeToString() + " " + url + " " + convertVersionToString() + "\r\n";
+  return convertTypeToString() + " " + url.domain + " " + convertVersionToString() + "\n\n";
 }
 std::string HTTPRequest::convertTypeToString() {
   switch (type) {

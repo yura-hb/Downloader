@@ -11,7 +11,8 @@ OUTPUT = $(OUTPUT_PATH)/%.o
 PROGRAM_PATH = $(OUTPUT_PATH)/$(PROGRAM_NAME)
 
 
-MODULES = $(OUTPUT_PATH)/main.o $(OUTPUT_PATH)/Socket.o $(OUTPUT_PATH)/HTTPClient.o $(OUTPUT_PATH)/Receiver.o $(OUTPUT_PATH)/HTTPRequest.o
+MODULES = $(OUTPUT_PATH)/main.o $(OUTPUT_PATH)/Socket.o $(OUTPUT_PATH)/HTTPClient.o $(OUTPUT_PATH)/Receiver.o $(OUTPUT_PATH)/HTTPRequest.o $(OUTPUT_PATH)/URL.o
+
 
 
 all: compile

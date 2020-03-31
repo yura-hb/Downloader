@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include "URL.hpp"
 
 struct HTTPRequest {
   /**
@@ -34,11 +35,11 @@ struct HTTPRequest {
     v2_0
   };
 
-  const std::string url;
+  const URL url;
   const HTTPRequestType type;
   const HTTPRequestVersion version;
 
-  HTTPRequest(const std::string &url, const HTTPRequestType &type, const HTTPRequestVersion &version): url(url), type(type), version(version) {}
+  HTTPRequest(const URL &url, const HTTPRequestType &type, const HTTPRequestVersion &version): url(url), type(type), version(version) {}
   /**
    * Creates request in the next format:
    *    TYPE URL HTTP/$(HTTP_REQUEST_VERSION) \r\n
