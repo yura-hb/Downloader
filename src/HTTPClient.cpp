@@ -1,20 +1,22 @@
 #include "HTTPClient.hpp"
 
 bool HTTPClient::loadPage(const std::string &url, std::string &result) {
-  URL link(url);
+  URL link = convertLink(url);
 
-  if (!link.isValid() || link.protocol != URL::Protocol::http) {
-    std::cerr << "HTTPClient: Link is incorrect or protocol is not SUPPORTED" << std::endl;
+  Request request = makeRequest(link);
+
+  std::string data = "";
+
+  if (!performRequest(request, data))
     return false;
-  }
 
-  HTTPRequest request(link, HTTPRequest::HTTPRequestType::GET, HTTPRequest::HTTPRequestVersion::v1_1);
+  std::cout << request.createRequest() << "God " << data << std::endl;
+  splitResponse(data, data, data);
 
-  std::cout << request.createRequest() << std::endl;
-  return performRequest(request, result);
+  return true;
 }
 
-bool HTTPClient::performRequest(HTTPRequest request, std::string &result) {
+bool HTTPClient::performRequest(Request request, std::string &result) {
   Socket sock(request.url.domain.c_str(), port.c_str());
 
   uint32_t sentBytes = 0;
@@ -24,11 +26,31 @@ bool HTTPClient::performRequest(HTTPRequest request, std::string &result) {
     return false;
 
   Receiver receiver;
-
   receiver.receivePage(result, sock);
-
   sock.disconnect();
-
   return true;
 }
 
+/**
+ * Helpers
+ */
+URL HTTPClient::convertLink(const std::string& url) const {
+  URL link(url);
+
+  if (!link.isValid() || link.protocol != URL::Protocol::http) {
+    std::cerr << "HTTPClient: Link is incorrect or protocol is not SUPPORTED" << std::endl;
+  }
+
+  return link;
+}
+
+Request HTTPClient::makeRequest(const URL& url) const {
+  RequestMethod method(RequestMethod::_RequestMethod::GET);
+  Version version(Version::_Version::v1_1);
+  std::vector<Header> headers = { Header(Header::_Header::HOST, url.domain), Header(Header::_Header::CONNECTION, "Close") };
+
+  return Request(url, method, version, headers);
+}
+
+void HTTPClient::splitResponse(const std::string& response, std::string& header, std::string& message) const {
+}

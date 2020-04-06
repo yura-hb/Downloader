@@ -10,7 +10,5 @@ int main() {
 
   client.loadPage(url, buf);
 
-  std::cout << buf << std::endl;
-
   return 0;
 }

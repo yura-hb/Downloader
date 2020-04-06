@@ -4,7 +4,7 @@
 #include "Socket.hpp"
 #include "Receiver.hpp"
 #include "URL.hpp"
-#include "HTTPRequest.hpp"
+#include "Request.hpp"
 
 class HTTPClient {
   public:
@@ -21,7 +21,16 @@ class HTTPClient {
      *  3. Fetch message
      *  4. Disconnects from the server
      */
-    bool performRequest(HTTPRequest request, std::string &result);
+    bool performRequest(Request request, std::string &result);
+    /**
+     * Parsers headers of the response
+     */
+    bool proceedResponse(const std::string &headers, const std::string &message);
+
+
+    URL convertLink(const std::string& url) const;
+    Request makeRequest(const URL& url) const;
+    void splitResponse(const std::string& response, std::string &headers, std::string &message) const;
 };
 
 

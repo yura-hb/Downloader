@@ -15,7 +15,11 @@ PROGRAM_PATH = $(OUTPUT_PATH)/$(PROGRAM_NAME)
 DOC_PATH = doc
 DOXYGEN_FILE = doxygex.dox
 
-MODULES = $(OUTPUT_PATH)/main.o $(OUTPUT_PATH)/Socket.o $(OUTPUT_PATH)/HTTPClient.o $(OUTPUT_PATH)/Receiver.o $(OUTPUT_PATH)/HTTPRequest.o $(OUTPUT_PATH)/URL.o
+MODULES = $(OUTPUT_PATH)/main.o $(OUTPUT_PATH)/Socket.o $(OUTPUT_PATH)/HTTPClient.o \
+	  $(OUTPUT_PATH)/Receiver.o $(OUTPUT_PATH)/Request.o $(OUTPUT_PATH)/URL.o \
+	  $(OUTPUT_PATH)/Header.o $(OUTPUT_PATH)/RequestMethod.o $(OUTPUT_PATH)/Version.o \
+	  $(OUTPUT_PATH)/HTTPHeaderParser.o $(OUTPUT_PATH)/StringConvertible.o
+
 
 all: compile
 
