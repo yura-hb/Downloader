@@ -62,11 +62,11 @@ class Socket {
      *
      * This method consists of the 3 steps:
      *  1. Validate, if we are connected to the server
-     *  2. Read until the end of the buffer, in case of the error logs it to the console.
+     *  2. Read until to the buffer at min of size (size + 1), in case of the error logs it to the console.
      *  3. Returns true, in case of success and sets reference and size of the read bytes (readSize)
      *
      */
-    bool read(std::string &str, const uint32_t &size, uint32_t &readBytesSize) const;
+    bool read(char * &str, const uint32_t &size, uint32_t &readBytesSize) const;
 
     ~Socket();
   private:

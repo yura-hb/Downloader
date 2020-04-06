@@ -1,25 +1,16 @@
 #include <iostream>
-#include "Socket.hpp"
+#include "HTTPClient.hpp"
 
 int main() {
-  Socket socket("google.com", "80");
 
-  socket.connect();
+  HTTPClient client;
 
-  std::string message = "GET\n";
-  uint32_t size = message.size();
+  std::string buf = "";
+  std::string url = "www.google.com";
 
-  socket.send(message, size);
+  client.loadPage(url, buf);
 
-  std::string buffer = "";
-
-  size = 0;
-
-  socket.read(buffer, 1024, size);
-
-  std::cout << buffer << std::endl;
-
-  socket.disconnect();
+  std::cout << buf << std::endl;
 
   return 0;
 }
