@@ -5,7 +5,7 @@
 #include "string"
 #include "vector"
 
-#include "StringConvertible.hpp"
+#include "../Templates/StringConvertible.hpp"
 
 struct Header: public StringConvertible {
   public:

@@ -10,6 +10,9 @@ OUTPUT_PATH = hayeuyur
 PROGRAM_NAME = downloader
 
 SRC = $(SRC_PATH)/%.cpp
+HTML_SRC = $(SRC_PATH)/HTML/%.cpp
+NETWORKING_SRC = $(SRC_PATH)/Networking/%.cpp
+TEMPLATES_SRC = $(SRC_PATH)/Templates/%.cpp
 OUTPUT = $(OUTPUT_PATH)/%.o
 PROGRAM_PATH = $(OUTPUT_PATH)/$(PROGRAM_NAME)
 DOC_PATH = doc
@@ -18,7 +21,8 @@ DOXYGEN_FILE = doxygex.dox
 MODULES = $(OUTPUT_PATH)/main.o $(OUTPUT_PATH)/Socket.o $(OUTPUT_PATH)/HTTPClient.o \
 	  $(OUTPUT_PATH)/Receiver.o $(OUTPUT_PATH)/Request.o $(OUTPUT_PATH)/URL.o \
 	  $(OUTPUT_PATH)/Header.o $(OUTPUT_PATH)/RequestMethod.o $(OUTPUT_PATH)/Version.o \
-	  $(OUTPUT_PATH)/HTTPHeaderParser.o $(OUTPUT_PATH)/StringConvertible.o $(OUTPUT_PATH)/ResponseStatus.o
+	  $(OUTPUT_PATH)/HTTPParser.o $(OUTPUT_PATH)/StringConvertible.o $(OUTPUT_PATH)/ResponseStatus.o \
+		$(OUTPUT_PATH)/HTMLElement.o $(OUTPUT_PATH)/HTMLVoidTag.o
 
 
 all: compile
@@ -45,3 +49,11 @@ clean:
 $(OUTPUT) : $(SRC)
 	$(CXX) $(FLAGS) -c $^ -o $@
 
+$(OUTPUT) : $(HTML_SRC)
+	$(CXX) $(FLAGS) -c $^ -o $@
+
+$(OUTPUT) : $(NETWORKING_SRC)
+	$(CXX) $(FLAGS) -c $^ -o $@
+
+$(OUTPUT) : $(TEMPLATES_SRC)
+	$(CXX) $(FLAGS) -c $^ -o $@

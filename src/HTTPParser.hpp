@@ -6,8 +6,9 @@
 #include "vector"
 #include "map"
 #include "sstream"
-#include "ResponseStatus.hpp"
-#include "Header.hpp"
+#include "Networking/ResponseStatus.hpp"
+#include "Networking/Header.hpp"
+#include "HTML/HTMLElement.hpp"
 
 class Parser {
   public:
@@ -24,6 +25,12 @@ class Parser {
      */
     static const std::vector<Header> parse(const std::string& response);
 
+    /**
+     * Parsers headers of messages
+     *
+     * @param[in] response - full response from the server
+     */
+    static const HTMLElement parseHtml(const std::string &response);
   private:
     static const std::string getHeader(const std::string &response);
 

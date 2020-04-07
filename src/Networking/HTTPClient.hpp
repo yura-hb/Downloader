@@ -5,7 +5,7 @@
 #include "Receiver.hpp"
 #include "URL.hpp"
 #include "Request.hpp"
-#include "HTTPHeaderParser.hpp"
+#include "../HTTPParser.hpp"
 #include "ResponseStatus.hpp"
 
 class HTTPClient {
@@ -28,11 +28,14 @@ class HTTPClient {
      * Parsers headers of the response
      */
     bool proceedResponse(const std::string &headers, const std::string &message);
-
-
+    /**
+     * Converts string url to the URL object
+     */
     URL convertLink(const std::string& url) const;
+    /**
+     * Make basic request
+     */
     Request makeRequest(const URL& url) const;
-    void splitResponse(const std::string& response, std::string &headers, std::string &message) const;
 };
 
 

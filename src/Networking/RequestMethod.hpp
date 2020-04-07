@@ -4,7 +4,7 @@
 #include "iostream"
 #include "string"
 #include "vector"
-#include "StringConvertible.hpp"
+#include "../Templates/StringConvertible.hpp"
 
 struct RequestMethod: public StringConvertible {
   public:

@@ -27,11 +27,11 @@
    "-fsanitize=address,leak",
    "-Wno-long-long",
    "-c",
-   "src/Socket.cpp",
+   "src/Networking/Socket.cpp",
    "-o",
    "hayeuyur/Socket.o"
   ],
-  "file": "src/Socket.cpp"
+  "file": "src/Networking/Socket.cpp"
  },
  {
   "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
@@ -44,11 +44,11 @@
    "-fsanitize=address,leak",
    "-Wno-long-long",
    "-c",
-   "src/HTTPClient.cpp",
+   "src/Networking/HTTPClient.cpp",
    "-o",
    "hayeuyur/HTTPClient.o"
   ],
-  "file": "src/HTTPClient.cpp"
+  "file": "src/Networking/HTTPClient.cpp"
  },
  {
   "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
@@ -61,11 +61,11 @@
    "-fsanitize=address,leak",
    "-Wno-long-long",
    "-c",
-   "src/Receiver.cpp",
+   "src/Networking/Receiver.cpp",
    "-o",
    "hayeuyur/Receiver.o"
   ],
-  "file": "src/Receiver.cpp"
+  "file": "src/Networking/Receiver.cpp"
  },
  {
   "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
@@ -78,11 +78,11 @@
    "-fsanitize=address,leak",
    "-Wno-long-long",
    "-c",
-   "src/Request.cpp",
+   "src/Networking/Request.cpp",
    "-o",
    "hayeuyur/Request.o"
   ],
-  "file": "src/Request.cpp"
+  "file": "src/Networking/Request.cpp"
  },
  {
   "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
@@ -95,11 +95,11 @@
    "-fsanitize=address,leak",
    "-Wno-long-long",
    "-c",
-   "src/URL.cpp",
+   "src/Networking/URL.cpp",
    "-o",
    "hayeuyur/URL.o"
   ],
-  "file": "src/URL.cpp"
+  "file": "src/Networking/URL.cpp"
  },
  {
   "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
@@ -112,11 +112,11 @@
    "-fsanitize=address,leak",
    "-Wno-long-long",
    "-c",
-   "src/Header.cpp",
+   "src/Networking/Header.cpp",
    "-o",
    "hayeuyur/Header.o"
   ],
-  "file": "src/Header.cpp"
+  "file": "src/Networking/Header.cpp"
  },
  {
   "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
@@ -129,11 +129,11 @@
    "-fsanitize=address,leak",
    "-Wno-long-long",
    "-c",
-   "src/RequestMethod.cpp",
+   "src/Networking/RequestMethod.cpp",
    "-o",
    "hayeuyur/RequestMethod.o"
   ],
-  "file": "src/RequestMethod.cpp"
+  "file": "src/Networking/RequestMethod.cpp"
  },
  {
   "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
@@ -146,11 +146,11 @@
    "-fsanitize=address,leak",
    "-Wno-long-long",
    "-c",
-   "src/Version.cpp",
+   "src/Networking/Version.cpp",
    "-o",
    "hayeuyur/Version.o"
   ],
-  "file": "src/Version.cpp"
+  "file": "src/Networking/Version.cpp"
  },
  {
   "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
@@ -163,11 +163,11 @@
    "-fsanitize=address,leak",
    "-Wno-long-long",
    "-c",
-   "src/HTTPHeaderParser.cpp",
+   "src/HTTPParser.cpp",
    "-o",
-   "hayeuyur/HTTPHeaderParser.o"
+   "hayeuyur/HTTPParser.o"
   ],
-  "file": "src/HTTPHeaderParser.cpp"
+  "file": "src/HTTPParser.cpp"
  },
  {
   "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
@@ -180,10 +180,61 @@
    "-fsanitize=address,leak",
    "-Wno-long-long",
    "-c",
-   "src/StringConvertible.cpp",
+   "src/Templates/StringConvertible.cpp",
    "-o",
    "hayeuyur/StringConvertible.o"
   ],
-  "file": "src/StringConvertible.cpp"
+  "file": "src/Templates/StringConvertible.cpp"
+ },
+ {
+  "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
+  "arguments": [
+   "clang++",
+   "-std=c++14",
+   "-Wall",
+   "-pedantic",
+   "-g",
+   "-fsanitize=address,leak",
+   "-Wno-long-long",
+   "-c",
+   "src/Networking/ResponseStatus.cpp",
+   "-o",
+   "hayeuyur/ResponseStatus.o"
+  ],
+  "file": "src/Networking/ResponseStatus.cpp"
+ },
+ {
+  "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
+  "arguments": [
+   "clang++",
+   "-std=c++14",
+   "-Wall",
+   "-pedantic",
+   "-g",
+   "-fsanitize=address,leak",
+   "-Wno-long-long",
+   "-c",
+   "src/HTML/HTMLElement.cpp",
+   "-o",
+   "hayeuyur/HTMLElement.o"
+  ],
+  "file": "src/HTML/HTMLElement.cpp"
+ },
+ {
+  "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
+  "arguments": [
+   "clang++",
+   "-std=c++14",
+   "-Wall",
+   "-pedantic",
+   "-g",
+   "-fsanitize=address,leak",
+   "-Wno-long-long",
+   "-c",
+   "src/HTML/HTMLVoidTag.cpp",
+   "-o",
+   "hayeuyur/HTMLVoidTag.o"
+  ],
+  "file": "src/HTML/HTMLVoidTag.cpp"
  }
 ]

@@ -1,4 +1,4 @@
-#include "HTTPHeaderParser.hpp"
+#include "HTTPParser.hpp"
 
 const ResponseStatus Parser::parseStatus(const std::string& response) {
   std::stringstream splitStream(response);
