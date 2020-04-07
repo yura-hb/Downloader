@@ -30,14 +30,15 @@ Header::Header(const std::string& header) {
   if (iter == header.end())
     throw "Incorrect format of the string";
 
-  auto headerString = std::string(header.begin(), iter - 1);
+  auto headerString = std::string(header.begin(), iter);
   auto headerTypeIndex = std::find(store.begin(), store.end(), headerString);
 
   if (headerTypeIndex == store.end())
     throw "Header is not found";
 
   this -> header = (_Header)(headerTypeIndex - store.begin());
-  parameters = std::string(iter + 1, header.end());
+  // skip : and space
+  parameters = std::string(iter + 2, header.end());
 };
 
 std::string Header::convert() const {

@@ -18,7 +18,7 @@ DOXYGEN_FILE = doxygex.dox
 MODULES = $(OUTPUT_PATH)/main.o $(OUTPUT_PATH)/Socket.o $(OUTPUT_PATH)/HTTPClient.o \
 	  $(OUTPUT_PATH)/Receiver.o $(OUTPUT_PATH)/Request.o $(OUTPUT_PATH)/URL.o \
 	  $(OUTPUT_PATH)/Header.o $(OUTPUT_PATH)/RequestMethod.o $(OUTPUT_PATH)/Version.o \
-	  $(OUTPUT_PATH)/HTTPHeaderParser.o $(OUTPUT_PATH)/StringConvertible.o
+	  $(OUTPUT_PATH)/HTTPHeaderParser.o $(OUTPUT_PATH)/StringConvertible.o $(OUTPUT_PATH)/ResponseStatus.o
 
 
 all: compile
@@ -27,7 +27,7 @@ compile: $(MODULES)
 	$(CXX) $(FLAGS) -o $(PROGRAM_PATH) $^
 
 run: compile
-	ASAN_OPTIONS=detect_leaks=1  ./$(PROGRAM_PATH)
+	ASAN_OPTIONS=detect_leaks=1  ./$(PROGRAM_PATH) 2>&1
 
 debug: compile
 	gdb ./$(PROGRAM_PATH)

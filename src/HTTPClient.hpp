@@ -5,6 +5,8 @@
 #include "Receiver.hpp"
 #include "URL.hpp"
 #include "Request.hpp"
+#include "HTTPHeaderParser.hpp"
+#include "ResponseStatus.hpp"
 
 class HTTPClient {
   public:

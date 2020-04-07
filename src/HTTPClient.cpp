@@ -10,8 +10,18 @@ bool HTTPClient::loadPage(const std::string &url, std::string &result) {
   if (!performRequest(request, data))
     return false;
 
-  std::cout << request.createRequest() << "God " << data << std::endl;
-  splitResponse(data, data, data);
+  try {
+    ResponseStatus status = Parser::parseStatus(data);
+    std::cout << status.intCode << std::endl;
+
+    std::vector<Header> headers = Parser::parse(data);
+
+    for (const auto& header: headers) {
+      std::cout << header << std::endl;
+    }
+  } catch (std::exception &exc) {
+    std::cerr << exc.what() << std::endl;
+  }
 
   return true;
 }
@@ -50,7 +60,4 @@ Request HTTPClient::makeRequest(const URL& url) const {
   std::vector<Header> headers = { Header(Header::_Header::HOST, url.domain), Header(Header::_Header::CONNECTION, "Close") };
 
   return Request(url, method, version, headers);
-}
-
-void HTTPClient::splitResponse(const std::string& response, std::string& header, std::string& message) const {
 }
