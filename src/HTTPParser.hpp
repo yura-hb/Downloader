@@ -8,7 +8,6 @@
 #include "sstream"
 #include "Networking/ResponseStatus.hpp"
 #include "Networking/Header.hpp"
-#include "HTML/HTMLElement.hpp"
 
 class Parser {
   public:
@@ -30,7 +29,7 @@ class Parser {
      *
      * @param[in] response - full response from the server
      */
-    static const HTMLElement parseHtml(const std::string &response);
+    //static const HTMLElement parseHtml(const std::string &response);
   private:
     static const std::string getHeader(const std::string &response);
 

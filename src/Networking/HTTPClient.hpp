@@ -1,6 +1,7 @@
 #ifndef __HTTP_CLIENT_N__
 #define __HTTP_CLIENT_N__
 
+#include <algorithm>
 #include "Socket.hpp"
 #include "Receiver.hpp"
 #include "URL.hpp"
@@ -36,6 +37,10 @@ class HTTPClient {
      * Make basic request
      */
     Request makeRequest(const URL& url) const;
+    /**
+     * Help method to normalise newlines
+     */
+    void preprocessResponse(std::string& str) const;
 };
 
 

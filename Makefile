@@ -11,8 +11,10 @@ PROGRAM_NAME = downloader
 
 SRC = $(SRC_PATH)/%.cpp
 HTML_SRC = $(SRC_PATH)/HTML/%.cpp
+HTML_STATES_SRC = $(SRC_PATH)/HTML/States/%.cpp
 NETWORKING_SRC = $(SRC_PATH)/Networking/%.cpp
 TEMPLATES_SRC = $(SRC_PATH)/Templates/%.cpp
+
 OUTPUT = $(OUTPUT_PATH)/%.o
 PROGRAM_PATH = $(OUTPUT_PATH)/$(PROGRAM_NAME)
 DOC_PATH = doc
@@ -22,7 +24,8 @@ MODULES = $(OUTPUT_PATH)/main.o $(OUTPUT_PATH)/Socket.o $(OUTPUT_PATH)/HTTPClien
 	  $(OUTPUT_PATH)/Receiver.o $(OUTPUT_PATH)/Request.o $(OUTPUT_PATH)/URL.o \
 	  $(OUTPUT_PATH)/Header.o $(OUTPUT_PATH)/RequestMethod.o $(OUTPUT_PATH)/Version.o \
 	  $(OUTPUT_PATH)/HTTPParser.o $(OUTPUT_PATH)/StringConvertible.o $(OUTPUT_PATH)/ResponseStatus.o \
-		$(OUTPUT_PATH)/HTMLElement.o $(OUTPUT_PATH)/HTMLVoidTag.o
+		$(OUTPUT_PATH)/HTMLToken.o $(OUTPUT_PATH)/HTMLTokenizer.o $(OUTPUT_PATH)/HTMLTokenizerState.o \
+		$(OUTPUT_PATH)/HTMLTagStartState.o
 
 
 all: compile
@@ -50,6 +53,9 @@ $(OUTPUT) : $(SRC)
 	$(CXX) $(FLAGS) -c $^ -o $@
 
 $(OUTPUT) : $(HTML_SRC)
+	$(CXX) $(FLAGS) -c $^ -o $@
+
+$(OUTPUT) : $(HTML_STATES_SRC)
 	$(CXX) $(FLAGS) -c $^ -o $@
 
 $(OUTPUT) : $(NETWORKING_SRC)

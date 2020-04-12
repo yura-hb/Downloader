@@ -214,11 +214,11 @@
    "-fsanitize=address,leak",
    "-Wno-long-long",
    "-c",
-   "src/HTML/HTMLElement.cpp",
+   "src/HTML/HTMLToken.cpp",
    "-o",
-   "hayeuyur/HTMLElement.o"
+   "hayeuyur/HTMLToken.o"
   ],
-  "file": "src/HTML/HTMLElement.cpp"
+  "file": "src/HTML/HTMLToken.cpp"
  },
  {
   "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
@@ -231,10 +231,27 @@
    "-fsanitize=address,leak",
    "-Wno-long-long",
    "-c",
-   "src/HTML/HTMLVoidTag.cpp",
+   "src/HTML/HTMLTokenizer.cpp",
    "-o",
-   "hayeuyur/HTMLVoidTag.o"
+   "hayeuyur/HTMLTokenizer.o"
   ],
-  "file": "src/HTML/HTMLVoidTag.cpp"
+  "file": "src/HTML/HTMLTokenizer.cpp"
+ },
+ {
+  "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
+  "arguments": [
+   "clang++",
+   "-std=c++14",
+   "-Wall",
+   "-pedantic",
+   "-g",
+   "-fsanitize=address,leak",
+   "-Wno-long-long",
+   "-c",
+   "src/HTML/States/HTMLTokenizerState.cpp",
+   "-o",
+   "hayeuyur/HTMLTokenizerState.o"
+  ],
+  "file": "src/HTML/States/HTMLTokenizerState.cpp"
  }
 ]
