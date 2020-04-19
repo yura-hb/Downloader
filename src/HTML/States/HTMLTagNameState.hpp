@@ -3,17 +3,19 @@
 
 #include "HTMLTokenizerState.hpp"
 #include "HTMLTagStartState.hpp"
+#include "HTMLTagAttributesState.hpp"
 
 /**
  *  Group, which handles implementation of the base tag name states, for solution reference use
  *
  *  https://html.spec.whatwg.org/multipage/parsing.html#end-tag-open-state
  *
- *  Cases 12.2.5.8, 12.2.5.11, 12.2.5.14, 12.2.5.17
+ *  Cases 12.2.5.8, 12.2.5.11, 12.2.5.14, 12.2.5.17, 12.2.5.25
  */
 
 struct HTMLTagNameState: public HTMLTokenizerState {
   public:
+    HTMLTagNameState() = delete;
     HTMLTagNameState(HTMLTagType type): type(type) {}
 
     void next(const std::string& str, const NextStateFunctions& functions) override;

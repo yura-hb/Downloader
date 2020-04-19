@@ -19,6 +19,7 @@ struct HTMLTagStartState: public HTMLTokenizerState {
       STATE_DATA, LESS_THAN_SIGN, TAG_OPEN_STATE, END_TAG_OPEN_STATE
     };
 
+    HTMLTagStartState() = delete;
     HTMLTagStartState(State state, HTMLTagType type): state(state), type(type) {}
 
     void next(const std::string& str, const NextStateFunctions& functions) override;
@@ -35,7 +36,7 @@ struct HTMLTagStartState: public HTMLTokenizerState {
     /**
      * Basic action on the '<' sign
      *
-     * Cases 12.2.5.9, 12.2.5.12, 12.2.5.15,
+     * Cases 12.2.5.9, 12.2.5.12, 12.2.5.15
      */
     void lessThanSignStateAction(const std::string& str, const NextStateFunctions& functions);
     /**

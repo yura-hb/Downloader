@@ -26,16 +26,12 @@ void HTMLTagNameState::next(const std::string& str, const NextStateFunctions& fu
     return;
   }
 
-  if (str[0] == EOF && type == HTMLTagType::DATA) {
-    eofAction(str, functions);
-    return;
-  }
-
   otherAction(str, functions);
 }
 
 void HTMLTagNameState::whitespaceCharacterAction(const std::string& str, const NextStateFunctions& functions) {
   // Switch to the before attribute name state.
+  std::get<0>(functions)(std::make_shared<HTMLTagAttributesState>(HTMLTagAttributesState::State::BEFORE_ATTRIBUTE_NAME));
 }
 
 void HTMLTagNameState::solidusCharacterAction(const std::string& str, const NextStateFunctions& functions) {
@@ -44,8 +40,7 @@ void HTMLTagNameState::solidusCharacterAction(const std::string& str, const Next
 
 void HTMLTagNameState::greaterThanSignAction(const std::string& str, const NextStateFunctions& functions) {
   // Switch to the data state. Emit the current tag token.
-  std::get<0>(functions)(std::make_shared<HTMLTagStartState>(HTMLTagStartState(HTMLTagStartState::State::STATE_DATA,
-                                                                               HTMLTagType::DATA)));
+  std::get<0>(functions)(std::make_shared<HTMLTagStartState>(HTMLTagStartState::State::STATE_DATA, HTMLTagType::DATA));
 }
 
 void HTMLTagNameState::alphaAction(const std::string& str, const NextStateFunctions& functions) {

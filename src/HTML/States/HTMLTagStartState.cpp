@@ -17,8 +17,6 @@ void HTMLTagStartState::dataStateAction(const std::string& str, const NextStateF
     state = type == HTMLTagType::DATA ? HTMLTagStartState::State::TAG_OPEN_STATE : HTMLTagStartState::State::LESS_THAN_SIGN;
   } else if (str == "\0") {
     // EMIT U+FFFD or null depending on the type
-  } else if (str[0] == EOF) {
-    std::get<1>(functions)(std::make_unique<HTMLEOFToken>(HTMLEOFToken()));
   } else {
     std::get<1>(functions)(std::make_unique<HTMLCharacterToken>(HTMLCharacterToken(str)));
   }
@@ -65,10 +63,6 @@ void HTMLTagStartState::tagOpenStateAction(const std::string& str, const NextSta
     return;
   }
 
-  if (str[0] == EOF) {
-
-    return;
-  }
   reset("<", functions);
 }
 
@@ -85,14 +79,6 @@ void HTMLTagStartState::endTagOpenStateAction(const std::string& str, const Next
   if (type == HTMLTagType::DATA) {
     if (str == ">") {
       state = HTMLTagStartState::State::STATE_DATA;
-      return;
-    }
-
-    if (str[0] == EOF) {
-     // DATA
-     // This is an eof-before-tag-name parse error.
-     // Emit a U+003C LESS-THAN SIGN character token, a U+002F SOLIDUS character token and an end-of-file toke
-      std::get<1>(functions)(std::make_unique<HTMLEOFToken>(HTMLEOFToken()));
       return;
     }
 

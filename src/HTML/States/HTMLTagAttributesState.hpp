@@ -18,12 +18,20 @@ struct HTMLTagAttributesState: public HTMLTokenizerState {
       ATTRIBUTE_VALUE_UNQUOTED_STATE, AFTER_ATTRIBUTE_VALUE_QUOTED_STATE
     };
 
+    HTMLTagAttributesState() = delete;
     HTMLTagAttributesState(State state): state(state) {}
 
     void next(const std::string& str, const NextStateFunctions& functions) override;
   private:
-
     State state;
+
+    void beforeAttributeNameAction(const std::string& str, const NextStateFunctions& functions);
+    void attributeNameAction(const std::string& str, const NextStateFunctions& functions);
+    void afterAttributeNameAction(const std::string& str, const NextStateFunctions& functions);
+    void beforeAttributeValueAction(const std::string& str, const NextStateFunctions& functions);
+    void beforeAttributeQuotedState(const std::string& str, const NextStateFunctions& functions);
+    void attributeValueUnquotedState(const std::string& str, const NextStateFunctions& functions);
+    void afterAttributeValueQuotedState(const std::string& str, const NextStateFunctions& functions);
 };
 
 #endif
