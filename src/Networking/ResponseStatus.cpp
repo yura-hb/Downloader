@@ -2,8 +2,8 @@
 
 ResponseStatus::ResponseStatus(const std::string& statusLine) {
   std::istringstream text(statusLine);
-  std::vector<std::string> splitted(std::istream_iterator<std::string>(text),
-                                    std::istream_iterator<std::string>());
+  std::vector<std::string> splitted { std::istream_iterator<std::string>(text),
+                                      std::istream_iterator<std::string>() };
 
   intCode = std::stoi(splitted.at(1));
   code = (_ResponseStatusCode)intCode;

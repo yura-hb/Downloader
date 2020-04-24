@@ -6,6 +6,7 @@
 #include <sstream>
 #include <vector>
 #include <iterator>
+#include <algorithm>
 
 struct ResponseStatus {
   public:
