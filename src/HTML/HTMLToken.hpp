@@ -22,20 +22,23 @@ struct HTMLToken: public StringConvertible {
      */
     virtual void setFlagEnabled() = 0;
     virtual HTMLTokenType getType() const = 0;
-    virtual ~HTMLToken() {};
+    virtual ~HTMLToken() = default;;
 };
 
 struct HTMLDocktypeToken: public HTMLToken {
   public:
+    std::string name = "";
+    std::string publicId = "";
+    std::string privateId = "";
+    // Constuctions
+    HTMLDocktypeToken() = default;
     HTMLDocktypeToken(const std::string& name, const std::string& publicId, const std::string& privateId): name(name), publicId(publicId), privateId(privateId) {}
+    ~HTMLDocktypeToken();
     // Overriden
     std::string description() const override;
     void setFlagEnabled() override;
     HTMLTokenType getType() const override;
   private:
-    std::string name = "";
-    std::string publicId = "";
-    std::string privateId = "";
     bool forceQuirkFlag = false;
 };
 

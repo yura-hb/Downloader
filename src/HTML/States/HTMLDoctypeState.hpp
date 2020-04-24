@@ -4,7 +4,6 @@
 #include "HTMLTokenizerState.hpp"
 #include "HTMLTagStartState.hpp"
 #include "HTMLTagAttributesState.hpp"
-#include "../HTMLTokenizerContext.hpp"
 /**
  *  Group, which handles logic for parsing doctype comment
  *
@@ -40,6 +39,8 @@ struct HTMLDoctypeState: public HTMLTokenizerState {
 
     void doctypeNameAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
     void doctypeStartAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
+    void afterDoctypeNameAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
+    void doctypePublicKeywordStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
 };
 
 #endif

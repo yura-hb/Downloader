@@ -3,7 +3,6 @@
 
 #include "HTMLTokenizerState.hpp"
 #include "HTMLTagStartState.hpp"
-#include "../HTMLTokenizerContext.hpp"
 /**
  *  Group, which handles logic for parsing comments
  *

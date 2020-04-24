@@ -4,7 +4,7 @@
 #include "HTMLTokenizerState.hpp"
 #include "HTMLTagStartState.hpp"
 #include "HTMLTagAttributesState.hpp"
-#include "../HTMLTokenizerContext.hpp"
+
 /**
  *  Group, which handles logic for parsing script tag
  *

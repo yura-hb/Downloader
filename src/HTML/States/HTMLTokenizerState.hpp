@@ -33,6 +33,7 @@ const std::vector<char> whitespaceCharacters = { ' ', '\t', 10, 12 };
  *      1 - Emit token function
  *      2 - Reconsume state provider
  */
+
 class HTMLTokenizerContext;
 
 struct HTMLTokenizerState {

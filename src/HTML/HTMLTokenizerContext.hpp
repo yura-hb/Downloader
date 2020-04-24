@@ -6,7 +6,9 @@
 #include <vector>
 #include "States/HTMLTokenizerState.hpp"
 #include "HTMLToken.hpp"
+//#include "HTMLTokenizer.hpp"
 
+class HTMLTokenizer;
 struct HTMLTokenizerState;
 /**
  *  During the tokenization there is high demand on caching structures,
@@ -16,41 +18,34 @@ struct HTMLTokenizerState;
  */
 class HTMLTokenizerContext {
   public:
+    // Weak pointer to current tokenizer instance
+    //std::shared_ptr<HTMLTokenizer> tokenizer;
     //  - Setters
-    void setState(std::shared_ptr<HTMLTokenizerState> state) {
-      this -> state = state;
-    }
-    void setReconsumeState() {
-      shouldReconsume = true;
-    }
-    void setToken(std::shared_ptr<HTMLToken> token) {
-      this -> token = token;
-    }
+    void setState(std::shared_ptr<HTMLTokenizerState> state);
+    void setReconsumeState();
+    void setToken(std::shared_ptr<HTMLToken> token);
+    void addToBuffer(const std::string& str);
     /**
      *  Invalidates temporary flags from the context
      */
-    void prepareForNextState() {
-      shouldReconsume = false;
-    }
+    void prepareForNextState();
     /**
      * Emit current token to the tree constructor
      */
-    void emit(const std::shared_ptr<HTMLToken> token) {
-      std::cout << token -> description() << std::endl;
-    }
+    void emit(const std::shared_ptr<HTMLToken> token);
     /**
      *  Emits local token, which is set in context
      */
-    void emitLocalToken() {
-
-    }
+    void emitLocalToken();
+    /**
+     *  Loads n characters from the stream
+     */
+    std::string substring(const size_t length) const;
     //  - Getters
-    std::shared_ptr<HTMLTokenizerState>& getState() {
-      return state;
-    }
-    bool getReconsumeState() const {
-      return shouldReconsume;
-    }
+    std::shared_ptr<HTMLTokenizerState>& getState();
+    std::shared_ptr<HTMLToken>& getCurrentToken();
+    std::string getBuffer();
+    bool getReconsumeState() const;
   private:
     /**
      *  Current state of the tokenizer
@@ -59,7 +54,7 @@ class HTMLTokenizerContext {
     /**
      *  Temporary buffer needed for the operations
      */
-    std::vector<std::string> buffer;
+    std::string buffer;
     /**
      *  Temporary token to store
      */
