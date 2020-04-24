@@ -12,7 +12,7 @@ void HTMLTokenizer::parse(const std::string& str) {
     /**
      * Provide the reference of the context, to update logic of
      */
-    context.getState() -> next(std::to_string(*index), [this]() -> HTMLTokenizerContext& {
+    context.getState() -> next(std::string(1, *index), [this]() -> HTMLTokenizerContext& {
       return this -> context;
     });
 

@@ -15,9 +15,8 @@ void HTMLTagStartState::dataStateAction(const std::string& str, const std::funct
 
   } else if (str == "<" && type != HTMLTagType::PLAIN_TEXT) {
     state = type == HTMLTagType::DATA ? HTMLTagStartState::State::TAG_OPEN_STATE : HTMLTagStartState::State::LESS_THAN_SIGN;
-  } else {
-    functions().emit(std::make_unique<HTMLCharacterToken>(str));
   }
+  functions().emit(std::make_unique<HTMLCharacterToken>(str));
 }
 // DONE
 void HTMLTagStartState::lessThanSignStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
