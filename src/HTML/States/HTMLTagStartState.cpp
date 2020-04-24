@@ -1,7 +1,7 @@
 #include "HTMLTagStartState.hpp"
 
 
-void HTMLTagStartState::next(const std::string& str, const NextStateFunctions& functions) {
+void HTMLTagStartState::next(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   switch (state) {
   case (HTMLTagStartState::State::STATE_DATA): dataStateAction(str, functions); break;
   case (HTMLTagStartState::State::LESS_THAN_SIGN): lessThanSignStateAction(str, functions); break;
@@ -10,7 +10,7 @@ void HTMLTagStartState::next(const std::string& str, const NextStateFunctions& f
   }
 }
 // DONE
-void HTMLTagStartState::dataStateAction(const std::string& str, const NextStateFunctions& functions) {
+void HTMLTagStartState::dataStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   if (str == "&" && (type == HTMLTagType::DATA || type == HTMLTagType::RC_DATA)) {
 
   } else if (str == "<" && type != HTMLTagType::PLAIN_TEXT) {
@@ -20,7 +20,7 @@ void HTMLTagStartState::dataStateAction(const std::string& str, const NextStateF
   }
 }
 // DONE
-void HTMLTagStartState::lessThanSignStateAction(const std::string& str, const NextStateFunctions& functions) {
+void HTMLTagStartState::lessThanSignStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   if (str == "/") {
     // Set the temporary buffer to the empty string.
     state = HTMLTagStartState::State::END_TAG_OPEN_STATE;
@@ -34,7 +34,7 @@ void HTMLTagStartState::lessThanSignStateAction(const std::string& str, const Ne
 }
 
 // DONE
-void HTMLTagStartState::tagOpenStateAction(const std::string& str, const NextStateFunctions& functions) {
+void HTMLTagStartState::tagOpenStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   if (type != HTMLTagType::DATA) { return; }
 
   if (str[0] == '!') {
@@ -48,7 +48,7 @@ void HTMLTagStartState::tagOpenStateAction(const std::string& str, const NextSta
   }
 
   if (std::isalpha(str[0])) {
-    functions().setState(std::make_shared<HTMLTagNameState>(type));
+   // functions().setState(std::make_shared<HTMLTagNameState>(type));
     functions().setToken(std::make_shared<HTMLStartTagToken>());
     functions().setReconsumeState();
     return;
@@ -65,10 +65,10 @@ void HTMLTagStartState::tagOpenStateAction(const std::string& str, const NextSta
 }
 
 // DONE
-void HTMLTagStartState::endTagOpenStateAction(const std::string& str, const NextStateFunctions& functions) {
+void HTMLTagStartState::endTagOpenStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
 
   if (std::isalpha(str[0])) {
-    functions().setState(std::make_shared<HTMLTagNameState>(type));
+   // functions().setState(std::make_shared<HTMLTagNameState>(type));
     functions().setToken(std::make_shared<HTMLEndTagToken>());
     functions().setReconsumeState();
     return;
@@ -91,7 +91,7 @@ void HTMLTagStartState::endTagOpenStateAction(const std::string& str, const Next
 }
 
 // Helpers
-void HTMLTagStartState::reset(const std::string& str, const NextStateFunctions& functions) {
+void HTMLTagStartState::reset(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   state =  HTMLTagStartState::State::STATE_DATA;
   functions().setToken(std::make_shared<HTMLCharacterToken>("<"));
   functions().setReconsumeState();

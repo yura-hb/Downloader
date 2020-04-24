@@ -2,7 +2,7 @@
 
 using State = HTMLDoctypeState::State;
 
-void HTMLDoctypeState::next(const std::string& str, const NextStateFunctions& functions) {
+void HTMLDoctypeState::next(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   switch (state) {
   case (State::DOCTYPE_STATE):
   case (State::BEFORE_DOCTYPE_NAME_STATE):
@@ -23,7 +23,7 @@ void HTMLDoctypeState::next(const std::string& str, const NextStateFunctions& fu
   }
 }
 
-void HTMLDoctypeState::doctypeStartAction(const std::string& str, const NextStateFunctions& functions) {
+void HTMLDoctypeState::doctypeStartAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   if (std::find(whitespaceCharacters.begin(), whitespaceCharacters.end(), str[0]) != whitespaceCharacters.end()) {
     if (state == State::DOCTYPE_STATE)
       state = State::BEFORE_DOCTYPE_NAME_STATE;
@@ -47,7 +47,7 @@ void HTMLDoctypeState::doctypeStartAction(const std::string& str, const NextStat
   // Create a new DOCTYPE token. Set the token's name to the current input character.
 }
 
-void HTMLDoctypeState::doctypeNameAction(const std::string& str, const NextStateFunctions& functions) {
+void HTMLDoctypeState::doctypeNameAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   if (std::find(whitespaceCharacters.begin(), whitespaceCharacters.end(), str[0]) != whitespaceCharacters.end()) {
     state = State::AFTER_DOCTYPE_NAME_STATE;
     return;
@@ -70,7 +70,7 @@ void HTMLDoctypeState::doctypeNameAction(const std::string& str, const NextState
   // Append the current input character to the current DOCTYPE token's name.
 }
 
-void HTMLDoctypeState::afterDoctypeNameAction(const std::string& str, const NextStateFunctions& functions) {
+void HTMLDoctypeState::afterDoctypeNameAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   if (std::find(whitespaceCharacters.begin(), whitespaceCharacters.end(), str[0]) != whitespaceCharacters.end())
     return;
 
@@ -95,7 +95,7 @@ void HTMLDoctypeState::afterDoctypeNameAction(const std::string& str, const Next
   //Otherwise, this is an invalid-character-sequence-after-doctype-name parse error. Set the DOCTYPE token's force-quirks flag to on. Reconsume in the bogus DOCTYPE state.
 }
 
-void HTMLDoctypeState::doctypePublicKeywordStateAction(const std::string& str, const NextStateFunctions& functions) {
+void HTMLDoctypeState::doctypePublicKeywordStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   if (std::find(whitespaceCharacters.begin(), whitespaceCharacters.end(), str[0]) != whitespaceCharacters.end()) {
     state = State::BEFORE_DOCTYPE_PUBLIC_IDENTIFIER_STATE;
     return;

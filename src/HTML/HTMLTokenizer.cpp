@@ -6,8 +6,12 @@ void HTMLTokenizer::parse(const std::string& str) {
 
   auto index = str.begin();
 
+  std::cout << "Parsing: " << str << std::endl;
+
   while (index != str.end()) {
-    // TODO: - Describe, why give reference
+    /**
+     * Provide the reference of the context, to update logic of
+     */
     context.getState() -> next(std::to_string(*index), [this]() -> HTMLTokenizerContext& {
       return this -> context;
     });

@@ -4,6 +4,7 @@
 #include "HTMLTokenizerState.hpp"
 #include "HTMLTagStartState.hpp"
 #include "HTMLTagAttributesState.hpp"
+#include "../HTMLTokenizerContext.hpp"
 
 /**
  *  Group, which handles implementation of the base tag name states, for solution reference use
@@ -18,38 +19,38 @@ struct HTMLTagNameState: public HTMLTokenizerState {
     HTMLTagNameState() = delete;
     HTMLTagNameState(HTMLTagType type): type(type) {}
 
-    void next(const std::string& str, const NextStateFunctions& functions) override;
+    void next(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) override;
 
   private:
     HTMLTagType type;
     /**
      *  Action on the 0009 CHARACTER TABULATION (tab), U+000A LINE FEED (LF), U+000C FORM FEED (FF), U+0020 SPACE
      */
-    void whitespaceCharacterAction(const std::string& str, const NextStateFunctions& functions);
+    void whitespaceCharacterAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
     /**
      *  Action on the solidus character
      */
-    void solidusCharacterAction(const std::string& str, const NextStateFunctions& functions);
+    void solidusCharacterAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
     /**
      *  Action on the > character
      */
-    void greaterThanSignAction(const std::string& str, const NextStateFunctions& functions);
+    void greaterThanSignAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
     /**
      *  Action on the alpha upper character
      */
-    void alphaAction(const std::string& str, const NextStateFunctions& functions);
+    void alphaAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
     /**
      *  Action on the null character
      */
-    void nullAction(const std::string& str, const NextStateFunctions& functions);
+    void nullAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
     /**
      *  Action on the eof character
      */
-    void eofAction(const std::string& str, const NextStateFunctions& functions);
+    void eofAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
     /**
      *  Action on the other character
      */
-    void otherAction(const std::string& str, const NextStateFunctions& functions);
+    void otherAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
 };
 
 #endif

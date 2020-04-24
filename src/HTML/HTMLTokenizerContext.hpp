@@ -5,7 +5,9 @@
 #include <memory>
 #include <vector>
 #include "States/HTMLTokenizerState.hpp"
+#include "HTMLToken.hpp"
 
+struct HTMLTokenizerState;
 /**
  *  During the tokenization there is high demand on caching structures,
  *  emition of the tokens and communication between tokenizer and the states.
@@ -67,5 +69,4 @@ class HTMLTokenizerContext {
      */
     bool shouldReconsume = false;
 };
-
 #endif

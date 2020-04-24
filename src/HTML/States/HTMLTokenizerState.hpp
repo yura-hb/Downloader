@@ -6,7 +6,7 @@
 #include <tuple>
 #include <vector>
 #include <functional>
-#include "../HTMLTokenizer.hpp"
+#include "../HTMLTokenizerContext.hpp"
 
 /**
  *  Basic HTML tokens datatypes
@@ -32,20 +32,13 @@ const std::vector<char> whitespaceCharacters = { ' ', '\t', 10, 12 };
  *      1 - Emit token function
  *      2 - Reconsume state provider
  */
-struct HTMLTokenizerState {
-  /**
-   *  Provides instance of the context
-   */
-  using TokenizerInstanceProvider = std::function<HTMLTokenizerContext&(void)>;
-  /**
-   * Base functions
-   */
-  using NextStateFunctions = std::function<HTMLTokenizerContext&(void)>;
+class HTMLTokenizerContext;
 
+struct HTMLTokenizerState {
   /**
    * Navigate FSM to the next state
    */
-  virtual void next(const std::string& str, const NextStateFunctions& functions) = 0;
+  virtual void next(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) = 0;
 
   virtual ~HTMLTokenizerState() {};
 };

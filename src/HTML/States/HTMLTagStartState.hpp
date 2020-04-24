@@ -2,7 +2,7 @@
 #define __HTML_TAG_START_STATE_HPP__
 
 #include "HTMLTokenizerState.hpp"
-#include "HTMLTagNameState.hpp"
+//#include "HTMLTagNameState.hpp"
 #include "../HTMLTokenizerContext.hpp"
 
 /**
@@ -19,7 +19,7 @@ struct HTMLTagStartState: public HTMLTokenizerState {
     HTMLTagStartState() = delete;
     HTMLTagStartState(State state, HTMLTagType type): state(state), type(type) {}
 
-    void next(const std::string& str, const NextStateFunctions& functions) override;
+    void next(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) override;
 
   private:
     State state;
@@ -29,28 +29,28 @@ struct HTMLTagStartState: public HTMLTokenizerState {
      *
      * Cases 12.2.5.1 - 12.2.5.5
      */
-    void dataStateAction(const std::string& str, const NextStateFunctions& functions);
+    void dataStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
     /**
      * Basic action on the '<' sign
      *
      * Cases 12.2.5.9, 12.2.5.12, 12.2.5.15
      */
-    void lessThanSignStateAction(const std::string& str, const NextStateFunctions& functions);
+    void lessThanSignStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
     /**
      * Basic action on the tag open state
      *
      * Case 12.2.5.6
      */
-    void tagOpenStateAction(const std::string& str, const NextStateFunctions& functions);
+    void tagOpenStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
     /**
      *  Handle end tag open state
      *
      *  Cases 12.2.5.7, 12.2.5.10, 12.2.5.13, 12.2.5.16
      */
-    void endTagOpenStateAction(const std::string& str, const NextStateFunctions& functions);
+    void endTagOpenStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
 
     // Helpers
-    void reset(const std::string& str, const NextStateFunctions& functions);
+    void reset(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
 };
 
 #endif

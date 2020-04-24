@@ -2,7 +2,7 @@
 
 using State = HTMLCommentState::State;
 
-void HTMLCommentState::next(const std::string& str, const NextStateFunctions& functions) {
+void HTMLCommentState::next(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   switch (state) {
   case State::BOGUS_COMMENT:
     if (str[0] == '>') {
@@ -132,12 +132,12 @@ void HTMLCommentState::next(const std::string& str, const NextStateFunctions& fu
   }
 }
 
-void HTMLCommentState::switchToDataState(const NextStateFunctions& functions) {
+void HTMLCommentState::switchToDataState(const std::function<HTMLTokenizerContext&(void)> functions) {
   std::get<0>(functions)(std::make_shared<HTMLTagStartState>(HTMLTagStartState::State::STATE_DATA, HTMLTagType::DATA));
   // Emit the comment token.
 }
 
-void HTMLCommentState::reconsumeInCommentState(const NextStateFunctions& functions) {
+void HTMLCommentState::reconsumeInCommentState(const std::function<HTMLTokenizerContext&(void)> functions) {
    state = State::COMMENT_STATE;
    std::get<2>(functions)(true);
 }

@@ -253,5 +253,22 @@
    "hayeuyur/HTMLTokenizerState.o"
   ],
   "file": "src/HTML/States/HTMLTokenizerState.cpp"
+ },
+ {
+  "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
+  "arguments": [
+   "clang++",
+   "-std=c++14",
+   "-Wall",
+   "-pedantic",
+   "-g",
+   "-fsanitize=address,leak",
+   "-Wno-long-long",
+   "-c",
+   "src/HTML/States/HTMLTagStartState.cpp",
+   "-o",
+   "hayeuyur/HTMLTagStartState.o"
+  ],
+  "file": "src/HTML/States/HTMLTagStartState.cpp"
  }
 ]

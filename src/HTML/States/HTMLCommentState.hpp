@@ -3,6 +3,7 @@
 
 #include "HTMLTokenizerState.hpp"
 #include "HTMLTagStartState.hpp"
+#include "../HTMLTokenizerContext.hpp"
 /**
  *  Group, which handles logic for parsing comments
  *
@@ -29,14 +30,14 @@ struct HTMLCommentState: public HTMLTokenizerState {
     HTMLCommentState() = delete;
     HTMLCommentState(State state): state(state) {}
 
-    void next(const std::string& str, const NextStateFunctions& functions) override;
+    void next(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) override;
   private:
     State state;
 
 
     // Helpers
-    void switchToDataState(const NextStateFunctions& functions);
-    void reconsumeInCommentState(const NextStateFunctions& functions);
+    void switchToDataState(const std::function<HTMLTokenizerContext&(void)> functions);
+    void reconsumeInCommentState(const std::function<HTMLTokenizerContext&(void)> functions);
 };
 
 #endif

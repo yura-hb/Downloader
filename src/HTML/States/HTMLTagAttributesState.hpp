@@ -3,6 +3,7 @@
 
 #include "HTMLTokenizerState.hpp"
 #include "HTMLTagStartState.hpp"
+#include "../HTMLTokenizerContext.hpp"
 /**
  *  Group, which handles logic for parsing attributes and values of specific tags
  *
@@ -21,17 +22,17 @@ struct HTMLTagAttributesState: public HTMLTokenizerState {
     HTMLTagAttributesState() = delete;
     HTMLTagAttributesState(State state): state(state) {}
 
-    void next(const std::string& str, const NextStateFunctions& functions) override;
+    void next(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) override;
   private:
     State state;
 
-    void beforeAttributeNameAction(const std::string& str, const NextStateFunctions& functions);
-    void attributeNameAction(const std::string& str, const NextStateFunctions& functions);
-    void afterAttributeNameAction(const std::string& str, const NextStateFunctions& functions);
-    void beforeAttributeValueAction(const std::string& str, const NextStateFunctions& functions);
-    void beforeAttributeQuotedState(const std::string& str, const NextStateFunctions& functions);
-    void attributeValueUnquotedState(const std::string& str, const NextStateFunctions& functions);
-    void afterAttributeValueQuotedState(const std::string& str, const NextStateFunctions& functions);
+    void beforeAttributeNameAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
+    void attributeNameAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
+    void afterAttributeNameAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
+    void beforeAttributeValueAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
+    void beforeAttributeQuotedState(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
+    void attributeValueUnquotedState(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
+    void afterAttributeValueQuotedState(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
 };
 
 #endif

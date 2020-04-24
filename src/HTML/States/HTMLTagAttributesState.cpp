@@ -1,6 +1,6 @@
 #include "HTMLTagAttributesState.hpp"
 
-void HTMLTagAttributesState::next(const std::string& str, const NextStateFunctions& functions) {
+void HTMLTagAttributesState::next(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   switch (state) {
   case HTMLTagAttributesState::State::BEFORE_ATTRIBUTE_NAME:
     beforeAttributeNameAction(str, functions);
@@ -26,7 +26,7 @@ void HTMLTagAttributesState::next(const std::string& str, const NextStateFunctio
   }
 }
 
-void HTMLTagAttributesState::beforeAttributeNameAction(const std::string& str, const NextStateFunctions& functions) {
+void HTMLTagAttributesState::beforeAttributeNameAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   if (std::find(whitespaceCharacters.begin(), whitespaceCharacters.end(), str[0]) != whitespaceCharacters.end())
       return;
 
@@ -50,7 +50,7 @@ void HTMLTagAttributesState::beforeAttributeNameAction(const std::string& str, c
   std::get<2>(functions)(true);
 }
 
-void HTMLTagAttributesState::attributeNameAction(const std::string& str, const NextStateFunctions& functions) {
+void HTMLTagAttributesState::attributeNameAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   if (std::find(whitespaceCharacters.begin(), whitespaceCharacters.end(), str[0]) != whitespaceCharacters.end() ||
       str[0] == '/' || str[0] == '>') {
     state = HTMLTagAttributesState::State::AFTER_ATTRIBUTE_NAME_STATE;
@@ -84,7 +84,7 @@ void HTMLTagAttributesState::attributeNameAction(const std::string& str, const N
   // must be removed from the token.
 }
 
-void HTMLTagAttributesState::afterAttributeNameAction(const std::string& str, const NextStateFunctions& functions) {
+void HTMLTagAttributesState::afterAttributeNameAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   if (std::find(whitespaceCharacters.begin(), whitespaceCharacters.end(), str[0]) != whitespaceCharacters.end())
       return;
 
@@ -111,7 +111,7 @@ void HTMLTagAttributesState::afterAttributeNameAction(const std::string& str, co
   std::get<2>(functions)(true);
 }
 
-void HTMLTagAttributesState::beforeAttributeValueAction(const std::string& str, const NextStateFunctions& functions) {
+void HTMLTagAttributesState::beforeAttributeValueAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   if (std::find(whitespaceCharacters.begin(), whitespaceCharacters.end(), str[0]) != whitespaceCharacters.end())
       return;
 
@@ -130,7 +130,7 @@ void HTMLTagAttributesState::beforeAttributeValueAction(const std::string& str, 
   std::get<2>(functions)(true);
 }
 
-void HTMLTagAttributesState::beforeAttributeQuotedState(const std::string& str, const NextStateFunctions& functions) {
+void HTMLTagAttributesState::beforeAttributeQuotedState(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   if (str[0] == '\"' || str[0] == '\'') {
      state = HTMLTagAttributesState::State::AFTER_ATTRIBUTE_VALUE_QUOTED_STATE;
      return;
@@ -146,7 +146,7 @@ void HTMLTagAttributesState::beforeAttributeQuotedState(const std::string& str, 
    // Append the current input character to the current attribute's value.
 }
 
-void HTMLTagAttributesState::attributeValueUnquotedState(const std::string& str, const NextStateFunctions& functions) {
+void HTMLTagAttributesState::attributeValueUnquotedState(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   if (std::find(whitespaceCharacters.begin(), whitespaceCharacters.end(), str[0]) != whitespaceCharacters.end()) {
     state = HTMLTagAttributesState::State::BEFORE_ATTRIBUTE_VALUE_STATE;
     return;
@@ -170,7 +170,7 @@ void HTMLTagAttributesState::attributeValueUnquotedState(const std::string& str,
   // Append the current input character to the current attribute's value.
 }
 
-void HTMLTagAttributesState::afterAttributeValueQuotedState(const std::string& str, const NextStateFunctions& functions) {
+void HTMLTagAttributesState::afterAttributeValueQuotedState(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   if (std::find(whitespaceCharacters.begin(), whitespaceCharacters.end(), str[0]) != whitespaceCharacters.end()) {
     state = HTMLTagAttributesState::State::BEFORE_ATTRIBUTE_VALUE_STATE;
     return;

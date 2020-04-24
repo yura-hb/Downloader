@@ -4,6 +4,7 @@
 #include "HTMLTokenizerState.hpp"
 #include "HTMLTagStartState.hpp"
 #include "HTMLTagAttributesState.hpp"
+#include "../HTMLTokenizerContext.hpp"
 /**
  *  Group, which handles logic for parsing script tag
  *
@@ -33,17 +34,17 @@ struct HTMLScriptState: public HTMLTokenizerState {
     HTMLScriptState() = delete;
     HTMLScriptState(State state): state(state) {}
 
-    void next(const std::string& str, const NextStateFunctions& functions) override;
+    void next(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) override;
   private:
     State state;
 
-    void scriptDataEscapeStartStateAction(const std::string& str, const NextStateFunctions& functions);
-    void scriptDataEscapeStateAction(const std::string& str, const NextStateFunctions& functions);
-    void lessThanSignStateAction(const std::string& str, const NextStateFunctions& functions);
-    void endTagOpenStateAction(const std::string& str, const NextStateFunctions& functions);
-    void endTagNameStateAction(const std::string& str, const NextStateFunctions& functions);
-    void doubleEscapeStartStateAction(const std::string& str, const NextStateFunctions& functions);
-    void doubleEscapeStateAction(const std::string& str, const NextStateFunctions& functions);
+    void scriptDataEscapeStartStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
+    void scriptDataEscapeStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
+    void lessThanSignStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
+    void endTagOpenStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
+    void endTagNameStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
+    void doubleEscapeStartStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
+    void doubleEscapeStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions);
 };
 
 #endif

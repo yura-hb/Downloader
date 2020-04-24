@@ -6,7 +6,7 @@ FLAGS = -std=c++14 -Wall -pedantic -g -fsanitize=address,leak -Wno-long-long
 
 SRC_PATH = src
 OUTPUT_PATH = hayeuyur
-PROGRAM_NAME = downloader
+PROGRAM_NAME = downloader.o
 
 SRC = $(SRC_PATH)/%.cpp
 HTML_SRC = $(SRC_PATH)/HTML/%.cpp
@@ -23,7 +23,8 @@ MODULES = $(OUTPUT_PATH)/main.o $(OUTPUT_PATH)/Socket.o $(OUTPUT_PATH)/HTTPClien
 	  $(OUTPUT_PATH)/Receiver.o $(OUTPUT_PATH)/Request.o $(OUTPUT_PATH)/URL.o \
 	  $(OUTPUT_PATH)/Header.o $(OUTPUT_PATH)/RequestMethod.o $(OUTPUT_PATH)/Version.o \
 	  $(OUTPUT_PATH)/HTTPParser.o $(OUTPUT_PATH)/StringConvertible.o $(OUTPUT_PATH)/ResponseStatus.o \
-
+		$(OUTPUT_PATH)/HTMLToken.o $(OUTPUT_PATH)/HTMLTokenizerState.o $(OUTPUT_PATH)/HTMLTagStartState.o \
+		$(OUTPUT_PATH)/HTMLTokenizer.o
 
 all: compile
 

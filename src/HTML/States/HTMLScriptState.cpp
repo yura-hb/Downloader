@@ -2,7 +2,7 @@
 
 using State = HTMLScriptState::State;
 
-void HTMLScriptState::next(const std::string& str, const NextStateFunctions& functions) {
+void HTMLScriptState::next(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   switch (state) {
   case (State::SCRIPT_DATA_ESCAPE_START_STATE):
   case (State::SCRIPT_DATA_ESCAPE_START_DASH_STATE):
@@ -31,7 +31,7 @@ void HTMLScriptState::next(const std::string& str, const NextStateFunctions& fun
   }
 }
 // READY
-void HTMLScriptState::scriptDataEscapeStartStateAction(const std::string& str, const NextStateFunctions& functions) {
+void HTMLScriptState::scriptDataEscapeStartStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   if (str[0] == '-') {
     // Emit a U+002D HYPHEN-MINUS character token
     state = state == State::SCRIPT_DATA_ESCAPE_START_STATE ? State::SCRIPT_DATA_ESCAPE_START_DASH_STATE : State::SCRIPT_DATA_ESCAPE_DASH_DASH_STATE;
@@ -43,7 +43,7 @@ void HTMLScriptState::scriptDataEscapeStartStateAction(const std::string& str, c
 }
 
 // READY
-void HTMLScriptState::scriptDataEscapeStateAction(const std::string& str, const NextStateFunctions& functions) {
+void HTMLScriptState::scriptDataEscapeStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   if (str[0] == '-') {
     // Emit a U+002D HYPHEN-MINUS character token
     if (state != State::SCRIPT_DATA_ESCAPE_DASH_DASH_STATE)
@@ -73,7 +73,7 @@ void HTMLScriptState::scriptDataEscapeStateAction(const std::string& str, const 
   // Emit the current input character as a character token.
 }
 // READY
-void HTMLScriptState::lessThanSignStateAction(const std::string& str, const NextStateFunctions& functions) {
+void HTMLScriptState::lessThanSignStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   if (str[0] == '/') {
     // Set the temporary buffer to the empty string
     state = state == State::SCRIPT_DATA_DOUBLE_ESCAPE_LESS_THAN_SIGN_STATE ? State::SCRIPT_DATA_DOUBLE_ESCAPE_END_STATE : State::SCRIPT_DATA_ESCAPE_END_TAG_OPEN_STATE;
@@ -91,7 +91,7 @@ void HTMLScriptState::lessThanSignStateAction(const std::string& str, const Next
   std::get<2>(functions)(true);
 }
 // READDY
-void HTMLScriptState::endTagOpenStateAction(const std::string& str, const NextStateFunctions& functions) {
+void HTMLScriptState::endTagOpenStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   if (std::isalpha(str[0])) {
     // Set the temporary buffer to the empty string. Emit a U+003C LESS-THAN SIGN character token
     state = State::SCRIPT_DATA_ESCAPE_END_TAG_NAME_STATE;
@@ -103,7 +103,7 @@ void HTMLScriptState::endTagOpenStateAction(const std::string& str, const NextSt
   std::get<2>(functions)(true);
 }
 // Ready
-void HTMLScriptState::endTagNameStateAction(const std::string& str, const NextStateFunctions& functions) {
+void HTMLScriptState::endTagNameStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   if (std::find(whitespaceCharacters.begin(), whitespaceCharacters.end(), str[0]) != whitespaceCharacters.end()) {
     //  If the current end tag token is an appropriate end tag token, then switch to the before attribute name state.
     //  Otherwise, treat it as per the "anything else" entry below.
@@ -138,7 +138,7 @@ void HTMLScriptState::endTagNameStateAction(const std::string& str, const NextSt
 }
 
 // READY
-void HTMLScriptState::doubleEscapeStartStateAction(const std::string& str, const NextStateFunctions& functions) {
+void HTMLScriptState::doubleEscapeStartStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   if (std::find(whitespaceCharacters.begin(), whitespaceCharacters.end(), str[0]) != whitespaceCharacters.end() ||
       str[0] == '/' ||
       str[0] == '>') {
@@ -160,7 +160,7 @@ void HTMLScriptState::doubleEscapeStartStateAction(const std::string& str, const
 }
 
 // READY
-void HTMLScriptState::doubleEscapeStateAction(const std::string& str, const NextStateFunctions& functions) {
+void HTMLScriptState::doubleEscapeStateAction(const std::string& str, const std::function<HTMLTokenizerContext&(void)> functions) {
   if (str[0] == '-') {
     //  Emit a U+002D HYPHEN-MINUS character token.
     if (state != State::SCRIPT_DATA_DOUBLE_ESCAPE_DASH_STATE)
