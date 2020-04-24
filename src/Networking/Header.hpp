@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 #include "../Templates/StringConvertible.hpp"
 
 struct Header: public StringConvertible {
