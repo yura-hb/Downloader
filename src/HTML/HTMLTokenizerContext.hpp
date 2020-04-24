@@ -36,7 +36,7 @@ class HTMLTokenizerContext {
      * Emit current token to the tree constructor
      */
     void emit(const std::shared_ptr<HTMLToken> token) {
-
+      std::cout << token -> description() << std::endl;
     }
     /**
      *  Emits local token, which is set in context

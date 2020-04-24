@@ -1,5 +1,5 @@
 #include "StringConvertible.hpp"
 
-std::string StringConvertible::convert() const {
+std::string StringConvertible::description() const {
   return "Empty";
 }

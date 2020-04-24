@@ -5,7 +5,7 @@
 
 struct StringConvertible {
   public:
-    virtual std::string convert() const;
+    virtual std::string description() const;
 
     virtual ~StringConvertible() = default;
 };

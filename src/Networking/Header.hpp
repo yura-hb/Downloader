@@ -45,7 +45,7 @@ struct Header: public StringConvertible {
      */
     Header(const _Header& header, const std::string& parameters) noexcept: header(header), parameters(parameters) {}
 
-    std::string convert() const override;
+    std::string description() const override;
 
     friend std::ostream& operator<< (std::ostream& output, const Header& header);
   private:

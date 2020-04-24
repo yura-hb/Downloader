@@ -3,9 +3,11 @@
 
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <map>
+#include "../Templates/StringConvertible.hpp"
 
-struct HTMLToken {
+struct HTMLToken: public StringConvertible {
   public:
     enum class HTMLTokenType {
       DOCTYPE,
@@ -27,6 +29,7 @@ struct HTMLDocktypeToken: public HTMLToken {
   public:
     HTMLDocktypeToken(const std::string& name, const std::string& publicId, const std::string& privateId): name(name), publicId(publicId), privateId(privateId) {}
     // Overriden
+    std::string description() const override;
     void setFlagEnabled() override;
     HTMLTokenType getType() const override;
   private:
@@ -41,6 +44,7 @@ struct HTMLStartTagToken: public HTMLToken {
     HTMLStartTagToken() = default;
     HTMLStartTagToken(const std::string& tagName, const std::map<std::string, std::string> attributes): tagName(tagName), attributes(attributes) {}
     // Overriden
+    std::string description() const override;
     void setFlagEnabled() override;
     HTMLTokenType getType() const override;
   private:
@@ -54,6 +58,7 @@ struct HTMLEndTagToken: public HTMLToken {
     HTMLEndTagToken() = default;
     HTMLEndTagToken(const std::string& tagName): tagName(tagName) {}
     // Overriden
+    std::string description() const override;
     void setFlagEnabled() override;
     HTMLTokenType getType() const override;
   private:
@@ -66,6 +71,7 @@ struct HTMLCommentToken: public HTMLToken {
     HTMLCommentToken() = default;
     HTMLCommentToken(const std::string& data): data(data) {}
     // Overriden
+    std::string description() const override;
     void setFlagEnabled() override;
     HTMLTokenType getType() const override;
   private:
@@ -76,16 +82,11 @@ struct HTMLCharacterToken: public HTMLToken {
   public:
     HTMLCharacterToken(const std::string& data): data(data) {}
     // Overriden
+    std::string description() const override;
     void setFlagEnabled() override;
     HTMLTokenType getType() const override;
   private:
     std::string data = "";
-};
-
-struct HTMLEOFToken: public HTMLToken {
-  // Overriden
-  void setFlagEnabled() override;
-  HTMLTokenType getType() const override;
 };
 
 #endif

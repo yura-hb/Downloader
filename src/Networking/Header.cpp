@@ -41,12 +41,12 @@ Header::Header(const std::string& header) {
   parameters = std::string(iter + 2, header.end());
 }
 
-std::string Header::convert() const {
+std::string Header::description() const {
   return store[static_cast<int>(header)] + ": " + parameters;
 }
 
 std::ostream& operator<< (std::ostream& output, const Header& header) {
-  output << header.convert();
+  output << header.description();
   return output;
 }
 

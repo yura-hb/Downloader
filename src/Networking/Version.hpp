@@ -14,7 +14,7 @@ struct Version: public StringConvertible {
 
     Version(const _Version version): version(version) {}
 
-    std::string convert() const override;
+    std::string description() const override;
   private:
     static const std::vector<std::string> store;
 

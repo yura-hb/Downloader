@@ -32,7 +32,7 @@ struct RequestMethod: public StringConvertible {
 
     RequestMethod(const _RequestMethod method): method(method) {}
 
-    std::string convert() const override;
+    std::string description() const override;
   private:
     static const std::vector<std::string> store;
     _RequestMethod method;
