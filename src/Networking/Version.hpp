@@ -1,9 +1,9 @@
 #ifndef __VERSION_H__
 #define __VERSION_H__
 
-#include "iostream"
-#include "string"
-#include "vector"
+#include <iostream>
+#include <string>
+#include <vector>
 #include "../Templates/StringConvertible.hpp"
 
 struct Version: public StringConvertible {

@@ -1,9 +1,9 @@
 #ifndef __REQUEST_TYPE_H__
 #define __REQUEST_TYPE_H__
 
-#include "iostream"
-#include "string"
-#include "vector"
+#include <iostream>
+#include <string>
+#include <vector>
 #include "../Templates/StringConvertible.hpp"
 
 struct RequestMethod: public StringConvertible {

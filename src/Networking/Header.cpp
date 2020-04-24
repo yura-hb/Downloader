@@ -25,7 +25,7 @@ const std::vector<std::string> Header::store = {
 
 Header::Header(const std::string& header) {
   // All of the types consists of the `Header: Params` format
-  auto iter = std::find(header.begin(), header.end(), ":");
+  auto iter = std::find(header.begin(), header.end(), ':');
 
   if (iter == header.end())
     throw "Incorrect format of the string";
@@ -39,7 +39,7 @@ Header::Header(const std::string& header) {
   this -> header = (_Header)(headerTypeIndex - store.begin());
   // skip : and space
   parameters = std::string(iter + 2, header.end());
-};
+}
 
 std::string Header::convert() const {
   return store[static_cast<int>(header)] + ": " + parameters;
