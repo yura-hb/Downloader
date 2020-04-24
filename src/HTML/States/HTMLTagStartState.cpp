@@ -15,10 +15,8 @@ void HTMLTagStartState::dataStateAction(const std::string& str, const NextStateF
 
   } else if (str == "<" && type != HTMLTagType::PLAIN_TEXT) {
     state = type == HTMLTagType::DATA ? HTMLTagStartState::State::TAG_OPEN_STATE : HTMLTagStartState::State::LESS_THAN_SIGN;
-  } else if (str == "\0") {
-    // EMIT U+FFFD or null depending on the type
   } else {
-    std::get<1>(functions)(std::make_unique<HTMLCharacterToken>(HTMLCharacterToken(str)));
+    functions().emit(std::make_unique<HTMLCharacterToken>(str));
   }
 }
 // DONE
@@ -50,9 +48,9 @@ void HTMLTagStartState::tagOpenStateAction(const std::string& str, const NextSta
   }
 
   if (std::isalpha(str[0])) {
-    std::get<0>(functions)(std::make_shared<HTMLTagNameState>(HTMLTagNameState(type)));
-    std::get<1>(functions)(std::make_unique<HTMLStartTagToken>(HTMLStartTagToken()));
-    std::get<2>(functions)(true);
+    functions().setState(std::make_shared<HTMLTagNameState>(type));
+    functions().setToken(std::make_shared<HTMLStartTagToken>());
+    functions().setReconsumeState();
     return;
   }
 
@@ -70,9 +68,9 @@ void HTMLTagStartState::tagOpenStateAction(const std::string& str, const NextSta
 void HTMLTagStartState::endTagOpenStateAction(const std::string& str, const NextStateFunctions& functions) {
 
   if (std::isalpha(str[0])) {
-    std::get<0>(functions)(std::make_shared<HTMLTagNameState>(HTMLTagNameState(type)));
-    std::get<1>(functions)(std::make_unique<HTMLEndTagToken>(HTMLEndTagToken()));
-    std::get<2>(functions)(true);
+    functions().setState(std::make_shared<HTMLTagNameState>(type));
+    functions().setToken(std::make_shared<HTMLEndTagToken>());
+    functions().setReconsumeState();
     return;
   }
 
@@ -95,6 +93,6 @@ void HTMLTagStartState::endTagOpenStateAction(const std::string& str, const Next
 // Helpers
 void HTMLTagStartState::reset(const std::string& str, const NextStateFunctions& functions) {
   state =  HTMLTagStartState::State::STATE_DATA;
-  std::get<1>(functions)(std::make_unique<HTMLCharacterToken>(HTMLCharacterToken("<")));
-  std::get<2>(functions)(true);
+  functions().setToken(std::make_shared<HTMLCharacterToken>("<"));
+  functions().setReconsumeState();
 }

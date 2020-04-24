@@ -1,18 +1,19 @@
-#ifndef __HTML_TOKENIZER__
-#define __HTML_TOKENIZER__
+#ifndef __HTML_TOKENIZER__HPP__
+#define __HTML_TOKENIZER__HPP__
 
 #include <iostream>
 #include <string>
+#include "States/HTMLTagStartState.hpp"
+#include "HTMLTokenizerContext.hpp"
 
 class HTMLTokenizer {
   public:
-    static std::string replacementCharacterToken;
-
-    void setup(const std::string& str);
-
+    /**
+     * This method simply parsers the data objects
+     */
+    void parse(const std::string& str);
   private:
-
-    void consume();
+    HTMLTokenizerContext context;
 };
 
 #endif

@@ -3,10 +3,7 @@
 
 #include "HTMLTokenizerState.hpp"
 #include "HTMLTagNameState.hpp"
-
- enum class HTMLTagType {
-  DATA, PLAIN_TEXT, RAW_TEXT, RC_DATA, SCRIPT_DATA
-};
+#include "../HTMLTokenizerContext.hpp"
 
 /**
  *  Group, which handles implementation of the base tag start states, for solution reference use

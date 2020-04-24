@@ -6,8 +6,14 @@
 #include <tuple>
 #include <vector>
 #include <functional>
-#include "../HTMLToken.hpp"
+#include "../HTMLTokenizer.hpp"
 
+/**
+ *  Basic HTML tokens datatypes
+ */
+enum class HTMLTagType {
+  DATA, PLAIN_TEXT, RAW_TEXT, RC_DATA, SCRIPT_DATA
+};
 /**
  *  Group of whitespace characters
  */
@@ -28,21 +34,13 @@ const std::vector<char> whitespaceCharacters = { ' ', '\t', 10, 12 };
  */
 struct HTMLTokenizerState {
   /**
-   * Returns the next state of the FSM
+   *  Provides instance of the context
    */
-  using NextStateCompletion = std::function<void(std::shared_ptr<HTMLTokenizerState>)>;
-  /**
-   * Emits token to the FSM. Can be any type of HTMLToken
-   */
-  using EmitTokenCompletion = std::function<void(std::unique_ptr<HTMLToken>)>;
-  /**
-   * Tells tokenizer to reconsume the next state. Means, that the FSM will change its state, but wouldn't move index.
-   */
-  using ReconsumeStateCompletion = std::function<void(bool)>;
+  using TokenizerInstanceProvider = std::function<HTMLTokenizerContext&(void)>;
   /**
    * Base functions
    */
-  using NextStateFunctions = std::tuple<NextStateCompletion, EmitTokenCompletion, ReconsumeStateCompletion>;
+  using NextStateFunctions = std::function<HTMLTokenizerContext&(void)>;
 
   /**
    * Navigate FSM to the next state
