@@ -1,10 +1,10 @@
 #include <iostream>
-#include "HTML/HTMLTokenizer.hpp"
+//#include "HTML/HTMLTokenizer.hpp"
 
 int main() {
-  HTMLTokenizer tokenizer;
+ // HTMLTokenizer tokenizer;
 
-  tokenizer.parse("<!DOCTYPE html>");
+ // tokenizer.parse("<!DOCTYPE html>");
 
   return 0;
 }

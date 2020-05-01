@@ -1,12 +1,8 @@
 #include "PageDownloader.hpp"
 
-void PageDownloader::processOperations() {
-  if (operationQueue.empty()) { return; }
+void downloadPage(const std::string& url) {
+  if
 
-  if (!operationQueue.front() -> perform()) {
-    // TODO: - Log error
-  }
 
-  operationQueue.pop();
-  processOperations();
+
 }
