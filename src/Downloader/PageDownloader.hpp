@@ -16,13 +16,7 @@ class PageDownloader {
      */
     virtual void downloadPage(const std::string& url) const;
   private:
-    /**
-     * Performs reguests
-     */
     HTTPClient client;
-    /**
-     *
-     */
     FileManager fileManager;
     /**
      *  Processes page and returns all references from it.
