@@ -11,7 +11,6 @@
 #include <list>
 #include <algorithm>
 
-// TODO: - Return folder name
 class FileManager {
   public:
     // Nested
@@ -30,29 +29,38 @@ class FileManager {
     /**
      * Creates folder at the current directory with the specific name and returns the full path to the folder
      */
-    std::string createPageFolder(const std::string& name) const;
+    void createPageFolder(const std::string& name) const;
     /**
      * Description:
      *  Write file to the specific directory at the relative path in the folder with data.
+     *  In case, if there are no folders with the specific path, creates them.
+     *  Doesn't operate out of the folderName
      *
      * Params:
-     *  @param[in]: - Folder in the current directory
-     *  @param[in]: - Relative path in the folder including filename
-     *  @param[in]: - data to save
+     *  @param[in] folderName: - Folder in the current directory
+     *  @param[in] relativePath: - Relative path in the folder including filename
+     *  @param[in] data: - data to save
      *
      * Exceptions:
      *  - In case if folder is not created throw exception
      *  - In case if any error occurs during write operation throws exceptions
      */
     void saveFile(const std::string& folderName, const std::string& relativePath, const std::string& data) const;
+    /**
+     *  Clears the directory
+     */
+    // TODO: Ask user for permission
+    void clearDirectory(const std::string& directory) const;
   private:
     // Disable copy constructor
     FileManager(FileManager &manager) {};
     FileManager& operator = (const FileManager& manager) { return *this; };
     /**
-     * Creates subdirectories, if they doesn't exist in the current directory.
+     *  Creates subdirectories, if they doesn't exist in the current directory.
+     *  Supports '.' and '..' path components.
      *
-     * Supports '.' and '..' path components.
+     *  Throws:
+     *    - In case, if there is file with the name of the subdirectory
      */
     void createRelativePathDirectories(const std::string& path) const;
     /**
@@ -68,13 +76,12 @@ class FileManager {
      */
     void simplifyPath(std::list<std::string>& components) const;
     /**
-     * Opens the specified directory
+     * Opens the specified directory.
+     *
+     * Throws:
+     *  - In case, if the directory doesn't exist
      */
     void openDirectory(const std::string& directory, DIR *& dir) const;
-    /**
-     * Clears the directory
-     */
-    void clearDirectory(const std::string& directory) const;
 };
 
 #endif

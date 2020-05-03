@@ -1,6 +1,6 @@
 #include "FileManager.hpp"
 
-std::string FileManager::createPageFolder(const std::string& name) const {
+void FileManager::createPageFolder(const std::string& name) const {
   int result;
   // TODO: - Replace cerr with the specified logger
   if ((result = mkdir(name.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)) != 0)
@@ -8,9 +8,7 @@ std::string FileManager::createPageFolder(const std::string& name) const {
   // Try to open directory with the name
   DIR *dir;
   openDirectory(name, dir);
-  clearDirectory(name);
   closedir(dir);
-  return name;
 }
 
 void FileManager::saveFile(const std::string& folderName, const std::string& relativePath, const std::string& data) const {
@@ -119,6 +117,7 @@ void FileManager::openDirectory(const std::string& directory, DIR *& dir) const 
 }
 
 void FileManager::clearDirectory(const std::string& directory) const {
-  std::string command = "rm " + directory + "/*";
+  std::string command = "rm -r '" + directory + "'/*";
+  std::cout << command;
   system(command.c_str());
 }
