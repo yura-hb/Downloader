@@ -9,12 +9,20 @@
 #include "../HTTPParser.hpp"
 #include "ResponseStatus.hpp"
 
+struct Response {
+  Response() = default;
+
+  ResponseStatus status;
+  std::vector<Header> headers;
+  std::string body;
+};
+
 class HTTPClient {
   public:
     // Default web port is 80, but connection using other ports is not prohibited
     HTTPClient(std::string port = "80") : port(port) {}
-
-    bool loadPage(const std::string &url, std::string &result);
+    // TODO: - add exception error handling
+    bool loadPage(const std::string &url, Response &response) const;
   private:
     std::string port = "80";
     /**
@@ -24,11 +32,11 @@ class HTTPClient {
      *  3. Fetch message
      *  4. Disconnects from the server
      */
-    bool performRequest(Request request, std::string &result);
+    bool performRequest(Request request, std::string &result) const;
     /**
      * Parsers headers of the response
      */
-    bool proceedResponse(const std::string &headers, const std::string &message);
+    bool proceedResponse(const std::string &headers, const std::string &message) const;
     /**
      * Converts string url to the URL object
      */

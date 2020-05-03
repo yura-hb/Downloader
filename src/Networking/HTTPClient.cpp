@@ -1,6 +1,7 @@
 #include "HTTPClient.hpp"
 
-bool HTTPClient::loadPage(const std::string &url, std::string &result) {
+bool HTTPClient::loadPage(const std::string &url,
+                          Response& response) const {
   URL link = convertLink(url);
 
   Request request = makeRequest(link);
@@ -13,15 +14,7 @@ bool HTTPClient::loadPage(const std::string &url, std::string &result) {
   preprocessResponse(data);
 
   try {
-    ResponseStatus status = Parser::parseStatus(data);
-
-    std::cout << status.intCode << std::endl;
-
-    std::vector<Header> headers = Parser::parse(data);
-
-    for (const auto& header: headers)
-      std::cout << header << std::endl;
-
+    response = { Parser::parseStatus(data), Parser::parse(data), data };
   } catch (std::exception &exc) {
     std::cerr << exc.what() << std::endl;
   }
@@ -29,7 +22,7 @@ bool HTTPClient::loadPage(const std::string &url, std::string &result) {
   return true;
 }
 
-bool HTTPClient::performRequest(Request request, std::string &result) {
+bool HTTPClient::performRequest(Request request, std::string &result) const {
   Socket sock(request.url.domain.c_str(), port.c_str());
 
   uint32_t sentBytes = 0;

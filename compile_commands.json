@@ -214,11 +214,11 @@
    "-fsanitize=address,leak",
    "-Wno-long-long",
    "-c",
-   "src/HTML/HTMLToken.cpp",
+   "src/Downloader/PageDownloader.cpp",
    "-o",
-   "hayeuyur/HTMLToken.o"
+   "hayeuyur/PageDownloader.o"
   ],
-  "file": "src/HTML/HTMLToken.cpp"
+  "file": "src/Downloader/PageDownloader.cpp"
  },
  {
   "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
@@ -231,44 +231,10 @@
    "-fsanitize=address,leak",
    "-Wno-long-long",
    "-c",
-   "src/HTML/HTMLTokenizer.cpp",
+   "src/FileManager/FileManager.cpp",
    "-o",
-   "hayeuyur/HTMLTokenizer.o"
+   "hayeuyur/FileManager.o"
   ],
-  "file": "src/HTML/HTMLTokenizer.cpp"
- },
- {
-  "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
-  "arguments": [
-   "clang++",
-   "-std=c++14",
-   "-Wall",
-   "-pedantic",
-   "-g",
-   "-fsanitize=address,leak",
-   "-Wno-long-long",
-   "-c",
-   "src/HTML/States/HTMLTokenizerState.cpp",
-   "-o",
-   "hayeuyur/HTMLTokenizerState.o"
-  ],
-  "file": "src/HTML/States/HTMLTokenizerState.cpp"
- },
- {
-  "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
-  "arguments": [
-   "clang++",
-   "-std=c++14",
-   "-Wall",
-   "-pedantic",
-   "-g",
-   "-fsanitize=address,leak",
-   "-Wno-long-long",
-   "-c",
-   "src/HTML/States/HTMLTagStartState.cpp",
-   "-o",
-   "hayeuyur/HTMLTagStartState.o"
-  ],
-  "file": "src/HTML/States/HTMLTagStartState.cpp"
+  "file": "src/FileManager/FileManager.cpp"
  }
 ]

@@ -1,10 +1,15 @@
 #include <iostream>
-//#include "HTML/HTMLTokenizer.hpp"
+#include "FileManager/FileManager.hpp"
 
 int main() {
- // HTMLTokenizer tokenizer;
+  FileManager manager;
 
- // tokenizer.parse("<!DOCTYPE html>");
-
+  std::string name = "Test, st";
+  try {
+    manager.createPageFolder(name);
+    manager.saveFile(name, "test/test/a/b/c/test.txt", "bla-bla-bla-bla-bla");
+  } catch (const FileManager::Exception& e) {
+    std::cout << e.what() << std::endl;
+  }
   return 0;
 }

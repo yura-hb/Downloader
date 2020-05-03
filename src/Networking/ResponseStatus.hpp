@@ -57,6 +57,8 @@ struct ResponseStatus {
     // Variables
     _ResponseStatusCode code = _ResponseStatusCode::BAD_REQUEST;
     int intCode = (int)_ResponseStatusCode::BAD_REQUEST;
+
+    ResponseStatus() = default;
     /**
      * Initialize ResponseStatus using first line of the responce message
      * The format of the responce is the next:
