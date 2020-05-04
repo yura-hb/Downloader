@@ -15,9 +15,8 @@ bool Attribute::consume(const Range& range, const EmitFunction& func) const  {
     // Skip whitespaces
     AbstractPattern::skipWhitespacesCharacters(tmpRange);
     tmp++;
-    std::cout << *tmp << std::endl;
     if (*tmp == '\'' || *tmp == '\"') {
-      auto quoteIndex = std::find(tmp, range.second, *tmp);
+      auto quoteIndex = std::find(tmp + 1, range.second, *tmp);
       func(std::pair<int, int>(tmp - range.first, quoteIndex - range.first));
       range.first = quoteIndex + 1;
       return true;
