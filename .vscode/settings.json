@@ -71,6 +71,7 @@
     "fstream": "cpp",
     "iomanip": "cpp",
     "list": "cpp",
-    "stack": "cpp"
+    "stack": "cpp",
+    "__functional_03": "cpp"
   }
 }

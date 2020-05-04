@@ -5,7 +5,6 @@ bool Attribute::consume(const Range& range, const EmitFunction& func) const  {
   Range tmpRange(tmp, range.second);
 
   if (begin == AbstractPattern::prefix(tmpRange)) {
-    std::cout << AbstractPattern::begin << std::endl;
     tmp += begin.size();
     // Skip whitespaces
     AbstractPattern::skipWhitespacesCharacters(tmpRange);

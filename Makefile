@@ -51,6 +51,7 @@ gen_ycm:
 
 clean:
 	rm -f $(PROGRAM_PATH) $(OUTPUT_PATH)/$(MODULES)
+	rm -rf $(PROGRAM_PATH)/*
 	rm -rf $(DOC_PATH)
 
 $(OUTPUT) : $(SRC)
