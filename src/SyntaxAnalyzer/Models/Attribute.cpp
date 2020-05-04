@@ -10,13 +10,12 @@ bool Attribute::consume(const Range& range, const EmitFunction& func) const  {
     // Skip whitespaces
     AbstractPattern::skipWhitespacesCharacters(tmpRange);
     // Check for =
-    std::cout << *tmp << (std::string(1, *tmp) == separator) << begin << "+" << AbstractPattern::separator << "+"  << end << std::endl;
     if (std::string(1, *tmp) != separator || separator == "")
       return false;
     // Skip whitespaces
     AbstractPattern::skipWhitespacesCharacters(tmpRange);
     tmp++;
-    std::cout << *tmp << " frfx" << std::endl;
+    std::cout << *tmp << std::endl;
     if (*tmp == '\'' || *tmp == '\"') {
       auto quoteIndex = std::find(tmp, range.second, *tmp);
       func(std::pair<int, int>(tmp - range.first, quoteIndex - range.first));
