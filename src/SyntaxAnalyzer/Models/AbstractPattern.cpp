@@ -8,7 +8,7 @@ void AbstractPattern::skipWhitespacesCharacters(const Range& range) const {
 }
 
 std::string AbstractPattern::prefix(const Range& range) const {
-  if (range.second - range.first > begin.size() && std::string(range.first, range.first + begin.size()) == begin)
+  if (range.second - range.first > (int)begin.size() && std::string(range.first, range.first + begin.size()) == begin)
     return begin;
   return "";
 }
