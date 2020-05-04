@@ -11,7 +11,7 @@ struct AbstractPattern {
     /**
      * Active search range
      */
-    using Range = std::pair<std::string::iterator&, const std::string::iterator&>;
+    using Range = std::pair<std::string::const_iterator&, const std::string::const_iterator&>;
     /**
      * Pair of indexes
      */
@@ -21,15 +21,17 @@ struct AbstractPattern {
      */
     using EmitFunction = std::function<void(IndexRange)>;
 
-    AbstractPattern(const std::string& begin, const std::string& end, const std::string& separator = "=") {}
+    AbstractPattern(const std::string& begin, const std::string& separator, const std::string& end):
+      begin(begin), separator(separator), end(end) {}
     /**
      * Consumes string from the current position and validates it with begin
      */
     virtual bool consume(const Range& range, const EmitFunction& func) const = 0;
-  protected:
-    const::std::string begin;
-    const::std::string separator;
-    const::std::string end;
+    virtual ~AbstractPattern() = default;
+   protected:
+    const std::string begin;
+    const std::string separator;
+    const std::string end;
 
     void skipWhitespacesCharacters(const Range& range) const;
     /**

@@ -11,7 +11,7 @@
  */
 struct Comment: public AbstractPattern {
   public:
-    Comment(std::string begin, std::string end, std::string separator = ""): AbstractPattern(begin, end, separator) {}
+    Comment(const std::string& begin, const std::string& separator, const std::string& end): AbstractPattern(begin, separator, end) {}
 
     bool consume(const Range& range, const EmitFunction& func) const override;
   private:
