@@ -2,7 +2,7 @@
 
 CXX = clang++
 LD = g++
-FLAGS = -std=c++14 -Wall -pedantic -g -fsanitize=address,leak -Wno-long-long
+FLAGS = -std=c++14 -Wall -pedantic -g -fsanitize=address -Wno-long-long
 
 SRC_PATH = src
 OUTPUT_PATH = hayeuyur
@@ -22,7 +22,8 @@ PROGRAM_PATH = $(OUTPUT_PATH)/$(PROGRAM_NAME)
 DOC_PATH = doc
 DOXYGEN_FILE = doxygex.dox
 
-MODULES = $(OUTPUT_PATH)/main.o $(OUTPUT_PATH)/Socket.o $(OUTPUT_PATH)/HTTPClient.o \
+MODULES = $(OUTPUT_PATH)/main.o $(OUTPUT_PATH)/Exception.o \
+    $(OUTPUT_PATH)/Socket.o $(OUTPUT_PATH)/HTTPClient.o \
 	  $(OUTPUT_PATH)/Receiver.o $(OUTPUT_PATH)/Request.o $(OUTPUT_PATH)/URL.o \
 	  $(OUTPUT_PATH)/Header.o $(OUTPUT_PATH)/RequestMethod.o $(OUTPUT_PATH)/Version.o \
 	  $(OUTPUT_PATH)/HTTPParser.o $(OUTPUT_PATH)/StringConvertible.o $(OUTPUT_PATH)/ResponseStatus.o \
@@ -37,7 +38,7 @@ compile: $(MODULES)
 	$(CXX) $(FLAGS) -o $(PROGRAM_PATH) $^
 
 run: compile
-	ASAN_OPTIONS=detect_leaks=1  ./$(PROGRAM_PATH) 2>&1
+	./$(PROGRAM_PATH) 2>&1
 
 debug: compile
 	gdb ./$(PROGRAM_PATH)

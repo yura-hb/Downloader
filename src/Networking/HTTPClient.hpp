@@ -6,7 +6,7 @@
 #include "Receiver.hpp"
 #include "URL.hpp"
 #include "Request.hpp"
-#include "../HTTPParser.hpp"
+#include "HTTPParser.hpp"
 #include "ResponseStatus.hpp"
 
 struct Response {
@@ -23,6 +23,7 @@ class HTTPClient {
     HTTPClient(std::string port = "80") : port(port) {}
     // TODO: - add exception error handling
     bool loadPage(const std::string &url, Response &response) const;
+    bool loadPage(const URL& url, Response& response) const;
   private:
     std::string port = "80";
     /**
@@ -45,10 +46,6 @@ class HTTPClient {
      * Make basic request
      */
     Request makeRequest(const URL& url) const;
-    /**
-     * Help method to normalise newlines
-     */
-    void preprocessResponse(std::string& str) const;
 };
 
 

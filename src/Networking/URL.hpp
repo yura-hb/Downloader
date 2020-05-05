@@ -22,6 +22,7 @@ struct URL {
   std::string parameters = "";
 
   URL(const std::string &url);
+  ~URL() = default;
   /**
    * Convert url to the standart request format
    */
@@ -41,7 +42,7 @@ struct URL {
      *  5. Parameters
      *
      */
-    const std::string regexString = "^(http\\:\\/\\/|https\\:\\/\\/|ftp\\:\\/\\/)?([a-z0-9\\.]+)(\\:[0-9]+)?(\\/[^?]+)?[\\?]?(.*)?$";
+    static const std::string regexString;
 
     void parse(const std::string &str);
 };

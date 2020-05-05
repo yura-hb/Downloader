@@ -6,31 +6,26 @@
 #include <vector>
 #include <map>
 #include <sstream>
-#include "Networking/ResponseStatus.hpp"
-#include "Networking/Header.hpp"
+#include "ResponseStatus.hpp"
+#include "Header.hpp"
 
 class Parser {
   public:
     /**
      * Parsers response message and extracts first line of the response
-     *
-     * @param[in] response - full response from the server
      */
     static const ResponseStatus parseStatus(const std::string& response);
     /**
      * Parsers headers of messages
-     *
-     * @param[in] response - full response from the server
      */
     static const std::vector<Header> parse(const std::string& response);
-
     /**
-     * Parsers headers of messages
-     *
-     * @param[in] response - full response from the server
+     * Cuts the body from the message
      */
-    //static const HTMLElement parseHtml(const std::string &response);
+    static const std::string body(const std::string& response);
   private:
+    static const std::string separator;
+
     static const std::string getHeader(const std::string &response);
 
 };

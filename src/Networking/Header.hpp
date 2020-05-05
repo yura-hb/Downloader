@@ -6,6 +6,7 @@
 #include <vector>
 #include <algorithm>
 #include "../Templates/StringConvertible.hpp"
+#include "../Templates/Exception.hpp"
 
 struct Header: public StringConvertible {
   public:

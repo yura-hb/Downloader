@@ -11,20 +11,10 @@
 #include <list>
 #include <algorithm>
 #include "Models/Reference.hpp"
+#include "../Templates/Exception.hpp"
 
 class FileManager {
   public:
-    // Nested
-    class Exception {
-      public:
-        Exception(const std::string& object): object(object) {}
-
-        const char * what() const throw() {
-          return object.c_str();
-        }
-      private:
-        const std::string object;
-    };
     // Constructor
     FileManager() = default;
     /**

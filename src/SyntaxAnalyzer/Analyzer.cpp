@@ -7,7 +7,7 @@ std::vector<Reference> Analyzer::loadReferences(const std::string& str) const {
   AbstractPattern::Range range(begin, end);
   AbstractPattern::EmitFunction function = std::function<void(AbstractPattern::IndexRange)>(
     [range](const AbstractPattern::IndexRange& relIndexRange) {
-    std::cout << std::string(range.first + relIndexRange.first, range.first + relIndexRange.second) << std::endl;
+    //std::cout << std::string(range.first + relIndexRange.first, range.first + relIndexRange.second) << std::endl;
   });
 
   while (range.first != range.second) {

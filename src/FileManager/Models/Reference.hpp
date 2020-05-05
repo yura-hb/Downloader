@@ -8,6 +8,7 @@
 #include <list>
 #include <functional>
 #include "../../Networking/URL.hpp"
+#include "../../Templates/Exception.hpp"
 /**
  *  In HTML and CSS there are several types of references:
  *    1. External link - link to the external source, which contains HTTP and HTTPs
@@ -19,17 +20,6 @@
  */
 struct Reference {
   public:
-    // Nested
-    class Exception {
-      public:
-        Exception(const std::string& object): object(object) {}
-
-        const char * what() const throw() {
-          return object.c_str();
-        }
-      private:
-        const std::string object;
-    };
     enum class Type {
       EXTERNAL_LINK = 0,
       HYPER_LINK
@@ -37,6 +27,8 @@ struct Reference {
 
     Type type;
     std::string path;
+
+    Reference() : type(Type::HYPER_LINK), path("/") {}
     /**
      * Create a reference, depending on the type of the reference. Then simplifies it
      *
@@ -49,6 +41,8 @@ struct Reference {
       if (shouldSimplify)
         simplify();
     }
+    Reference(const std::string& path, Type type):
+      type(type), path(path) {}
     ~Reference() = default;
     /**
      * Validates, if the item is directory

@@ -1,25 +1,26 @@
 #include "HTTPClient.hpp"
 
-bool HTTPClient::loadPage(const std::string &url,
-                          Response& response) const {
-  URL link = convertLink(url);
-
-  Request request = makeRequest(link);
+bool HTTPClient::loadPage(const URL& url, Response& response) const {
+  Request request = makeRequest(url);
 
   std::string data = "";
 
   if (!performRequest(request, data))
     return false;
 
-  preprocessResponse(data);
-
   try {
-    response = { Parser::parseStatus(data), Parser::parse(data), data };
-  } catch (std::exception &exc) {
+    response = { Parser::parseStatus(data), Parser::parse(data), Parser::body(data) };
+  } catch (const Exception &exc) {
     std::cerr << exc.what() << std::endl;
   }
 
   return true;
+}
+
+bool HTTPClient::loadPage(const std::string &url,
+                          Response& response) const {
+  URL link = convertLink(url);
+  return loadPage(link, response);
 }
 
 bool HTTPClient::performRequest(Request request, std::string &result) const {
@@ -56,8 +57,4 @@ Request HTTPClient::makeRequest(const URL& url) const {
   std::vector<Header> headers = { Header(Header::_Header::HOST, url.domain), Header(Header::_Header::CONNECTION, "Close") };
 
   return Request(url, method, version, headers);
-}
-
-void HTTPClient::preprocessResponse(std::string& str) const {
-  str.erase(std::remove(str.begin(), str.end(), '\r'));
 }

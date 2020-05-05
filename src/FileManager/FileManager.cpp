@@ -58,8 +58,6 @@ void FileManager::createRelativePathDirectories(const Reference& reference) cons
       if (comparisonResult && item.second == DT_DIR) {
         didFoundFile = true;
         break;
-      } else if (comparisonResult) {
-        throw Exception("Can't create folder, as file with the directory name exists");
       }
     }
 
@@ -79,6 +77,5 @@ void FileManager::openDirectory(const Reference& reference, DIR *& dir) const {
 
 void FileManager::clearDirectory(const Reference& reference) const {
   std::string command = "rm -r '" + reference.path + "'/*";
-  std::cout << command;
   system(command.c_str());
 }

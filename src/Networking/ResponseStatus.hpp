@@ -7,8 +7,9 @@
 #include <vector>
 #include <iterator>
 #include <algorithm>
+#include "../Templates/StringConvertible.hpp"
 
-struct ResponseStatus {
+struct ResponseStatus: public StringConvertible {
   public:
     enum class _ResponseStatusCode {
       CONTINUE = 100,
@@ -73,11 +74,15 @@ struct ResponseStatus {
     /**
      * !isFailed()
      */
-    bool isSucceessful() const;
+    bool isSuccessful() const;
     /**
      * If status is 3xx
      */
     bool isRedirection() const;
+    /**
+     * Converts to string
+     */
+    std::string description() const override;
 };
 
 #endif
