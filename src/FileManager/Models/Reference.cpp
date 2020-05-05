@@ -1,29 +1,30 @@
 #include "Reference.hpp"
 
-bool Reference::isDirectory() {
+bool Reference::isDirectory() const{
   return type == Type::HYPER_LINK && path.at(path.size() - 1) == '/';
 }
 
-bool Reference::isRelative() {
+bool Reference::isRelative() const {
   return *path.begin() == '/';
 }
 
-Reference Reference::addAbsoleteReference(const std::string& str) {
+Reference Reference::addAbsoleteReference(const std::string& str) const {
   if (type == Type::EXTERNAL_LINK)
     throw Exception("Only can apply on the local references");
   return Reference(str + '/' + path);
 }
 
-Reference Reference::addPath(const std::string& str) {
+Reference Reference::addPath(const std::string& str) const {
   if (type == Type::EXTERNAL_LINK)
     throw Exception("Only can apply on the local references");
 
   return Reference(path + '/' + str);
 }
 
-std::list<std::string> Reference::loadComponents() {
-  if (type != Type::HYPER_LINK)
+std::list<std::string> Reference::loadComponents() const {
+  if (type == Type::EXTERNAL_LINK)
     return {};
+
   std::list<std::string> list;
 
   auto begin = path.begin();
@@ -41,11 +42,7 @@ std::list<std::string> Reference::loadComponents() {
 void Reference::simplify() {
   std::list<std::string> components = loadComponents();
 
-  std::cout << components.size() << std::endl;
-  for (const auto& item: components)
-    std::cout << item << std::endl;
-
-  auto accumulator = [this](std::string result, std::string& component) {
+  auto accumulator = [this, components](std::string result, std::string& component) {
     if (component == "" || component == ".")
       return result;
 
@@ -56,19 +53,23 @@ void Reference::simplify() {
         int offset = result.rend() - iter;
         return std::string(result.begin(), result.begin() + offset);
       }
+      return std::string();
     }
-
     if (result == "/" && isRelative())
       return std::move(result) + component;
 
-    return std::move(result) + "/" + component;
+    return std::move(result) + component + "/";
   };
 
+  bool isDirectoryPath = isDirectory();
   std::string prefix = isRelative() ? "/" : "";
-  path = std::accumulate(components.begin(), components.end(), prefix, accumulator);
+  path = prefix + std::accumulate(components.begin(), components.end(), std::string(), accumulator);
+
+  if (path.at(path.size() - 1) == '/')
+    path.at(path.size() - 1) = isDirectoryPath ? '/' : ' ';
 }
 
 std::ostream& operator<< (std::ostream& out, const Reference& ref) {
-  out << ref.path << " " << "Type: " << (int)ref.type << std::endl;
+  out << ref.path << std::endl;
   return out;
 }

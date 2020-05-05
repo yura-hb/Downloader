@@ -4,7 +4,7 @@ void PageDownloader::downloadPage(const std::string& url) const {
   URL uri(url);
   //  - Create folder
   try {
-    fileManager.createPageFolder(uri.domain);
+    fileManager.createPageFolder(Reference(uri.domain));
   } catch (FileManager::Exception& exception) {
     // TODO: - Ask user, if he wants to continue
     std::cerr << exception.what() << std::endl;
@@ -18,6 +18,7 @@ void PageDownloader::downloadPage(const std::string& url) const {
     return;
   }
 
+  std::cout << uri.query << std::endl;
 }
 
 std::vector<std::string> PageDownloader::processResponse(const Response& response) {

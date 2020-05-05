@@ -10,6 +10,7 @@
 #include <vector>
 #include <list>
 #include <algorithm>
+#include "Models/Reference.hpp"
 
 class FileManager {
   public:
@@ -29,7 +30,7 @@ class FileManager {
     /**
      * Creates folder at the current directory with the specific name and returns the full path to the folder
      */
-    void createPageFolder(const std::string& name) const;
+    void createPageFolder(const Reference& reference) const;
     /**
      * Description:
      *  Write file to the specific directory at the relative path in the folder with data.
@@ -45,43 +46,31 @@ class FileManager {
      *  - In case if folder is not created throw exception
      *  - In case if any error occurs during write operation throws exceptions
      */
-    void saveFile(const std::string& folderName, const std::string& relativePath, const std::string& data) const;
+    void saveFile(const Reference& reference, const std::string& data) const;
     /**
      *  Clears the directory
      */
     // TODO: Ask user for permission
-    void clearDirectory(const std::string& directory) const;
+    void clearDirectory(const Reference& reference) const;
   private:
     // Disable copy constructor
     FileManager(FileManager &manager) {};
     FileManager& operator = (const FileManager& manager) { return *this; };
     /**
-     *  Creates subdirectories, if they doesn't exist in the current directory.
-     *  Supports '.' and '..' path components.
-     *
-     *  Throws:
-     *    - In case, if there is file with the name of the subdirectory
+     *  Creates subdirectories, if they doesn't exist in the current directory
      */
-    void createRelativePathDirectories(const std::string& path) const;
+    void createRelativePathDirectories(const Reference& reference) const;
     /**
      * List the files in the directory
      */
-    std::vector<std::pair<std::string, uint8_t>> getFolderFiles(const std::string& directory) const;
-    /**
-     *  Split the path by the '/'
-     */
-    std::list<std::string> splitPath(const std::string& path) const;
-    /**
-     *  Simplify the path by removing extra '/' and '.' and applying actions on the '..'
-     */
-    void simplifyPath(std::list<std::string>& components) const;
+    std::vector<std::pair<std::string, uint8_t>> getFolderFiles(const Reference& reference) const;
     /**
      * Opens the specified directory.
      *
      * Throws:
      *  - In case, if the directory doesn't exist
      */
-    void openDirectory(const std::string& directory, DIR *& dir) const;
+    void openDirectory(const Reference& reference, DIR *& dir) const;
 };
 
 #endif

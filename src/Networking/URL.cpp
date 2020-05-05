@@ -28,7 +28,10 @@ std::string URL::requestUrl() const {
 }
 
 bool URL::isValid() const {
-  return protocol != Protocol::undefined && !domain.empty() && domain.find(".") != domain.npos;
+  return protocol != Protocol::undefined &&
+    !domain.empty() &&
+    domain.find(".") != domain.npos &&
+    std::any_of(domain.begin(), domain.end(), [](char c) { return isalpha(c); });
 }
 
 void URL::parse(const std::string &url) {

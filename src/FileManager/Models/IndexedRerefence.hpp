@@ -6,10 +6,11 @@
 /**
  * Wrapper around the Reference, which defines index in the some string
  */
-struct IndexedReference {
-
-
-  
+struct IndexedReference: public Reference {
+  public:
+    IndexedReference(const std::string& path, const std::pair<int, int>& range): Reference(path), range(range) {}
+  protected:
+    std::pair<int, int> range;
 };
 
 #endif
