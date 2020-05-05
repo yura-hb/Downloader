@@ -7,7 +7,7 @@
 int main() {
 
   PageDownloader downloader;
-  downloader.mirror("www.oustranka.cz/fvnfj");
+  downloader.mirror("www.oustranka.cz");
 
 
 /*

@@ -2,12 +2,37 @@
 
 void PageDownloader::mirror(const std::string& url) {
   URL uri(url);
-  // Don't download file, in case if the
+
+  // Don't download file, in case, if
   if (!prepare(uri) || loadedReferences.find(uri.query) != loadedReferences.end())
     return;
 
   Response response;
 
+  if (client.loadPage(uri, response) && response.status.isSuccessful()) {
+    uri.query += "index.html";
+    saveFile(uri, response);
+
+    HTMLAnalyzer analyzer;
+
+    std::vector<Reference> references = analyzer.loadReferences(response.body);
+
+    for (const auto& ref: references)  {
+      if (ref.type == Reference::Type::HYPER_LINK) {
+        URL componentUri(ref.path);
+
+        std::cout << componentUri.requestUrl() << std::endl;
+
+        if (loadedReferences.find(componentUri.query) == loadedReferences.end() &&
+            client.loadPage(componentUri, response) &&
+            response.status.isSuccessful()) {
+
+          saveFile(componentUri, response);
+        }
+      }
+    }
+    return;
+  }
 }
 
 bool PageDownloader::prepare(const URL& url) {
@@ -38,9 +63,9 @@ void PageDownloader::fetchRobotsFile(const URL& url) {
   requestUri.query = robotsFileQuery;
   requestUri.parameters = "";
   Response response;
-
-  if (client.loadPage(url, response) && response.status.isSuccessful()) {
-    saveFile(url, response);
+  //  TODO: - Add redirection
+  if (client.loadPage(requestUri, response) && response.status.isSuccessful()) {
+    saveFile(requestUri, response);
     return;
   }
 
@@ -49,7 +74,7 @@ void PageDownloader::fetchRobotsFile(const URL& url) {
 
 void PageDownloader::saveFile(const URL& url, const Response& response) {
   fileManager.saveFile(getLocalReference(url), response.body);
-  loadedReferences.insert(url.query, getContentType(response));
+  loadedReferences.insert({ url.query, getContentType(response) });
 }
 
 Reference PageDownloader::getLocalReference(const URL& url) const {

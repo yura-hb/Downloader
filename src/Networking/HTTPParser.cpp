@@ -7,7 +7,7 @@ const ResponseStatus Parser::parseStatus(const std::string& response) {
   std::string line = "";
 
   if (!getline(splitStream, line))
-    throw "Incorrect response";
+    throw Exception("Incorrect response");
 
   return ResponseStatus(line);
 }
@@ -20,11 +20,11 @@ const std::vector<Header> Parser::parse(const std::string& response) {
 
   while (getline(splitStream, line)) {
     try {
-      std::cout << line << std::endl;
+     // std::cout << line << std::endl << std::endl;
       Header header(line);
       components.push_back(header);
     } catch (const std::exception& exc) {
-      std::cerr << "Parser: error " << exc.what() << " " << line << std::endl;
+     // std::cerr << "Parser: error " << exc.what() << "[" << line << "]" << std::endl;
     } catch (...) {
       continue;
     }

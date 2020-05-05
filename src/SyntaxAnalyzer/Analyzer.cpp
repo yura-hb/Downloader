@@ -4,10 +4,12 @@ std::vector<Reference> Analyzer::loadReferences(const std::string& str) const {
   auto begin = str.begin();
   auto end = str.end();
 
+  std::vector<Reference> result = {};
+
   AbstractPattern::Range range(begin, end);
   AbstractPattern::EmitFunction function = std::function<void(AbstractPattern::IndexRange)>(
-    [range](const AbstractPattern::IndexRange& relIndexRange) {
-    //std::cout << std::string(range.first + relIndexRange.first, range.first + relIndexRange.second) << std::endl;
+    [&]( const AbstractPattern::IndexRange& relIndexRange) {
+    result.push_back(Reference(std::string(range.first + relIndexRange.first, range.first + relIndexRange.second)));
   });
 
   while (range.first != range.second) {
@@ -18,7 +20,7 @@ std::vector<Reference> Analyzer::loadReferences(const std::string& str) const {
     }
     range.first++;
   }
-  return {};
+  return result;
 }
 
 std::string Analyzer::convertToLocalReferences(std::string& str, const std::vector<Reference>& references) const {

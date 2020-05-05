@@ -11,6 +11,7 @@
 #include "../Networking/URL.hpp"
 #include "../Networking/HTTPClient.hpp"
 #include "../FileManager/FileManager.hpp"
+#include "../SyntaxAnalyzer/HTMLAnalyzer.hpp"
 
 /**
  * Base class to download html page and all it underlying resources.
@@ -50,7 +51,7 @@ class PageDownloader {
     HTTPClient client;
     FileManager fileManager;
 
-    std::queue<std::string> requests;
+    std::queue<Reference> requests;
     /**
      * Set of all downloaded references
      */
@@ -63,14 +64,14 @@ class PageDownloader {
     bool prepare(const URL& url);
 
     void createSaveFolder(const URL& url);
-    
+
     void saveFile(const URL& url, const Response& response);
 
     void fetchRobotsFile(const URL& url);
 
     Reference getLocalReference(const URL& url) const;
-    // Helpers
 
+    // Helpers
     std::string getContentType(const Response& response) const;
   private:
     const std::string robotsFileQuery = "/robots.txt";
