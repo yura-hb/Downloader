@@ -3,7 +3,7 @@
 void Receiver::receivePage(std::string &str, const Socket &sock) {
   uint32_t receivedSize = 0;
 
-	  char *buffer = new char[bufSize + 1];
+	char *buffer = new char[bufSize + 1];
 
   memset(buffer, 0, bufSize + 1);
 

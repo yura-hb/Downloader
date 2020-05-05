@@ -1,6 +1,7 @@
 #include <iostream>
 #include "FileManager/FileManager.hpp"
 #include "SyntaxAnalyzer/HTMLAnalyzer.hpp"
+#include "FileManager/Models/Reference.hpp"
 
 int main() {
   FileManager manager;
@@ -12,11 +13,12 @@ int main() {
   std::string str((std::istreambuf_iterator<char>(stream)),
                   std::istreambuf_iterator<char>());
 
-  //std::cout << str;
-
   HTMLAnalyzer a;
 
   a.loadReferences(str);
+
+  Reference ref("../../../..//v/a.txt");
+  std::cout << ref;
 
   try {
    // manager.createPageFolder(name);

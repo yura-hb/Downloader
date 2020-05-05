@@ -7,7 +7,7 @@
 #include "Models/Comment.hpp"
 #include "Models/AbstractPattern.hpp"
 #include "Models/Attribute.hpp"
-#include "Models/Reference.hpp"
+#include "../FileManager/Models/Reference.hpp"
 
 class Analyzer {
   public:

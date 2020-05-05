@@ -13,6 +13,7 @@ NETWORKING_SRC = $(SRC_PATH)/Networking/%.cpp
 TEMPLATES_SRC = $(SRC_PATH)/Templates/%.cpp
 DOWNLOADER_SRC = $(SRC_PATH)/Downloader/%.cpp
 FILE_MANAGER_SRC = $(SRC_PATH)/FileManager/%.cpp
+FILE_MANAGER_MODELS_SRC = $(SRC_PATH)/FileManager/Models/%.cpp
 SYNTAX_ANALYZER_SRC = $(SRC_PATH)/SyntaxAnalyzer/%.cpp
 SYNTAX_ANALYZER_MODELS_SRC = $(SRC_PATH)/SyntaxAnalyzer/Models/%.cpp
 
@@ -29,8 +30,6 @@ MODULES = $(OUTPUT_PATH)/main.o $(OUTPUT_PATH)/Socket.o $(OUTPUT_PATH)/HTTPClien
 		$(OUTPUT_PATH)/AbstractPattern.o $(OUTPUT_PATH)/Attribute.o $(OUTPUT_PATH)/Comment.o \
 		$(OUTPUT_PATH)/Reference.o $(OUTPUT_PATH)/Analyzer.o \
 		$(OUTPUT_PATH)/CSSAnalyzer.o $(OUTPUT_PATH)/HTMLAnalyzer.o
-	#	$(OUTPUT_PATH)/HTMLToken.o $(OUTPUT_PATH)/HTMLTokenizerState.o $(OUTPUT_PATH)/HTMLTokenizer.o \
-	#	$(OUTPUT_PATH)/HTMLTokenizerContext.o $(OUTPUT_PATH)/HTMLTagStartState.o
 
 all: compile
 
@@ -50,9 +49,7 @@ gen_ycm:
 	compiledb make
 
 clean:
-	rm -f $(PROGRAM_PATH) $(OUTPUT_PATH)/$(MODULES)
-	rm -rf $(PROGRAM_PATH)/*
-	rm -rf $(DOC_PATH)
+	rm -rf $(OUTPUT_PATH)/*
 
 $(OUTPUT) : $(SRC)
 	$(CXX) $(FLAGS) -c $^ -o $@
@@ -67,6 +64,9 @@ $(OUTPUT) : $(DOWNLOADER_SRC)
 	$(CXX) $(FLAGS) -c $^ -o $@
 
 $(OUTPUT) : $(FILE_MANAGER_SRC)
+	$(CXX) $(FLAGS) -c $^ -o $@
+
+$(OUTPUT) : $(FILE_MANAGER_MODELS_SRC)
 	$(CXX) $(FLAGS) -c $^ -o $@
 
 $(OUTPUT) : $(SYNTAX_ANALYZER_SRC)

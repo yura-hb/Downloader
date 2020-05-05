@@ -16,6 +16,7 @@ bool Attribute::consume(const Range& range, const EmitFunction& func) const  {
     tmp++;
     if (*tmp == '\'' || *tmp == '\"') {
       auto quoteIndex = std::find(tmp + 1, range.second, *tmp);
+      tmp++;
       func(std::pair<int, int>(tmp - range.first, quoteIndex - range.first));
       range.first = quoteIndex + 1;
       return true;
