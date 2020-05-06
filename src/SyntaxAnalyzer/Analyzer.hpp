@@ -16,7 +16,7 @@ class Analyzer {
     /**
      * Consumes the str and returns the founded references
      */
-    virtual std::vector<Reference> loadReferences(const std::string& str) const;
+    virtual std::vector<std::string> loadReferences(const std::string& str) const;
     /**
      * Converts the references to files pathes on the local disk
      */

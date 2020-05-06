@@ -10,7 +10,7 @@
 #include <vector>
 #include <list>
 #include <algorithm>
-#include "Models/Reference.hpp"
+#include "Models/LocalReference.hpp"
 #include "../Templates/Exception.hpp"
 
 class FileManager {
@@ -20,7 +20,7 @@ class FileManager {
     /**
      * Creates folder at the current directory with the specific name and returns the full path to the folder
      */
-    void createPageFolder(const Reference& reference) const;
+    void createPageFolder(const LocalReference& reference) const;
     /**
      * Description:
      *  Write file to the specific directory at the relative path in the folder with data.
@@ -36,12 +36,12 @@ class FileManager {
      *  - In case if folder is not created throw exception
      *  - In case if any error occurs during write operation throws exceptions
      */
-    void saveFile(const Reference& reference, const std::string& data) const;
+    void saveFile(const LocalReference& reference, const std::string& data) const;
     /**
      *  Clears the directory
      */
     // TODO: Ask user for permission
-    void clearDirectory(const Reference& reference) const;
+    void clearDirectory(const LocalReference& reference) const;
   private:
     // Disable copy constructor
     FileManager(FileManager &manager) {};
@@ -49,18 +49,18 @@ class FileManager {
     /**
      *  Creates subdirectories, if they doesn't exist in the current directory
      */
-    void createRelativePathDirectories(const Reference& reference) const;
+    void createRelativePathDirectories(const LocalReference& reference) const;
     /**
      * List the files in the directory
      */
-    std::vector<std::pair<std::string, uint8_t>> getFolderFiles(const Reference& reference) const;
+    std::vector<std::pair<std::string, uint8_t>> getFolderFiles(const LocalReference& reference) const;
     /**
      * Opens the specified directory.
      *
      * Throws:
      *  - In case, if the directory doesn't exist
      */
-    void openDirectory(const Reference& reference, DIR *& dir) const;
+    void openDirectory(const LocalReference& reference, DIR *& dir) const;
 };
 
 #endif

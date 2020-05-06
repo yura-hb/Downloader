@@ -1,9 +1,9 @@
 #include "FileManager.hpp"
 
-void FileManager::createPageFolder(const Reference& reference) const {
+void FileManager::createPageFolder(const LocalReference& reference) const {
   int result;
   // TODO: - Replace cerr with the specified logger
-  if ((result = mkdir(reference.path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)) != 0)
+  if ((result = mkdir(reference.getPath().c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)) != 0)
     std::cerr << "Fail during creating directory" << std::endl;
   // Try to open directory with the name
   DIR *dir;
@@ -11,13 +11,13 @@ void FileManager::createPageFolder(const Reference& reference) const {
   closedir(dir);
 }
 
-void FileManager::saveFile(const Reference& reference, const std::string& data) const {
-  createRelativePathDirectories(reference.path);
-  std::ofstream out(reference.path, std::ios::out | std::ios::trunc);
+void FileManager::saveFile(const LocalReference& reference, const std::string& data) const {
+  createRelativePathDirectories(reference.getPath());
+  std::ofstream out(reference.getPath(), std::ios::out | std::ios::trunc);
   out << data;
 }
 
-std::vector<std::pair<std::string, uint8_t>> FileManager::getFolderFiles(const Reference& reference) const {
+std::vector<std::pair<std::string, uint8_t>> FileManager::getFolderFiles(const LocalReference& reference) const {
   DIR *dir;
   openDirectory(reference, dir);
 
@@ -34,9 +34,9 @@ std::vector<std::pair<std::string, uint8_t>> FileManager::getFolderFiles(const R
   return result;
 }
 
-void FileManager::createRelativePathDirectories(const Reference& reference) const {
+void FileManager::createRelativePathDirectories(const LocalReference& reference) const {
   std::list<std::string> list = reference.loadComponents();
-  // The base folder is already created and the last object of the path is string
+  // The base folder is already created and the last object of the getPath() is string
   auto begin = list.begin();
   auto end = list.end();
   begin++; end--;
@@ -48,7 +48,7 @@ void FileManager::createRelativePathDirectories(const Reference& reference) cons
       path += *it + "/";
 
     // Load files from the folder
-    std::vector<std::pair<std::string, uint8_t>> items = getFolderFiles(Reference(path));
+    std::vector<std::pair<std::string, uint8_t>> items = getFolderFiles(LocalReference(path));
 
     bool didFoundFile = false;
 
@@ -68,14 +68,14 @@ void FileManager::createRelativePathDirectories(const Reference& reference) cons
   }
 }
 
-void FileManager::openDirectory(const Reference& reference, DIR *& dir) const {
-  dir = opendir(reference.path.c_str());
+void FileManager::openDirectory(const LocalReference& reference, DIR *& dir) const {
+  dir = opendir(reference.getPath().c_str());
 
   if (dir == nullptr)
     throw Exception("Directory doesn't exist");
 }
 
-void FileManager::clearDirectory(const Reference& reference) const {
-  std::string command = "rm -r '" + reference.path + "'/*";
+void FileManager::clearDirectory(const LocalReference& reference) const {
+  std::string command = "rm -r '" + reference.getPath() + "'/*";
   system(command.c_str());
 }

@@ -9,7 +9,7 @@ bool HTTPClient::loadPage(const URL& url, Response& response) const {
     return false;
 
   try {
-    response = { Parser::parseStatus(data), Parser::parse(data), Parser::body(data) };
+    response = { url, Parser::parseStatus(data), Parser::parse(data), Parser::body(data) };
   } catch (const Exception &exc) {
     std::cerr << exc.what() << std::endl;
   }

@@ -26,54 +26,32 @@ struct Reference {
     };
 
     Type type;
-    std::string path;
 
-    Reference() : type(Type::HYPER_LINK), path("/") {}
-    /**
-     * Create a reference, depending on the type of the reference. Then simplifies it
-     *
-     * @param[in] url - link from analyzer
-     * @param[in] tuple of indexes in the original html
-     */
-    Reference(const std::string& path, bool shouldSimplify = false):
-      type(URL(path).isValid() ? Type::EXTERNAL_LINK : Type::HYPER_LINK),
-      path(path) {
-      if (shouldSimplify)
-        simplify();
-    }
-    Reference(const std::string& path, Type type):
-      type(type), path(path) {}
-    ~Reference() = default;
+    Reference() = default;
+    Reference(const Type type): type(type) {}
+    virtual ~Reference() = default;
     /**
      * Validates, if the item is directory
      */
-    bool isDirectory() const;
+    virtual bool isDirectory() const = 0;
     /**
      * Validates, if the directory is relative
      */
-    bool isRelative() const;
+    virtual bool isRelative() const = 0;
     /**
      * Add reference from the left.
-     *
-     * Throws:
-     *   - In case if the called on the External link
      */
-    Reference addAbsoleteReference(const std::string& str) const;
+    virtual std::unique_ptr<Reference> addAbsoleteReference(const std::string& str) const = 0;
     /**
      * Add reference from the right.
-     *
-     * Throws:
-     *   - In case if the called on the External link
      */
-    Reference addPath(const std::string& str) const;
+    virtual std::unique_ptr<Reference> addPath(const std::string& str) const = 0;
     /**
-     * Split string on the list of subpathes
+     * Create request URL
      */
-    std::list<std::string> loadComponents() const;
-
-    friend std::ostream& operator<< (std::ostream& out, const Reference& ref);
-  private:
-    void simplify();
+    virtual std::string requestUrl(const std::string& domain) const = 0;
+  protected:
+    std::string path;
 };
 
 #endif

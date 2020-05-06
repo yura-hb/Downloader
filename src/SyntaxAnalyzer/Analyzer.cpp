@@ -1,15 +1,15 @@
 #include "Analyzer.hpp"
 
-std::vector<Reference> Analyzer::loadReferences(const std::string& str) const {
+std::vector<std::string> Analyzer::loadReferences(const std::string& str) const {
   auto begin = str.begin();
   auto end = str.end();
 
-  std::vector<Reference> result = {};
+  std::vector<std::string> result = {};
 
   AbstractPattern::Range range(begin, end);
   AbstractPattern::EmitFunction function = std::function<void(AbstractPattern::IndexRange)>(
     [&]( const AbstractPattern::IndexRange& relIndexRange) {
-    result.push_back(Reference(std::string(range.first + relIndexRange.first, range.first + relIndexRange.second)));
+    result.push_back(std::string(range.first + relIndexRange.first, range.first + relIndexRange.second));
   });
 
   while (range.first != range.second) {

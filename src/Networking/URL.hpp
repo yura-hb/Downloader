@@ -21,6 +21,7 @@ struct URL {
   std::string query = "";
   std::string parameters = "";
 
+  URL() = default;
   URL(const std::string &url);
   ~URL() = default;
   /**

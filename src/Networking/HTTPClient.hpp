@@ -12,9 +12,18 @@
 struct Response {
   Response() = default;
 
+  URL url;
   ResponseStatus status;
   std::vector<Header> headers;
   std::string body;
+
+  std::string loadHeader(const Header::_Header& type) const {
+    auto result = std::find_if(headers.begin(), headers.end(), [type](const Header& header) {
+      return header.header == type;
+    });
+
+    return result == headers.end() ? "" : result -> parameters;
+  }
 };
 
 class HTTPClient {

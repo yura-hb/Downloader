@@ -1,17 +1,20 @@
 #ifndef __PAGE_DOWNLOADER__
 #define __PAGE_DOWNLOADER__
 
-#include <iostream>
 #include <vector>
 #include <exception>
 #include <set>
 #include <unordered_map>
 #include <algorithm>
 #include <queue>
+
 #include "../Networking/URL.hpp"
 #include "../Networking/HTTPClient.hpp"
-#include "../FileManager/FileManager.hpp"
+
 #include "../SyntaxAnalyzer/HTMLAnalyzer.hpp"
+
+#include "../FileManager/FileManager.hpp"
+#include "../FileManager/Models/ReferenceConverter.hpp"
 
 /**
  * Base class to download html page and all it underlying resources.
@@ -44,14 +47,15 @@ class PageDownloader {
     virtual ~PageDownloader() {};
 
     virtual void mirror(const std::string& url);
-
   protected:
-    Reference saveFolderReference;
-    // Clients
+    /**
+     * This is load domain, in case, if during the recursive load, the downloader
+     * finds the reference, which doesn't have base domain
+     */
+    std::string loadDomain;
     HTTPClient client;
     FileManager fileManager;
-
-    std::queue<Reference> requests;
+    std::queue<std::string> loadQueue;
     /**
      * Set of all downloaded references
      */
@@ -65,15 +69,20 @@ class PageDownloader {
 
     void createSaveFolder(const URL& url);
 
-    void saveFile(const URL& url, const Response& response);
-
     void fetchRobotsFile(const URL& url);
 
-    Reference getLocalReference(const URL& url) const;
-
-    // Helpers
-    std::string getContentType(const Response& response) const;
+    /**
+     * Core methods
+     */
+    void sendRequest(const std::string& link, Response& response, bool followRedirection) const;
+    void sendRequest(const URL& url, Response& response, bool followRedirection) const;
+    void save(const Response& response, const std::string& filepath = "") const;
   private:
+    class PageDownloaderException: public std::exception {
+      public:
+        PageDownloaderException() {}
+    };
+
     const std::string robotsFileQuery = "/robots.txt";
 };
 
