@@ -21,7 +21,7 @@ struct Response {
     std::vector<Header> headers;
     Data<> response;
 
-    std::string loadHeader(const Header::_Header& type) const;
+    Data<> loadHeader(const Header::_Header& type) const;
     /**
      * This method is suitable only to load data for save.
      *
@@ -47,7 +47,7 @@ struct Response {
      */
     Data<> loadBody() const;
   private:
-    enum class TransferEncodingTypes {
+    enum class TransferEncodingType {
       CHUNCKED, DEFLATE, GZIP, IDENTITY
     };
 
@@ -58,8 +58,11 @@ struct Response {
 
     void setStatus();
     void setHeaders();
-    void processTransferEncoding(std::string& body) const;
     const std::string getHeader(const std::string& response) const;
+
+    void processTransferEncoding(Data<>& body) const;
+    void mergeChunks(Data<>& body) const;
+    TransferEncodingType transferEncodingType(Data<> data) const;
 };
 
 #endif

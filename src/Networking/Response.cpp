@@ -1,24 +1,24 @@
 #include "Response.hpp"
 
-const std::string Response::separator = "\r\n\r\n";
+const std::string Response::separator = "\r\n";
 const std::string Response::doubleSeparator = "\r\n\r\n";
 const std::string Response::headerParametersSeparator = ", ";
 const std::string Response::textContentTypePrefix = "text/";
 
-std::string Response::loadHeader(const Header::_Header& type) const {
+Data<> Response::loadHeader(const Header::_Header& type) const {
   auto result = std::find_if(headers.begin(), headers.end(), [type](const Header& header) {
     return header.header == type;
   });
 
-  return result == headers.end() ? "" : result -> parameters;
+  return result == headers.end() ? Data<>() : result -> parameters;
 }
 
 Data<> Response::loadBody() const {
   Data<> body = response.subsequence(response.find(doubleSeparator, response.begin()), response.end());
 
-  //processTransferEncoding(body);
+  processTransferEncoding(body);
 
-  std::string contentType = loadHeader(Header::_Header::CONTENT_TYPE);
+  Data<> contentType = loadHeader(Header::_Header::CONTENT_TYPE);
 
   if (std::mismatch(textContentTypePrefix.begin(),
                     textContentTypePrefix.end(),
@@ -56,31 +56,17 @@ const std::string Response::getHeader(const std::string& response) const {
   return std::string(response.begin(), response.begin() + index);
 }
 
-void Response::processTransferEncoding(std::string& body) const {
-  std::string transferEncoding = "chuncked, test, test, test"; //loadHeader(Header::_Header::TRANSFER_ENCODING);
+void Response::processTransferEncoding(Data<>& body) const {
+  Data<> transferEncoding = loadHeader(Header::_Header::TRANSFER_ENCODING);
 
-  if (transferEncoding == "")
+  if (transferEncoding.empty())
     return;
 
-  std::vector<std::string> components;
+  transferEncoding.forEachInterval(headerParametersSeparator, [body](const Data<>& data) {
 
-  auto prev = transferEncoding.begin();
-  auto next = transferEncoding.begin();
+  });
+}
 
-  std::cout << headerParametersSeparator << std::endl;
+void Response::mergeChunks(Data<>& body) const {
 
-  while ((next = std::search(next,
-                             transferEncoding.end(),
-                             headerParametersSeparator.begin(),
-                             headerParametersSeparator.end())) != transferEncoding.end()) {
-    auto offset = headerParametersSeparator.size();
-    components.push_back(std::string(prev, next + offset));
-    prev = next + offset;
-    next += offset + 1;
-  }
-  components.push_back(std::string(prev, next));
-
-  for (const auto& component : components) {
-    std::cout << component << std::endl;
-  }
 }

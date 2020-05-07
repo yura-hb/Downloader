@@ -14,8 +14,8 @@ void PageDownloader::mirror(const std::string& url) {
   std::cout << uri.requestUrl() << std::endl;
   try {
      sendRequest(loadQueue.front(), response, true);
-
-     fileManager.saveFile(LocalReference("test.txt"), response.loadBody());
+     std::cout << response.loadBody().stringRepresentation() << std::endl;
+    // fileManager.saveFile(LocalReference("test.txt"), response.loadBody());
   } catch (const RemoteReference::LinkCreationException& exc) {
      loadQueue.pop();
      shouldAddRefs = false;
@@ -125,12 +125,12 @@ void PageDownloader::sendRequest(const URL& url,
     if (!followRedirection)
       throw Exception("Can't redirect as protocol is not supported [" + url.requestUrl() + "] (Hint: Redirection)");
 
-    std::string location = tmpResponse.loadHeader(Header::_Header::LOCATION);
+    Data<> location = tmpResponse.loadHeader(Header::_Header::LOCATION);
 
     if (location.empty())
       throw Exception("Can't redirect as location is empty [" + url.requestUrl() + "] (Hint: Redirection)");
 
-    sendRequest(location, tmpResponse, false);
+    sendRequest(location.stringRepresentation(), tmpResponse, false);
     return;
   }
 
@@ -150,5 +150,5 @@ void PageDownloader::save(const Response& response, const std::string& filepath)
 
   LocalReference ref(loadDomain);
   ref = *dynamic_cast<LocalReference*>(ref.addPath(path).get());
-  fileManager.saveFile(ref, response.loadBody());
+ // fileManager.saveFile(ref, response.loadBody());
 }

@@ -8,6 +8,8 @@
 #include <algorithm>
 #include <queue>
 
+#include "../Templates/Data.hpp"
+
 #include "../Networking/URL.hpp"
 #include "../Networking/HTTPClient.hpp"
 

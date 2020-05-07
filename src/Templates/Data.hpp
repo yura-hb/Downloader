@@ -9,6 +9,7 @@
 #include <numeric>
 #include <functional>
 #include <fstream>
+#include <tuple>
 
 /**
  * The wrapper around Data type, which stores raw data information and provides basic methods to format data.
@@ -21,15 +22,19 @@ class Data {
     Data(): cmp() {}
     Data(const char * str, const Comparator& cmp = {}): cmp(cmp) { append(str); }
     Data(const std::string& str, const Comparator& cmp = {}): cmp(cmp) { append(str); }
-    Data(const std::list<uint8_t>& store, const Comparator& cmp = {}): cmp(cmp), store(store) { }
+    Data(const std::list<uint8_t>& store, const Comparator& cmp = {}): store(store), cmp(cmp) { }
 
-    std::list<uint8_t> rawRepresentation() const { return store; }
-    std::string stringRepresentation() const {;
+    std::list<uint8_t> rawRepresentation() const {
+      return store;
+    }
+
+    std::string stringRepresentation() const {
       std::string result;
       return std::accumulate(store.begin(), store.end(), result, [](std::string result, uint8_t c) {
         return std::move(result) + std::string(1, c);
       });
     }
+
     size_t size() const {
       return store.size();
     }
@@ -43,15 +48,19 @@ class Data {
       std::advance(iter, pos);
       return *iter;
     }
+
     iterator begin() const {
       return store.begin();
     }
+
     iterator end() const {
       return store.end();
     }
+
     Data<Comparator> subsequence(const iterator& begin, const iterator& end) const {
       return Data<Comparator>(std::list<uint8_t>(begin, end), cmp);
     }
+
     bool empty() const { return store.empty(); }
     /**
      * Replaces one subsequence with another
@@ -87,7 +96,7 @@ class Data {
      *
      * Complexity: O(n)
      */
-    std::list<uint8_t>::iterator eraseFirst(const Data<Comparator>& sequence, iterator startPos) {
+    iterator eraseFirst(const Data<Comparator>& sequence, iterator startPos) {
       auto iter = startPos;
 
       if ((iter = find(sequence, startPos)) != store.end()) {
@@ -105,7 +114,7 @@ class Data {
      *
      * Complexity: O(n)
      */
-    std::list<uint8_t>::iterator find(const Data<Comparator>& sequence, iterator startPos) const {
+    iterator find(const Data<Comparator>& sequence, iterator startPos) const {
       auto iter = startPos;
 
       while (iter != store.end()) {
@@ -163,6 +172,35 @@ class Data {
     void write(std::ofstream& stream) const {
       for (const auto& c: store)
         stream << (char)c;
+    }
+
+    template <typename _Comparator = std::equal_to<uint8_t>>
+    friend std::ostream& operator << (std::ostream& stream, const Data<_Comparator>& data) {
+      for (const auto& c: data.rawRepresentation())
+        stream << (char)c;
+
+      return stream;
+    }
+
+    template <typename _Comparator = std::equal_to<uint8_t>>
+    friend bool operator == (const char * str, const Data<_Comparator>& data) {
+      return std::string(str) == data;
+    }
+
+    template <typename _Comparator = std::equal_to<uint8_t>>
+    friend bool operator == (const std::string& str, const Data<_Comparator>& data) {
+      if (str.size() == data.size()) {
+        auto i = str.begin();
+        auto j = data.begin();
+
+        while (*i++ == *j++) {}
+
+        if (i != str.end())
+          return false;
+
+        return true;
+      }
+      return false;
     }
   private:
     std::list<uint8_t> store;

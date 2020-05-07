@@ -7,6 +7,7 @@
 #include <algorithm>
 #include "../Templates/StringConvertible.hpp"
 #include "../Templates/Exception.hpp"
+#include "../Templates/Data.hpp"
 
 struct Header: public StringConvertible {
   public:
@@ -37,11 +38,11 @@ struct Header: public StringConvertible {
     // - Type of the header
     _Header header;
     // - Content string
-    std::string parameters;
+    Data<> parameters;
     /**
      * Parses string and converts it in the header type and parameters
      */
-    Header(const std::string& header);
+    Header(const Data<>& header);
     /**
      * Base construct, which is ready to be parsed to string
      */

@@ -24,20 +24,20 @@ const std::vector<std::string> Header::store = {
   "Transfer-Encoding"
 };
 
-Header::Header(const std::string& header) {
-  // All of the types consists of the `Header: Params` format
-  auto iter = std::find(header.begin(), header.end(), ':');
+Header::Header(const Data<>& header) {
+  auto separator = header.find(":", header.begin());
 
-  if (iter == header.end())
+  if (separator == header.end())
     throw Exception("Incorrect format of the string");
 
-  auto headerString = std::string(header.begin(), iter);
+  auto headerName = header.subsequence(header.begin(), separator).stringRepresentation();
+  auto headerParams = header.subsequence(separator++, header.end());
 
-  auto headerTypeIndex = std::find_if(store.begin(), store.end(), [headerString](const std::string& str) {
-    if (headerString.size() != str.size())
+  auto headerTypeIndex = std::find_if(store.begin(), store.end(), [headerName](const std::string& str) {
+    if (headerName.size() != str.size())
       return false;
 
-    for (auto i = str.begin(), j = headerString.begin(); i != str.end() && j != headerString.end(); i++, j++)
+    for (auto i = str.begin(), j = headerName.begin(); i != str.end() && j != headerName.end(); i++, j++)
       if (tolower(*i) != tolower(*j))
         return false;
 
@@ -48,12 +48,11 @@ Header::Header(const std::string& header) {
     throw Exception("Header is not found");
 
   this -> header = (_Header)(headerTypeIndex - store.begin());
-  // skip : and space
-  parameters = std::string(iter + 2, header.end());
+  parameters = headerParams;
 }
 
 std::string Header::description() const {
-  return store[static_cast<int>(header)] + ": " + parameters;
+  return store[static_cast<int>(header)] + ": " + parameters.stringRepresentation();
 }
 
 std::ostream& operator<< (std::ostream& output, const Header& header) {
