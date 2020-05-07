@@ -5,13 +5,16 @@ bool HTTPClient::loadPage(const URL& url, Response& response) const {
 
   std::string data = "";
 
+  std::cout << request.createRequest();
+
   if (!performRequest(request, data))
     return false;
 
   try {
-    response = { url, Parser::parseStatus(data), Parser::parse(data), Parser::body(data) };
+    response = { data, url };
   } catch (const Exception &exc) {
     std::cerr << exc.what() << std::endl;
+    return false;
   }
 
   return true;

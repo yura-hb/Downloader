@@ -4,7 +4,7 @@
 int main() {
 
   PageDownloader downloader;
-  downloader.mirror("www.oustranka.cz");
+  downloader.mirror("https://jigsaw.w3.org/HTTP/ChunkedScript");
 
   return 0;
 }

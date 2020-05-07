@@ -6,6 +6,11 @@
 
 struct RemoteReference: public Reference {
   public:
+    class LinkCreationException: public std::exception {
+      public:
+        LinkCreationException() {}
+    };
+
     RemoteReference(const std::string& link): Reference(Type::EXTERNAL_LINK), url(URL(link)) {}
     RemoteReference(const URL& url): Reference(Type::EXTERNAL_LINK), url(url) {}
     ~RemoteReference() = default;

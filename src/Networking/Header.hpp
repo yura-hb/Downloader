@@ -31,7 +31,8 @@ struct Header: public StringConvertible {
       EXCEPT,
       HOST,
       LOCATION,
-      PRAGMA
+      PRAGMA,
+      TRANSFER_ENCODING
     };
     // - Type of the header
     _Header header;

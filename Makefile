@@ -25,7 +25,7 @@ DOXYGEN_FILE = doxygex.dox
 MODULES = $(OUTPUT_PATH)/main.o $(OUTPUT_PATH)/Exception.o $(OUTPUT_PATH)/Socket.o $(OUTPUT_PATH)/HTTPClient.o \
 	  $(OUTPUT_PATH)/Receiver.o $(OUTPUT_PATH)/Request.o $(OUTPUT_PATH)/URL.o \
 	  $(OUTPUT_PATH)/Header.o $(OUTPUT_PATH)/RequestMethod.o $(OUTPUT_PATH)/Version.o \
-	  $(OUTPUT_PATH)/HTTPParser.o $(OUTPUT_PATH)/StringConvertible.o $(OUTPUT_PATH)/ResponseStatus.o \
+	  $(OUTPUT_PATH)/Response.o $(OUTPUT_PATH)/StringConvertible.o $(OUTPUT_PATH)/ResponseStatus.o \
 		$(OUTPUT_PATH)/Reference.o 	$(OUTPUT_PATH)/LocalReference.o $(OUTPUT_PATH)/RemoteReference.o \
 		$(OUTPUT_PATH)/ReferenceConverter.o $(OUTPUT_PATH)/AbstractPattern.o $(OUTPUT_PATH)/Attribute.o \
 		$(OUTPUT_PATH)/Comment.o $(OUTPUT_PATH)/Analyzer.o $(OUTPUT_PATH)/CSSAnalyzer.o \

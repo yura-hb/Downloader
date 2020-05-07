@@ -3,6 +3,30 @@
 void PageDownloader::mirror(const std::string& url) {
   URL uri(url);
 
+  Response response;
+  HTMLAnalyzer analyzer;
+  bool shouldAddRefs = true;
+
+  loadQueue.push(uri.requestUrl());
+
+  loadDomain = uri.domain;
+
+  std::cout << uri.requestUrl() << std::endl;
+  try {
+     sendRequest(loadQueue.front(), response, true);
+
+     fileManager.saveFile(LocalReference("test.txt"), response.loadBody());
+  } catch (const RemoteReference::LinkCreationException& exc) {
+     loadQueue.pop();
+     shouldAddRefs = false;
+    // continue;
+  } catch (const Exception& exc) {
+     loadQueue.pop();
+     shouldAddRefs = false;
+     std::cerr << exc.what() << std::endl << std::endl;
+    // continue;
+  }
+/*
   // Don't download file, in case, if preparation failure
   if (!prepare(uri))
     return;
@@ -14,17 +38,18 @@ void PageDownloader::mirror(const std::string& url) {
   loadQueue.push(uri.requestUrl());
 
   while (!loadQueue.empty()) {
+    response = Response();
     try {
       sendRequest(loadQueue.front(), response, true);
       save(response, response.url.query == "/" ? "/index.html" : "");
-    } catch (const PageDownloaderException& exc) {
+    } catch (const RemoteReference::LinkCreationException& exc) {
       loadQueue.pop();
       shouldAddRefs = false;
       continue;
     } catch (const Exception& exc) {
       loadQueue.pop();
       shouldAddRefs = false;
-      std::cerr << exc.what() << std::endl;
+      std::cerr << exc.what() << std::endl << std::endl;
       continue;
     }
 
@@ -34,9 +59,9 @@ void PageDownloader::mirror(const std::string& url) {
 
     shouldAddRefs = false;
 
-    std::cout << "Successfully loaded: " << loadQueue.front() << std::endl;
+    std::cout << "Successfully loaded: " << loadQueue.front() << std::endl << std::endl;
     loadQueue.pop();
-  }
+  }*/
 }
 
 bool PageDownloader::prepare(const URL& url) {
@@ -71,7 +96,7 @@ void PageDownloader::fetchRobotsFile(const URL& url) {
   try {
     sendRequest(requestUri.requestUrl(), response, true);
     save(response);
-  } catch (const PageDownloaderException & exc) {
+  } catch (const RemoteReference::LinkCreationException & exc) {
     return;
   } catch (const Exception& exc) {
     std::cerr << exc.what() << std::endl;
@@ -84,18 +109,7 @@ void PageDownloader::sendRequest(const std::string& link,
                                  Response& response,
                                  bool followRedirection = true) const {
   std::shared_ptr<Reference> reference = ReferenceConverter::convert(link);
-
-  URL url;
-
-  try {
-    url = ReferenceConverter::makeRequest(loadDomain, reference);
-  } catch (const Exception& e) {
-    return;
-  }
-
-  if (url.domain != loadDomain)
-    throw PageDownloaderException();
-
+  URL url = ReferenceConverter::makeRequest(loadDomain, reference);
   sendRequest(url, response, followRedirection);
 }
 
@@ -111,7 +125,7 @@ void PageDownloader::sendRequest(const URL& url,
     if (!followRedirection)
       throw Exception("Can't redirect as protocol is not supported [" + url.requestUrl() + "] (Hint: Redirection)");
 
-    std::string location = response.loadHeader(Header::_Header::LOCATION);
+    std::string location = tmpResponse.loadHeader(Header::_Header::LOCATION);
 
     if (location.empty())
       throw Exception("Can't redirect as location is empty [" + url.requestUrl() + "] (Hint: Redirection)");
@@ -136,5 +150,5 @@ void PageDownloader::save(const Response& response, const std::string& filepath)
 
   LocalReference ref(loadDomain);
   ref = *dynamic_cast<LocalReference*>(ref.addPath(path).get());
-  fileManager.saveFile(ref, response.body);
+  fileManager.saveFile(ref, response.loadBody());
 }

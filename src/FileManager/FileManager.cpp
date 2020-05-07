@@ -13,6 +13,8 @@ void FileManager::createPageFolder(const LocalReference& reference) const {
 
 void FileManager::saveFile(const LocalReference& reference, const std::string& data) const {
   createRelativePathDirectories(reference.getPath());
+
+  std::cout << "Save path: " << reference.getPath() << std::endl;
   std::ofstream out(reference.getPath(), std::ios::out | std::ios::trunc);
   out << data;
 }
@@ -36,10 +38,11 @@ std::vector<std::pair<std::string, uint8_t>> FileManager::getFolderFiles(const L
 
 void FileManager::createRelativePathDirectories(const LocalReference& reference) const {
   std::list<std::string> list = reference.loadComponents();
-  // The base folder is already created and the last object of the getPath() is string
+
   auto begin = list.begin();
   auto end = list.end();
-  begin++; end--;
+
+  end--;
 
   while (begin != end) {
     std::string path;

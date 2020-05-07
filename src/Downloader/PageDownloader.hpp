@@ -78,11 +78,6 @@ class PageDownloader {
     void sendRequest(const URL& url, Response& response, bool followRedirection) const;
     void save(const Response& response, const std::string& filepath = "") const;
   private:
-    class PageDownloaderException: public std::exception {
-      public:
-        PageDownloaderException() {}
-    };
-
     const std::string robotsFileQuery = "/robots.txt";
 };
 

@@ -20,7 +20,7 @@ bool RemoteReference::isRelative() const {
 
 std::string RemoteReference::requestUrl(const std::string& domain) const {
   if (url.domain != domain)
-    throw Exception("Domains are not the same");
+    throw LinkCreationException();
 
   return url.requestUrl();
 }

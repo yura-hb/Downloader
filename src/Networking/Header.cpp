@@ -20,7 +20,8 @@ const std::vector<std::string> Header::store = {
   "Except",
   "Host",
   "Location",
-  "Pragma"
+  "Pragma",
+  "Transfer-Encoding"
 };
 
 Header::Header(const std::string& header) {
@@ -31,7 +32,17 @@ Header::Header(const std::string& header) {
     throw Exception("Incorrect format of the string");
 
   auto headerString = std::string(header.begin(), iter);
-  auto headerTypeIndex = std::find(store.begin(), store.end(), headerString);
+
+  auto headerTypeIndex = std::find_if(store.begin(), store.end(), [headerString](const std::string& str) {
+    if (headerString.size() != str.size())
+      return false;
+
+    for (auto i = str.begin(), j = headerString.begin(); i != str.end() && j != headerString.end(); i++, j++)
+      if (tolower(*i) != tolower(*j))
+        return false;
+
+    return true;
+  });
 
   if (headerTypeIndex == store.end())
     throw Exception("Header is not found");

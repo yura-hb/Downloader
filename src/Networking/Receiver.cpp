@@ -5,7 +5,7 @@ void Receiver::receivePage(std::string &str, const Socket &sock) {
 
 	char *buffer = new char[bufSize + 1];
 
-  memset(buffer, 0, bufSize + 1);
+  memset(buffer, '\0', bufSize + 1);
 
   while (sock.read(buffer, bufSize, receivedSize) && receivedSize > 0) {
     str += buffer;
