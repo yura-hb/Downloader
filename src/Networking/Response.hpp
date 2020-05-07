@@ -6,11 +6,12 @@
 #include "URL.hpp"
 #include "Header.hpp"
 #include "ResponseStatus.hpp"
+#include "../Templates/Data.hpp"
 
 struct Response {
   public:
     Response() = default;
-    Response(const std::string& response, const URL& url) : url(url), response(response) {
+    Response(const Data<>& response, const URL& url) : url(url), response(response) {
       setStatus();
       setHeaders();
     }
@@ -18,7 +19,7 @@ struct Response {
     URL url;
     ResponseStatus status;
     std::vector<Header> headers;
-    std::string response;
+    Data<> response;
 
     std::string loadHeader(const Header::_Header& type) const;
     /**
@@ -44,13 +45,14 @@ struct Response {
      *
      *     There can be several encodings stacked, separated by the comma. Then they are applied on by another sequentally
      */
-    std::string loadBody() const;
+    Data<> loadBody() const;
   private:
     enum class TransferEncodingTypes {
       CHUNCKED, DEFLATE, GZIP, IDENTITY
     };
 
     static const std::string separator;
+    static const std::string doubleSeparator;
     static const std::string headerParametersSeparator;
     static const std::string textContentTypePrefix;
 

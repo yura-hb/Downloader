@@ -3,7 +3,7 @@
 bool HTTPClient::loadPage(const URL& url, Response& response) const {
   Request request = makeRequest(url);
 
-  std::string data = "";
+  Data<> data("");
 
   std::cout << request.createRequest();
 
@@ -26,7 +26,7 @@ bool HTTPClient::loadPage(const std::string &url,
   return loadPage(link, response);
 }
 
-bool HTTPClient::performRequest(Request request, std::string &result) const {
+bool HTTPClient::performRequest(Request request, Data<> &result) const {
   Socket sock(request.url.domain.c_str(), port.c_str());
 
   uint32_t sentBytes = 0;

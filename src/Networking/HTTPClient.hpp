@@ -8,6 +8,7 @@
 #include "Request.hpp"
 #include "Response.hpp"
 #include "ResponseStatus.hpp"
+#include "../Templates/Data.hpp"
 
 class HTTPClient {
   public:
@@ -25,11 +26,7 @@ class HTTPClient {
      *  3. Fetch message
      *  4. Disconnects from the server
      */
-    bool performRequest(Request request, std::string &result) const;
-    /**
-     * Parsers headers of the response
-     */
-    bool proceedResponse(const std::string &headers, const std::string &message) const;
+    bool performRequest(Request request, Data<> &result) const;
     /**
      * Converts string url to the URL object
      */

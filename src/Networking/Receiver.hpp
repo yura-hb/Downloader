@@ -2,6 +2,7 @@
 #define __RECEIVER_H__
 
 #include "Socket.hpp"
+#include "../Templates/Data.hpp"
 
 /**
  * Help class, to manage reading the message from the socket
@@ -14,7 +15,7 @@ class Receiver {
      * @param[in] - str - output string reference
      * @param[in] - socket - connected socket
      */
-    void receivePage(std::string &str, const Socket &sock);
+    void receivePage(Data<> &str, const Socket &sock);
   private:
     const size_t bufSize = 1024;
 };

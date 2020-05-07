@@ -1,6 +1,7 @@
 #include "Response.hpp"
 
 const std::string Response::separator = "\r\n\r\n";
+const std::string Response::doubleSeparator = "\r\n\r\n";
 const std::string Response::headerParametersSeparator = ", ";
 const std::string Response::textContentTypePrefix = "text/";
 
@@ -12,10 +13,10 @@ std::string Response::loadHeader(const Header::_Header& type) const {
   return result == headers.end() ? "" : result -> parameters;
 }
 
-std::string Response::loadBody() const {
-  std::string body = std::string(response.begin() + response.find(separator) + separator.size(), response.end());
+Data<> Response::loadBody() const {
+  Data<> body = response.subsequence(response.find(doubleSeparator, response.begin()), response.end());
 
-  processTransferEncoding(body);
+  //processTransferEncoding(body);
 
   std::string contentType = loadHeader(Header::_Header::CONTENT_TYPE);
 
@@ -35,31 +36,19 @@ std::string Response::loadBody() const {
 }
 
 void Response::setStatus() {
-  std::stringstream splitStream(response);
-  std::string line = "";
-
-  if (!getline(splitStream, line))
-    throw Exception("Incorrect response");
-
-  status = ResponseStatus(line);
+  Data<> firstLine = response.subsequence(response.begin(), response.find(separator, response.begin()));
+  status = ResponseStatus(firstLine.stringRepresentation());
 }
 
 void Response::setHeaders() {
-  std::vector<Header> components  = {};
+  Data<> headers = response.subsequence(response.begin(), response.find(doubleSeparator, response.begin()));
 
-  std::stringstream splitStream(getHeader(response));
-  std::string line = "";
-
-  while (getline(splitStream, line)) {
+  headers.forEachInterval(separator, [this](const Data<>& data)  {
     try {
-      Header header(line);
-      components.push_back(header);
-    } catch (const std::exception& exc) {
-      continue;
-    }
-  }
-
-  headers = components;
+      Header header(data);
+      this -> headers.push_back(header);
+    } catch (const std::exception& exc) {}
+  });
 }
 
 const std::string Response::getHeader(const std::string& response) const {
