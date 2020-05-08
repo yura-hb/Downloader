@@ -5,6 +5,9 @@
 #include <string>
 #include <exception>
 
+/**
+ * Base wrapper around std::exception, which provides string exceptions
+ */
 class Exception: public std::exception {
   public:
     Exception(const std::string& object): object(object) {}
