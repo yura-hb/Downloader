@@ -14,7 +14,9 @@ Data<> Response::loadHeader(const Header::_Header& type) const {
 }
 
 Data<> Response::loadBody() const {
-  Data<> body = response.subsequence(response.find(doubleSeparator, response.begin()), response.end());
+  auto bodyBegin = response.find(doubleSeparator, response.begin());
+  std::advance(bodyBegin, doubleSeparator.size());
+  Data<> body = response.subsequence(bodyBegin, response.end());
 
   processTransferEncoding(body);
 
@@ -26,13 +28,10 @@ Data<> Response::loadBody() const {
                     contentType.end()).first == textContentTypePrefix.end()) {
     // Convert from CRLF to LF to unix separator(LF)
     #ifdef unix
-      size_t pos = 0;
-      while ((pos = body.find(pos, "\r\n")) != std::string::npos)
-        body.erase(pos);
     #endif
   }
 
-  return response;
+  return body;
 }
 
 void Response::setStatus() {
@@ -62,11 +61,25 @@ void Response::processTransferEncoding(Data<>& body) const {
   if (transferEncoding.empty())
     return;
 
-  transferEncoding.forEachInterval(headerParametersSeparator, [body](const Data<>& data) {
-
+  transferEncoding.forEachInterval(headerParametersSeparator, [&body, this](const Data<>& data) {
+    std::cout << data.stringRepresentation() << std::endl;
+    switch (transferEncodingType(data)) {
+    case (Response::TransferEncodingType::CHUNCKED):
+      ChunkMerger::mergeChunks(body);
+      break;
+    case (Response::TransferEncodingType::GZIP):
+      break;
+    default: break;
+    }
   });
 }
 
-void Response::mergeChunks(Data<>& body) const {
-
+Response::TransferEncodingType Response::transferEncodingType(const Data<>& data) const {
+  if (data == "chunked") {
+    return Response::TransferEncodingType::CHUNCKED;
+  } else if (data == "gzip") {
+    return Response::TransferEncodingType::GZIP;
+  } else {
+    return Response::TransferEncodingType::IDENTITY;
+  }
 }

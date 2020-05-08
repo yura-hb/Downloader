@@ -3,7 +3,7 @@
 
 int main() {
   PageDownloader downloader;
-  downloader.mirror("https://jigsaw.w3.org/HTTP/ChunkedScript");
+  downloader.download("https://i.stack.imgur.com/BNjyq.png");
 
   return 0;
 }

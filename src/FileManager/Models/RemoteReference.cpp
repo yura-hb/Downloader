@@ -19,9 +19,6 @@ bool RemoteReference::isRelative() const {
 };
 
 std::string RemoteReference::requestUrl(const std::string& domain) const {
-  if (url.domain != domain)
-    throw LinkCreationException();
-
   return url.requestUrl();
 }
 

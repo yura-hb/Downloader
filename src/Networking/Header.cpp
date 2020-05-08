@@ -25,13 +25,15 @@ const std::vector<std::string> Header::store = {
 };
 
 Header::Header(const Data<>& header) {
-  auto separator = header.find(":", header.begin());
+  std::string separatorString = ": ";
+  auto separator = header.find(separatorString, header.begin());
 
   if (separator == header.end())
     throw Exception("Incorrect format of the string");
 
   auto headerName = header.subsequence(header.begin(), separator).stringRepresentation();
-  auto headerParams = header.subsequence(separator++, header.end());
+  std::advance(separator, separatorString.size());
+  auto headerParams = header.subsequence(separator, header.end());
 
   auto headerTypeIndex = std::find_if(store.begin(), store.end(), [headerName](const std::string& str) {
     if (headerName.size() != str.size())

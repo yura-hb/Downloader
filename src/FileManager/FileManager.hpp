@@ -12,42 +12,54 @@
 #include <algorithm>
 #include "Models/LocalReference.hpp"
 #include "../Templates/Exception.hpp"
+#include "../Templates/Data.hpp"
 
 class FileManager {
   public:
     // Constructor
     FileManager() = default;
     /**
-     * Creates folder at the current directory with the specific name and returns the full path to the folder
+     * Discussion:
+     *   Creates folder at the current directory with the specific name and returns the full path to the folder
+     *
+     * Input:
+     *   - @param[in] - local reference to the folder
      */
     void createPageFolder(const LocalReference& reference) const;
     /**
-     * Description:
+     * Discussion:
      *  Write file to the specific directory at the relative path in the folder with data.
      *  In case, if there are no folders with the specific path, creates them.
      *  Doesn't operate out of the folderName
      *
-     * Params:
-     *  @param[in] folderName: - Folder in the current directory
-     *  @param[in] relativePath: - Relative path in the folder including filename
-     *  @param[in] data: - data to save
+     * Input:
+     *   - @param[in] reference: - Reference to the specific file
+     *   - @param[in] data: - data to save
      *
-     * Exceptions:
+     * Throws:
      *  - In case if folder is not created throw exception
      *  - In case if any error occurs during write operation throws exceptions
      */
-    void saveFile(const LocalReference& reference, const std::string& data) const;
+    void saveFile(const LocalReference& reference, const Data<>& data) const;
     /**
-     *  Clears the directory
+     *  Discussion:
+     *    Clears the directory by calling rm -r * on some path
+     *
+     *  Input:
+     *    - @param[in] - local reference to the folde
      */
-    // TODO: Ask user for permission
     void clearDirectory(const LocalReference& reference) const;
   private:
     // Disable copy constructor
     FileManager(FileManager &manager) {};
     FileManager& operator = (const FileManager& manager) { return *this; };
     /**
-     *  Creates subdirectories, if they doesn't exist in the current directory
+     *  Discussion:
+     *    Creates subdirectories, if they doesn't exist in the current directory
+     *
+     *  Input:
+     *    - @param[in] - reference to all the directories
+     *
      */
     void createRelativePathDirectories(const LocalReference& reference) const;
     /**

@@ -26,7 +26,7 @@ class Data {
     Data(const std::string& str, const Comparator& cmp = {}): cmp(cmp) { append(str); }
     Data(const std::list<uint8_t>& store, const Comparator& cmp = {}): store(store), cmp(cmp) { }
     /**
-     * @param[out] - returns a copy of the raw content
+     * @param[out] - reference to the data raw content
      *
      * Complexity: O(n), where n is the size of the content
      */
@@ -61,10 +61,10 @@ class Data {
      *
      * Complexity: O(n), where n == pos
      */
-    uint8_t at(size_t pos) const {
+    iterator at(size_t pos) const {
       auto iter = store.begin();
       std::advance(iter, pos);
-      return *iter;
+      return iter;
     }
     /**
      * Output:
@@ -157,6 +157,22 @@ class Data {
     }
     /**
      * Discussion:
+     *   Erases data in the interval [begin, end)
+     *
+     * Input:
+     *   @param[in] begin - iterator to the beginning of the sequence
+     *   @param[in] end - iterator to the end of the sequence
+     *
+     * Output:
+     *   @param[out] - iterator pointing to the position, where data subsequence was removed
+     *
+     * Complexity: O(m), where m is the distance between m and n
+     */
+    iterator eraseSequence(const iterator& begin, const iterator& end) {
+      return store.erase(begin, end);
+    }
+    /**
+     * Discussion:
      *   Erases first occurance of the specic sequence and returns the iterator in the new sequence
      *
      * Input:
@@ -172,11 +188,9 @@ class Data {
       auto iter = startPos;
 
       if ((iter = find(sequence, startPos)) != store.end()) {
-        auto currentPos = iter;
-        std::advance(currentPos, sequence.size());
-        store.erase(iter, currentPos);
-
-        return currentPos;
+        auto sequenceEndIter = iter;
+        std::advance(sequenceEndIter, sequence.size());
+        return eraseSequence(iter, sequenceEndIter);
       }
 
       return iter;
@@ -262,6 +276,18 @@ class Data {
         store.push_back(c);
     }
     /**
+     * Appends data to the storage
+     *
+     * Input:
+     *   @param[in] str - data object, from which data is taken
+     *
+     * Complexity: O(m), where m is size of the input string
+     */
+    void append(const  Data<>& data) {
+      for (const auto& byte: data.rawRepresentation())
+        store.push_back(byte);
+    }
+    /**
      * Discussion:
      *   Converts each byte in char and outputs it to the stream. Returns true, if both objects have the same data
      *
@@ -281,11 +307,6 @@ class Data {
 
       return stream;
     }
-
-    template <typename _Comparator = std::equal_to<uint8_t>>
-    friend bool operator == (const char * str, const Data<_Comparator>& data) {
-      return std::string(str) == data;
-    }
     /**
      * Discussion:
      *   Compares each char of the strings object with the data object. Returns true, if both objects have the same data
@@ -302,7 +323,7 @@ class Data {
         auto i = str.begin();
         auto j = data.begin();
 
-        while (*i++ == *j++) {}
+        while (data.cmp(*i, *j)) { i++; j++; }
 
         if (i != str.end())
           return false;
@@ -310,6 +331,16 @@ class Data {
         return true;
       }
       return false;
+    }
+    template <typename _Comparator = std::equal_to<uint8_t>>
+    friend bool operator == (const char * str, const Data<_Comparator>& data) {
+      return std::string(str) == data;
+    }
+    bool operator == (const std::string& str) const {
+      return str == *this;
+    }
+    bool operator == (const char* str) const {
+      return str == *this;
     }
   private:
     /**

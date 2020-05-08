@@ -3,7 +3,8 @@
         {
             "name": "Mac",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/usr/local/Cellar/libpng/**"
             ],
             "defines": [],
             "macFrameworkPath": [
@@ -11,7 +12,7 @@
             ],
             "compilerPath": "/usr/local/opt/llvm/bin/clang",
             "cStandard": "c11",
-            "cppStandard": "c++17",
+            "cppStandard": "c++14",
             "intelliSenseMode": "clang-x64",
             "compileCommands": "${workspaceFolder}/compile_commands.json"
         }

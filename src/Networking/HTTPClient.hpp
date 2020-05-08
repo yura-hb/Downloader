@@ -14,7 +14,6 @@ class HTTPClient {
   public:
     // Default web port is 80, but connection using other ports is not prohibited
     HTTPClient(std::string port = "80") : port(port) {}
-    // TODO: - add exception error handling
     bool loadPage(const std::string &url, Response &response) const;
     bool loadPage(const URL& url, Response& response) const;
   private:

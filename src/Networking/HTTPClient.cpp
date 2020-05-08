@@ -57,7 +57,11 @@ URL HTTPClient::convertLink(const std::string& url) const {
 Request HTTPClient::makeRequest(const URL& url) const {
   RequestMethod method(RequestMethod::_RequestMethod::GET);
   Version version(Version::_Version::v1_1);
-  std::vector<Header> headers = { Header(Header::_Header::HOST, url.domain), Header(Header::_Header::CONNECTION, "Close") };
+  std::vector<Header> headers = {
+    Header(Header::_Header::HOST, url.domain),
+    Header(Header::_Header::ACCEPT_ENCODING, "identity, chunked"),
+    Header(Header::_Header::CONNECTION, "Close")
+  };
 
   return Request(url, method, version, headers);
 }

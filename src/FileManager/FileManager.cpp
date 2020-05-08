@@ -11,7 +11,7 @@ void FileManager::createPageFolder(const LocalReference& reference) const {
   closedir(dir);
 }
 
-void FileManager::saveFile(const LocalReference& reference, const std::string& data) const {
+void FileManager::saveFile(const LocalReference& reference, const Data<>& data) const {
   createRelativePathDirectories(reference.getPath());
   std::ofstream out(reference.getPath(), std::ios::out | std::ios::trunc);
   out << data;
