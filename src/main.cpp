@@ -1,9 +1,10 @@
 #include <iostream>
-#include "Downloader/PageDownloader.hpp"
+#include "Downloader/Downloader.hpp"
 
 int main() {
-  PageDownloader downloader;
-  downloader.download("https://i.stack.imgur.com/BNjyq.png");
+  Downloader downloader;
+  downloader.download(RemoteReference("https://i.stack.imgur.com/BNjyq.png"), LocalReference("test.txt"));
 
   return 0;
 }
+

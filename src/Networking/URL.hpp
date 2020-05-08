@@ -4,7 +4,9 @@
 #include<iostream>
 #include<regex>
 #include<string>
-
+/**
+ * Wrapper around URL
+ */
 struct URL {
   /**
    * Basic internet connection protocols
@@ -25,11 +27,13 @@ struct URL {
   URL(const std::string &url);
   ~URL() = default;
   /**
-   * Convert url to the standart request format
+   * Discussion:
+   *   - Convert url from components to string format
    */
   std::string requestUrl() const;
   /**
-   * Validates string
+   * Discussion:
+   *   - Validaties if the URL is valid
    */
   bool isValid() const;
   private:
@@ -44,7 +48,10 @@ struct URL {
      *
      */
     static const std::string regexString;
-
+    /**
+     * Discussion:
+     *   - Consumes the string and sets all URL parameters
+     */
     void parse(const std::string &str);
 };
 

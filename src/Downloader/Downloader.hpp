@@ -8,11 +8,12 @@
 #include <algorithm>
 #include <queue>
 
+#include "ResponseSaveManager.hpp"
 #include "../Templates/Data.hpp"
 #include "../Networking/URL.hpp"
 #include "../Networking/HTTPClient.hpp"
-#include "../FileManager/FileManager.hpp"
 #include "../FileManager/Models/RemoteReference.hpp"
+#include "../FileManager/Models/LocalReference.hpp"
 /**
  *  Simple downloader, which will proceed download, processing and save of the file
  */
@@ -32,7 +33,7 @@ class Downloader {
     virtual void download(const RemoteReference& ref, const LocalReference& filepath) const;
   protected:
     HTTPClient client;
-    FileManager fileManager;
+    ResponseSaveManager saveManager;
     /**
      *  Discussion:
      *    Commit the request cycle with the possible redirection and returns response

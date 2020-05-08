@@ -1,6 +1,6 @@
 #include "FileManager.hpp"
 
-void FileManager::createPageFolder(const LocalReference& reference) const {
+void FileManager::createFolder(const LocalReference& reference) const {
   int result;
   // TODO: - Replace cerr with the specified logger
   if ((result = mkdir(reference.getPath().c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)) != 0)
@@ -63,7 +63,7 @@ void FileManager::createRelativePathDirectories(const LocalReference& reference)
     }
 
     if (!didFoundFile)
-      createPageFolder(path + *begin);
+      createFolder(path + *begin);
 
     begin++;
   }

@@ -93,10 +93,6 @@ bool Socket::read(char * &str, const uint32_t &size, uint32_t &readBytesSize) co
   return true;
 }
 
-//
-// Helpers
-//
-
 void Socket::setupHints() {
   memset(&hints, 0, sizeof(hints));
   hints.ai_family = AF_UNSPEC;

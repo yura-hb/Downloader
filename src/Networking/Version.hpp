@@ -5,7 +5,9 @@
 #include <string>
 #include <vector>
 #include "../Templates/StringConvertible.hpp"
-
+/**
+ * Wrapper around HTTP protocol version
+ */
 struct Version: public StringConvertible {
   public:
     enum class _Version {

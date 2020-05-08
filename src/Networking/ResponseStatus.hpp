@@ -22,7 +22,7 @@ struct ResponseStatus: public StringConvertible {
       NO_CONTENT = 204,
       RESET_CONTENT = 205,
       PARTIAL_CONTENT = 207,
-      // Redirection codes, need to change url
+
       MULTIPLE_CHOISES = 300,
       MOVED_PERMANENTLY = 301,
       FOUND = 302,
@@ -30,7 +30,7 @@ struct ResponseStatus: public StringConvertible {
       NOT_MODIFIED = 304,
       USE_PROXY = 305,
       TEMPORARY_REDIRECT = 307,
-      // Errors
+
       BAD_REQUEST = 400,
       UNAUTHORIZED = 401,
       PAYMENT_REQUIRED = 402,
@@ -47,7 +47,7 @@ struct ResponseStatus: public StringConvertible {
       REQUEST_ENTITY_TOO_LARGE = 413,
       REQUEST_URI_TOO_LONG = 414,
       USUPPORTED_MEDIA_TYPE =  415,
-      // Server errors
+
       INTERNAL_SERVER_ERROR = 500,
       NOT_IMPLEMNTED = 501,
       BAD_GATAWAY = 502,
@@ -61,26 +61,33 @@ struct ResponseStatus: public StringConvertible {
 
     ResponseStatus() = default;
     /**
-     * Initialize ResponseStatus using first line of the responce message
-     * The format of the responce is the next:
-     *  Version of HTTP -space- Status code -space- message
+     *  Discussion:
+     *   Initialize ResponseStatus using first line of the responce message
+     *   The format of the responce is the next:
+     *     `Version of HTTP -space- Status code -space- message`
+     *
+     *  Input:
+     *    @param[in] statusLine - the first line of the http response
      */
     ResponseStatus(const std::string& statusLine);
-    // Helpers
     /**
-     * If status is not 2xx returns false
+     * Output:
+     *   @param[out] - If status is not 2xx returns false
      */
     bool isFailed() const;
     /**
-     * !isFailed()
+     *  Discussion:
+     *    Eqvivalent to !isFailed()
      */
     bool isSuccessful() const;
     /**
-     * If status is 3xx
+     * Output:
+     *   @param[out] - If status is 3xx, returns true
      */
     bool isRedirection() const;
     /**
-     * Converts to string
+     * Discussion:
+     *   Converts to string
      */
     std::string description() const override;
 };

@@ -288,6 +288,22 @@ class Data {
         store.push_back(byte);
     }
     /**
+     * Writes data to the ostream from the specific sequence
+     *
+     * Input:
+     *   @param[in] str - data object, from which data is taken
+     *
+     * Complexity: O(m), where m is size of the input string
+     */
+    std::ostream& write(std::ostream& out, iterator begin, const iterator& end) const {
+      while (begin != end) {
+        out << *begin;
+        begin++;
+      }
+
+      return out;
+    }
+    /**
      * Discussion:
      *   Converts each byte in char and outputs it to the stream. Returns true, if both objects have the same data
      *

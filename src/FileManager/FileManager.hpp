@@ -25,7 +25,7 @@ class FileManager {
      * Input:
      *   - @param[in] - local reference to the folder
      */
-    void createPageFolder(const LocalReference& reference) const;
+    void createFolder(const LocalReference& reference) const;
     /**
      * Discussion:
      *  Write file to the specific directory at the relative path in the folder with data.
