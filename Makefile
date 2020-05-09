@@ -41,7 +41,7 @@ MODULES = $(OUTPUT_PATH)/main.o \
 		$(OUTPUT_PATH)/HTMLAnalyzer.o \
     \
 		$(OUTPUT_PATH)/ChunkMerger.o $(OUTPUT_PATH)/ResponseSaveManager.o \
-		$(OUTPUT_PATH)/FileDownloader.o
+		$(OUTPUT_PATH)/FileDownloader.o $(OUTPUT_PATH)/PageMirror.o
 
 all: compile
 

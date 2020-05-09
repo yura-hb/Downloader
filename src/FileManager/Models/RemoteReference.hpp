@@ -56,12 +56,12 @@ struct RemoteReference: public Reference {
      *  Output:
      *    - @param[out] - string representation of the url domain
      */
-    std::string domain();
+    std::string domain() const;
     /*
      *  Output:
-     *    - @param[out] - string representation of the url query
+     *    - @param[out] - string representation of the url query as a path
      */
-    std::string query();
+    std::string getPath() const override;
   private:
     URL url;
 };

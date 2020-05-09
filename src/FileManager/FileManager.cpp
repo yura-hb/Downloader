@@ -2,13 +2,17 @@
 
 void FileManager::createFolder(const LocalReference& reference) const {
   int result;
+
   // TODO: - Replace cerr with the specified logger
   if ((result = mkdir(reference.getPath().c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)) != 0)
     std::cerr << "Fail during creating directory" << std::endl;
-  // Try to open directory with the name
-  DIR *dir;
-  openDirectory(reference, dir);
-  closedir(dir);
+
+  // In case of error, try to open directory with the name
+  if (result) {
+    DIR *dir;
+    openDirectory(reference, dir);
+    closedir(dir);
+  }
 }
 
 void FileManager::saveFile(const LocalReference& reference, const Data<>& data, const Data<>::iterator& startPosition) const {
@@ -57,7 +61,6 @@ void FileManager::createRelativePathDirectories(const LocalReference& reference)
 
     // Load files from the folder
     std::vector<std::pair<std::string, uint8_t>> items = getFolderFiles(LocalReference(path));
-
     bool didFoundFile = false;
 
     for (const auto& item: items) {
@@ -77,7 +80,11 @@ void FileManager::createRelativePathDirectories(const LocalReference& reference)
 }
 
 void FileManager::openDirectory(const LocalReference& reference, DIR *& dir) const {
-  dir = opendir(reference.getPath().c_str());
+  std::string path = reference.getPath();
+  // In case of empty directory, check current
+  path = path + path == "" ? "." : "";
+
+  dir = opendir(path.c_str());
 
   if (dir == nullptr)
     throw Exception("Directory doesn't exist");

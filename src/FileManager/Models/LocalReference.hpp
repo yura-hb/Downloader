@@ -7,6 +7,7 @@
 
 struct LocalReference: public Reference {
   public:
+    LocalReference() = default;
     LocalReference(const std::string& query, bool shouldSimplify = false): Reference(Type::HYPER_LINK), path(query) {
       if (shouldSimplify)
         simplify();
@@ -67,19 +68,19 @@ struct LocalReference: public Reference {
      *  Output:
      *    - @param[out] - current path
      */
-    std::string getPath() const;
+    std::string getPath() const override;
     /*
      *  Output:
      *    - @param[out] - path splitted on the / components
      */
     std::list<std::string> loadComponents() const;
-  private:
-    std::string path;
     /*
      *  Discussion:
      *    Simplifies the path and removes all occurrences . // and ../ from the path.
      */
     void simplify();
+  private:
+    std::string path;
 };
 
 #endif

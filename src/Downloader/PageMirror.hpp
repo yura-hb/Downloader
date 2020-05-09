@@ -29,7 +29,8 @@ class PageMirror: public FileDownloader {
      *   @param[in] depth - the depth of the recursive download.
      *
      */
-    PageMirror(int maximalDepth = 1): maximalDepth(maximalDepth) {};
+    PageMirror(int maximalDepth = 1): FileDownloader(), maximalDepth(maximalDepth), lockedReferences({}) {};
+
     virtual ~PageMirror() = default;
     /**
      * Discussion:
@@ -42,12 +43,10 @@ class PageMirror: public FileDownloader {
      *   !!! Don't download the files out of the remote domain
      *
      * Input:
-     *   @param[in] ref - link to the page, which content is needed to be mirrored.
-     *   @param[in] filepath - reference to the local folder, to which should the files be saved.
+     *   @param[in] ref - link to the page, which content is needed to be mirrored..
      *
      */
-    virtual void mirror(const RemoteReference& ref,
-                        const LocalReference& filepath) const;
+    virtual void mirror(const RemoteReference& ref);
     /**
      * Discussion:
      *   Downloads specific file with setting references.
@@ -81,19 +80,26 @@ class PageMirror: public FileDownloader {
      * Discussion:
      *   Already loaded references
      */
-    std::unordered_map<const Request, const LocalReference> loadedReferences = {};
+  //  std::unordered_map<const Request, const LocalReference> loadedReferences = {};
     /**
      * Discussion:
      *   References, which are locked by the server
      */
-    std::set<const LocalReference> lockedReferences = {};
+    std::vector<LocalReference> lockedReferences;
     /**
      * Discussion:
      *   Prepares before mirroring the web site: sets the locked reference and downloads robots.txt
      */
-    bool prepare(const RemoteReference& url);
+    void prepare(const RemoteReference& ref);
+    /**
+     * Discussion:
+     *   Processes robots.txt file and sets locked reference dict
+     */
+    void processRobotsFile(const LocalReference& ref);
 
-    const std::string robotsFileQuery = "/robots.txt";
+    static const std::string robotsFileQuery;
+    static const std::string allUsersRobotsLockHeader;
+    static const std::string disallowKey;
 };
 
 #endif

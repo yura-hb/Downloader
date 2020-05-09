@@ -14,7 +14,7 @@
  *    In HTML and CSS there are several types of references:
  *      1. External link - link to the external source, which contains HTTP and HTTPs
  *      2. Hyperlinks - relative links to the source files
- *  
+ *
  *    External links are not important during mirroring process, as they contain information, which
  *    can be loaded by the browser during the view.
  *    Links should separated on the root directory link and current directory links
@@ -37,6 +37,7 @@ struct Reference {
     virtual std::unique_ptr<Reference> addAbsoluteReference(const std::string& str) const = 0;
     virtual std::unique_ptr<Reference> addPath(const std::string& str) const = 0;
     virtual URL requestUrl(const std::string& domain) const = 0;
+    virtual std::string getPath() const = 0;
   protected:
     std::string path;
 };

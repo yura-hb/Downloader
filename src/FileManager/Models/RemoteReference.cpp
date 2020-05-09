@@ -22,10 +22,10 @@ URL RemoteReference::requestUrl(const std::string& domain) const {
   return url;
 }
 
-std::string RemoteReference::domain() {
+std::string RemoteReference::domain() const {
   return url.domain;
 }
 
-std::string RemoteReference::query() {
+std::string RemoteReference::getPath() const {
   return url.query;
 }

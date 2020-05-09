@@ -1,7 +1,7 @@
 #include "Analyzer.hpp"
 
-std::vector<std::string> Analyzer::loadReferences(const std::string& str) const {
-  auto begin = str.begin();
+std::vector<std::string> Analyzer::loadReferences(const LocalReference& str) const {
+ /* auto begin = str.begin();
   auto end = str.end();
 
   std::vector<std::string> result = {};
@@ -20,9 +20,5 @@ std::vector<std::string> Analyzer::loadReferences(const std::string& str) const 
     }
     range.first++;
   }
-  return result;
-}
-
-std::string Analyzer::convertToLocalReferences(std::string& str, const std::vector<Reference>& references) const {
-  return "";
+  return result;*/
 }
