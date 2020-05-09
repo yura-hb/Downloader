@@ -16,7 +16,6 @@
 
 class FileManager {
   public:
-    // Constructor
     FileManager() = default;
     /**
      * Discussion:
@@ -40,13 +39,13 @@ class FileManager {
      *  - In case if folder is not created throw exception
      *  - In case if any error occurs during write operation throws exceptions
      */
-    void saveFile(const LocalReference& reference, const Data<>& data) const;
+    void saveFile(const LocalReference& reference, const Data<>& data, const Data<>::iterator& startPosition) const;
     /**
      *  Discussion:
      *    Clears the directory by calling rm -r * on some path
      *
      *  Input:
-     *    - @param[in] - local reference to the folde
+     *    - @param[in] - local reference to the folder
      */
     void clearDirectory(const LocalReference& reference) const;
   private:

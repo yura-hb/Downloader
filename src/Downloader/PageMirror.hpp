@@ -1,5 +1,5 @@
-#ifndef __PAGE_MIRRORER__
-#define __PAGE_MIRRORER__
+#ifndef __PAGE_MIRROR__
+#define __PAGE_MIRROR__
 
 #include <vector>
 #include <exception>
@@ -8,7 +8,7 @@
 #include <algorithm>
 #include <queue>
 
-#include "Downloader.hpp"
+#include "FileDownloader.hpp"
 
 #include "../Templates/Data.hpp"
 
@@ -18,20 +18,19 @@
 #include "../SyntaxAnalyzer/HTMLAnalyzer.hpp"
 
 #include "../FileManager/FileManager.hpp"
-#include "../FileManager/Models/ReferenceConverter.hpp"
 
 /**
  *  Downloader, which will be responsible for mirroring the page and all it underlying sources.
  */
-class PageMirrorer: public Downloader {
+class PageMirror: public FileDownloader {
   public:
     /**
      *  Input:
      *   @param[in] depth - the depth of the recursive download.
      *
      */
-    PageMirrorer(int maximalDepth = 1): maximalDepth(maximalDepth) {};
-    virtual ~PageMirrorer() = default;
+    PageMirror(int maximalDepth = 1): maximalDepth(maximalDepth) {};
+    virtual ~PageMirror() = default;
     /**
      * Discussion:
      *   Download is taken in several steps.

@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+
 #include "../Templates/StringConvertible.hpp"
 #include "../Templates/Exception.hpp"
 #include "../Templates/Data.hpp"
@@ -47,6 +48,7 @@ struct Header: public StringConvertible {
      * Base construct, which is ready to be parsed to string
      */
     Header(const _Header& header, const std::string& parameters) noexcept: header(header), parameters(parameters) {}
+    ~Header() {}
 
     std::string description() const override;
 

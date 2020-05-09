@@ -1,6 +1,7 @@
-#ifndef __DOWNLOADER__
-#define __DOWNLOADER__
+#ifndef __FILE_DOWNLOADER__
+#define __FILE_DOWNLOADER__
 
+#include <iostream>
 #include <vector>
 #include <exception>
 #include <set>
@@ -17,10 +18,10 @@
 /**
  *  Simple downloader, which will proceed download, processing and save of the file
  */
-class Downloader {
+class FileDownloader {
   public:
-    Downloader() {};
-    virtual ~Downloader() {};
+    FileDownloader() {};
+    virtual ~FileDownloader() {};
     /**
      *  Discussion:
      *    Downloads the file and saves it on the specific filepath. The filepath should contain filename
@@ -52,14 +53,15 @@ class Downloader {
     void sendRequest(const URL& url, Response& response, bool followRedirection) const;
     /**
      *  Discussion:
-     *    Saves the response object on the specific filepath
+     *    Saves the response object on the specific filepath.
+     *    In case of successful save the response data is being discarded, as can be accessed from the file at the filepath.
      *
      *  Input:
      *    @param[in] response - filled respons object
-     *    @param[in] filepath - filepath to save the object
+     *    @param[in] filepath - filepath, where to save the object
      *
      */
-    void save(const Response& response, const LocalReference& filepath) const;
+    void save(Response& response, const LocalReference& filepath) const;
 };
 
 #endif

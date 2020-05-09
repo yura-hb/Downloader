@@ -1,6 +1,6 @@
 #include "LocalReference.hpp"
 
-std::unique_ptr<Reference> LocalReference::addAbsoleteReference(const std::string& str) const {
+std::unique_ptr<Reference> LocalReference::addAbsoluteReference(const std::string& str) const {
   return std::make_unique<LocalReference>(str + "/" + path);
 }
 
@@ -8,7 +8,11 @@ std::unique_ptr<Reference> LocalReference::addPath(const std::string& str) const
   return std::make_unique<LocalReference>(path + "/" + str);
 }
 
-bool LocalReference::isDirectory() const{
+std::unique_ptr<Reference> LocalReference::addFileExtension(const std::string& str) const {
+  return std::make_unique<LocalReference>(path + "." + str);
+}
+
+bool LocalReference::isDirectory() const {
   return path.at(path.size() - 1) == '/';
 }
 
@@ -20,13 +24,13 @@ std::string LocalReference::getPath() const {
   return path;
 }
 
-std::string LocalReference::requestUrl(const std::string& domain) const {
+URL LocalReference::requestUrl(const std::string& domain) const {
   URL url;
   url.protocol = URL::Protocol::http;
   url.query = path;
   url.domain = domain;
 
-  return url.requestUrl();
+  return url;
 }
 
 std::list<std::string> LocalReference::loadComponents() const {

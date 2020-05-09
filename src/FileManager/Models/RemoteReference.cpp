@@ -1,6 +1,6 @@
 #include "RemoteReference.hpp"
 
-std::unique_ptr<Reference> RemoteReference::addAbsoleteReference(const std::string& str) const {
+std::unique_ptr<Reference> RemoteReference::addAbsoluteReference(const std::string& str) const {
   return std::make_unique<RemoteReference>(url);
 }
 
@@ -11,15 +11,15 @@ std::unique_ptr<Reference> RemoteReference::addPath(const std::string& str) cons
 }
 
 bool RemoteReference::isDirectory() const {
-  return false;
+  return url.query.at(path.size() - 1) == '/';;
 }
 
 bool RemoteReference::isRelative() const {
   return true;
 };
 
-std::string RemoteReference::requestUrl(const std::string& domain) const {
-  return url.requestUrl();
+URL RemoteReference::requestUrl(const std::string& domain) const {
+  return url;
 }
 
 std::string RemoteReference::domain() {

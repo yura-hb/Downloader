@@ -10,6 +10,8 @@
 #include <functional>
 #include <fstream>
 #include <tuple>
+#include <iterator>
+#include <fstream>
 
 /**
  * The wrapper around raw data information and provides basic methods to format data.
@@ -22,7 +24,7 @@ class Data {
     using iterator = std::list<uint8_t>::const_iterator;
 
     Data(): cmp() {}
-    Data(const char * str, const Comparator& cmp = {}): cmp(cmp) { append(str); }
+    Data(const char * str, size_t size, const Comparator& cmp = {}): cmp(cmp) { append(str, size); }
     Data(const std::string& str, const Comparator& cmp = {}): cmp(cmp) { append(str); }
     Data(const std::list<uint8_t>& store, const Comparator& cmp = {}): store(store), cmp(cmp) { }
     /**
@@ -106,7 +108,7 @@ class Data {
     bool empty() const { return store.empty(); }
     /**
      * Discussion:
-     *   Replaces all occurances of the old sequence with the new sequence
+     *   Replaces all occurrences of the old sequence with the new sequence
      *
      * Input:
      *   @param[in] oldSequence - sequence of elements, which will be replaced
@@ -125,7 +127,7 @@ class Data {
     }
     /**
      * Discussion:
-     *   Replaces all occurances of the old sequence with the new sequence
+     *   Replaces all occurrences of the old sequence with the new sequence
      *
      * Input:
      *   @param[in] oldSequence - string representation of data
@@ -138,13 +140,13 @@ class Data {
     }
     /**
      * Discussion:
-     *   Erases all occurances of the sequence starting from position
+     *   Erases all occurrences of the sequence starting from position
      *
      * Input:
      *   @param[in] sequence - sequence of the elements to remove
      *   @param[in] position - start position from which search will begin
      *
-     * Complexity: O(n - position), wher n is the size of the store
+     * Complexity: O(n - position), where n is the size of the store
      */
     void erase(const Data<Comparator>& sequence, size_t position = 0) {
       if (position >= size())
@@ -173,7 +175,7 @@ class Data {
     }
     /**
      * Discussion:
-     *   Erases first occurance of the specic sequence and returns the iterator in the new sequence
+     *   Erases first occurrence of the specic sequence and returns the iterator in the new sequence
      *
      * Input:
      *   @param[in] sequence - sequence of the elements to remove
@@ -254,14 +256,20 @@ class Data {
      *
      * Input:
      *   @param[in] str - string from which data is taken
+     *   @param[in] size - size of the buffer to read in
      *
      * Complexity: O(m), where m is size of the input string
      */
-    void append(const char *str) {
+    void append(const char *str, size_t size) {
       if (str == nullptr)
         return;
 
-      append(std::string(str));
+      size_t i = 0;
+
+      while (i != size) {
+        store.push_back(str[i]);
+        i++;
+      }
     }
     /**
      * Appends data to the storage
@@ -283,7 +291,7 @@ class Data {
      *
      * Complexity: O(m), where m is size of the input string
      */
-    void append(const  Data<>& data) {
+    void append(const Data<>& data) {
       for (const auto& byte: data.rawRepresentation())
         store.push_back(byte);
     }
@@ -291,17 +299,75 @@ class Data {
      * Writes data to the ostream from the specific sequence
      *
      * Input:
-     *   @param[in] str - data object, from which data is taken
+     *   @param[in] out - output stream,  where to write data
+     *   @param[in] begin - start position from which to write
+     *   @param[in] end - end position from which to write
+     *
+     * Output:
+     *   @param[out] - output stream
      *
      * Complexity: O(m), where m is size of the input string
      */
-    std::ostream& write(std::ostream& out, iterator begin, const iterator& end) const {
-      while (begin != end) {
-        out << *begin;
+    std::ostream& write(std::ostream& out, const iterator& begin, const iterator& end) const {
+      //  TODO: add buf iterator in case of c++17
+      std::ostream_iterator<uint8_t> output_iterator(out);
+      std::copy(begin, end, output_iterator);
+      return out;
+    }
+    /**
+     * Discussion:
+     *   Reads the data until some sequence is found or some error occurs
+     *
+     * Input:
+     *   @param[in] in - input stream
+     *   @param[in] sequence - the sequence of byte, when to stop reading the data from the file.
+     *
+     * Output:
+     *   @param[out] - input stream
+     *
+     * Complexity: O(m), where m is size of the file
+     */
+    std::ifstream& readUntil(std::ifstream& in, const Data<>& sequence) {
+      iterator pos = sequence.begin();
+
+      while (in.good() && pos != sequence.end()) {
+        uint8_t byte = 0;
+        in.read((char *)&byte, 1);
+
+        if (byte == *pos) {
+          pos++;
+        } else {
+          pos = sequence.begin();
+        }
+
+        store.push_back(byte);
+      }
+
+      return in;
+    }
+    /**
+     * Discussion:
+     *   Reads the data of the specific size from the input file, in case, if some error occurs stop the read
+     *
+     * Input:
+     *   @param[in] in - input stream
+     *   @param[in] size - size of the input
+     *
+     * Output:
+     *   @param[out] - input stream
+     *
+     * Complexity: O(m), where m is size of the file
+     */
+    std::ifstream& read(std::ifstream& in, size_t size) {
+      size_t begin = 0;
+
+      uint8_t byte = 0;
+      while (begin != size && in.read((char *)&byte, 1)) {
+        store.push_back(byte);
         begin++;
       }
 
-      return out;
+      return in;
     }
     /**
      * Discussion:
@@ -319,7 +385,7 @@ class Data {
     template <typename _Comparator = std::equal_to<uint8_t>>
     friend std::ostream& operator << (std::ostream& stream, const Data<_Comparator>& data) {
       for (const auto& c: data.rawRepresentation())
-        stream << (char)c;
+        stream << c;
 
       return stream;
     }
@@ -348,14 +414,7 @@ class Data {
       }
       return false;
     }
-    template <typename _Comparator = std::equal_to<uint8_t>>
-    friend bool operator == (const char * str, const Data<_Comparator>& data) {
-      return std::string(str) == data;
-    }
     bool operator == (const std::string& str) const {
-      return str == *this;
-    }
-    bool operator == (const char* str) const {
       return str == *this;
     }
   private:

@@ -11,10 +11,17 @@ void FileManager::createFolder(const LocalReference& reference) const {
   closedir(dir);
 }
 
-void FileManager::saveFile(const LocalReference& reference, const Data<>& data) const {
+void FileManager::saveFile(const LocalReference& reference, const Data<>& data, const Data<>::iterator& startPosition) const {
   createRelativePathDirectories(reference.getPath());
   std::ofstream out(reference.getPath(), std::ios::out | std::ios::trunc);
-  out << data;
+
+  if (out.bad())
+    throw Exception("Can't open file");
+
+  data.write(out, startPosition, data.end());
+
+  if (out.bad())
+    throw Exception("File write failed");
 }
 
 std::vector<std::pair<std::string, uint8_t>> FileManager::getFolderFiles(const LocalReference& reference) const {

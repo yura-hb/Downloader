@@ -2,37 +2,32 @@
 #define __CHUNK_MERGER__
 
 #include <iostream>
+#include <vector>
+#include <iterator>
+#include <fstream>
+
 #include "../../Templates/Data.hpp"
+#include "../../FileManager/Models/LocalReference.hpp"
 
 class ChunkMerger {
   public:
     /**
      *  Discussion:
-     *    Merges the chunks and sets them to the body
+     *    Processes the file at the file path and removes the chunk separation in it.
      *
      *  Input:
-     *    - @param[in] body - the chunked body data
+     *    - @param[in] filepath - the path to the file with the filepath.
      *
-     *  Output:
-     *    - @param[out] body - the merged body data
+     *  Throws:
+     *    Throws the exception, in case, if file operation were failed
+     *
      */
-    static void mergeChunks(Data<>& body);
+    static void mergeChunks(const LocalReference& filepath);
   private:
     static std::string separator;
-    /**
-     *  Discussion:
-     *    Reads specific chunk header and erases it from the body.
-     *    Returns the length of the chunks.
-     *    The format of chunck is the next:
-     *      chunk size \r\n chunk data \r\n chunk size \r\n .. \r\n zero chunck size
-     *
-     *  Input:
-     *    - @param[in] body - response in the chunked format
-     *
-     *  Output:
-     *    - @param[out] length of the chunk to read
-     */
-    static uint32_t readChunkHeader(Data<>& body);
+    static std::string temporaryFileExtension;
+
+    static uint32_t readHeader(std::ifstream& in);
 };
 
 #endif

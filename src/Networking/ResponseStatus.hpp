@@ -1,5 +1,5 @@
-#ifndef __RESPONSE_STATUS_H_
-#define __RESPONSE_STATUS_H_
+#ifndef __RESPONSE_STATUS_H__
+#define __RESPONSE_STATUS_H__
 
 #include <iostream>
 #include <string>
@@ -7,6 +7,7 @@
 #include <vector>
 #include <iterator>
 #include <algorithm>
+
 #include "../Templates/StringConvertible.hpp"
 
 struct ResponseStatus: public StringConvertible {
@@ -23,7 +24,7 @@ struct ResponseStatus: public StringConvertible {
       RESET_CONTENT = 205,
       PARTIAL_CONTENT = 207,
 
-      MULTIPLE_CHOISES = 300,
+      MULTIPLE_CHOICES = 300,
       MOVED_PERMANENTLY = 301,
       FOUND = 302,
       SEE_OTHER = 303,
@@ -38,7 +39,7 @@ struct ResponseStatus: public StringConvertible {
       NOT_FOUND = 404,
       METHOD_NOT_ALLOWED = 405,
       NOT_ACCEPTABLE = 406,
-      PROXY_AUTHENTIFICATION_REQUIRED = 407,
+      PROXY_AUTHENTICATION_REQUIRED = 407,
       REQUEST_TIMEOUT = 408,
       CONFLICT = 409,
       GONE = 410,
@@ -46,10 +47,10 @@ struct ResponseStatus: public StringConvertible {
       PRECONDITION_REQUIRED = 412,
       REQUEST_ENTITY_TOO_LARGE = 413,
       REQUEST_URI_TOO_LONG = 414,
-      USUPPORTED_MEDIA_TYPE =  415,
+      UNSUPPORTED_MEDIA_TYPE =  415,
 
       INTERNAL_SERVER_ERROR = 500,
-      NOT_IMPLEMNTED = 501,
+      NOT_IMPLEMENTED = 501,
       BAD_GATAWAY = 502,
       SERVICE_UNAVAILABLE = 503,
       GATAWAY_TIMEOUT = 504,
@@ -77,7 +78,7 @@ struct ResponseStatus: public StringConvertible {
     bool isFailed() const;
     /**
      *  Discussion:
-     *    Eqvivalent to !isFailed()
+     *    Equivalent to !isFailed()
      */
     bool isSuccessful() const;
     /**

@@ -1,6 +1,6 @@
 #include "URL.hpp"
 
-const std::string URL::regexString = "^(http\\:\\/\\/|https\\:\\/\\/|ftp\\:\\/\\/)?([a-z0-9\\.]+)(\\:[0-9]+)?(\\/[^?]+)?[\\?]?(.*)?$";
+const std::string URL::regexString = "^(http\\:\\/\\/|https\\:\\/\\/|ftp\\:\\/\\/)?([a-z0-9\\-\\.]+)(\\:[0-9]+)?(\\/[^?]+)?[\\?]?(.*)?$";
 
 URL::URL(const std::string &url) {
   parse(url);

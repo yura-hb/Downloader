@@ -8,7 +8,7 @@ void Receiver::receivePage(Data<> &str, const Socket &sock) {
   memset(buffer, '\0', bufSize + 1);
 
   while (sock.read(buffer, bufSize, receivedSize) && receivedSize > 0) {
-    str.append(buffer);
+    str.append(buffer, receivedSize);
     memset(buffer, '\0', bufSize + 1);
   }
 

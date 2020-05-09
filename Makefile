@@ -2,8 +2,7 @@
 
 CXX = clang++
 LD = g++
-FLAGS = -std=c++14 -Wall -pedantic -g -fsanitize=address -Wno-long-long $(INCLUDE_FLAGS)
-INCLUDE_FLAGS = -I/usr/local/Cellar/libpng/1.6.37/include
+FLAGS = -std=c++14 -Wall -pedantic -g -fsanitize=address,leak -Wno-long-long
 
 SRC_PATH = src
 OUTPUT_PATH = hayeuyur
@@ -12,11 +11,11 @@ PROGRAM_NAME = downloader.o
 SRC = $(SRC_PATH)/%.cpp
 NETWORKING_SRC = $(SRC_PATH)/Networking/%.cpp
 TEMPLATES_SRC = $(SRC_PATH)/Templates/%.cpp
-DOWNLOADER_SRC = $(SRC_PATH)/Downloader/%.cpp
 FILE_MANAGER_SRC = $(SRC_PATH)/FileManager/%.cpp
 FILE_MANAGER_MODELS_SRC = $(SRC_PATH)/FileManager/Models/%.cpp
 SYNTAX_ANALYZER_SRC = $(SRC_PATH)/SyntaxAnalyzer/%.cpp
 SYNTAX_ANALYZER_MODELS_SRC = $(SRC_PATH)/SyntaxAnalyzer/Models/%.cpp
+DOWNLOADER_SRC = $(SRC_PATH)/Downloader/%.cpp
 DOWNLOADER_HELPERS_SRC = $(SRC_PATH)/Downloader/Helpers/%.cpp
 
 OUTPUT = $(OUTPUT_PATH)/%.o
@@ -24,7 +23,9 @@ PROGRAM_PATH = $(OUTPUT_PATH)/$(PROGRAM_NAME)
 DOC_PATH = doc
 DOXYGEN_FILE = doxygex.dox
 
-MODULES = $(OUTPUT_PATH)/main.o $(OUTPUT_PATH)/Data.o $(OUTPUT_PATH)/Exception.o \
+MODULES = $(OUTPUT_PATH)/main.o \
+    \
+    $(OUTPUT_PATH)/Data.o $(OUTPUT_PATH)/Exception.o \
 		$(OUTPUT_PATH)/StringConvertible.o \
     \
 		$(OUTPUT_PATH)/Socket.o $(OUTPUT_PATH)/HTTPClient.o \
@@ -33,15 +34,14 @@ MODULES = $(OUTPUT_PATH)/main.o $(OUTPUT_PATH)/Data.o $(OUTPUT_PATH)/Exception.o
 	  $(OUTPUT_PATH)/Response.o  $(OUTPUT_PATH)/ResponseStatus.o \
 		\
 		$(OUTPUT_PATH)/Reference.o $(OUTPUT_PATH)/LocalReference.o $(OUTPUT_PATH)/RemoteReference.o \
-		$(OUTPUT_PATH)/ReferenceConverter.o $(OUTPUT_PATH)/FileManager.o \
+		$(OUTPUT_PATH)/FileManager.o \
 		\
 	  $(OUTPUT_PATH)/AbstractPattern.o $(OUTPUT_PATH)/Attribute.o \
 		$(OUTPUT_PATH)/Comment.o $(OUTPUT_PATH)/Analyzer.o $(OUTPUT_PATH)/CSSAnalyzer.o \
 		$(OUTPUT_PATH)/HTMLAnalyzer.o \
     \
-		$(OUTPUT_PATH)/ChunkMerger.o \
-		$(OUTPUT_PATH)/Downloader $(OUTPUT_PATH)/PageMirrorer.o $(OUTPUT_PATH)/PageSaveManager.o
-
+		$(OUTPUT_PATH)/ChunkMerger.o $(OUTPUT_PATH)/ResponseSaveManager.o \
+		$(OUTPUT_PATH)/FileDownloader.o
 
 all: compile
 
