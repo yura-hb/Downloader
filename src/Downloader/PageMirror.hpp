@@ -58,7 +58,7 @@ class PageMirror: public FileDownloader {
      *   @param[in] filepath - reference to the local folder, to which should the files be saved.
      *
      */
-    virtual void download(const RemoteReference& ref,
+    virtual Response download(const RemoteReference& ref,
                           const LocalReference& filepath) const override;
   protected:
     /**

@@ -1,12 +1,18 @@
 #include "Comment.hpp"
 
-std::vector<std::string> Comment::separators = { "//", "/*", "<!--" };
+bool Comment::consume(const Input& input, const EmitFunction& func) const {
+  if (input.second.size() < begin.size())
+    input.second.read(input.first, begin.size() - input.second.size());
 
-bool Comment::consume(const Range& range, const EmitFunction& func) const {
-  std::string buffer = AbstractPattern::prefix(range);
-  if (buffer != "") {
-    auto result = std::search(range.first, range.second, this -> end.begin(), this -> end.end());
-    range.first = result >= range.second ? range.second : result + this -> end.size() ;
-  }
-  return buffer == "";
+  if (input.second.size() < begin.size() || !input.second.beginsWith(begin))
+    return false;
+
+  input.second.readUntil(input.first, end);
+
+  if (input.first.eof())
+    return false;
+
+  input.second = {};
+
+  return true;
 }

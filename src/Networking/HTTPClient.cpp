@@ -5,8 +5,6 @@ bool HTTPClient::loadPage(const URL& url, Response& response) const {
 
   Data<> data("");
 
-  std::cout << request.createRequest();
-
   if (!performRequest(request, data))
     return false;
 

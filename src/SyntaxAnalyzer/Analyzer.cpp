@@ -1,24 +1,29 @@
 #include "Analyzer.hpp"
 
 std::vector<std::string> Analyzer::loadReferences(const LocalReference& str) const {
- /* auto begin = str.begin();
-  auto end = str.end();
+  if (str.isDirectory())
+    throw Exception("Can't work with directories");
 
-  std::vector<std::string> result = {};
+  std::ifstream in(str.getPath(), std::ios::in);
 
-  AbstractPattern::Range range(begin, end);
-  AbstractPattern::EmitFunction function = std::function<void(AbstractPattern::IndexRange)>(
-    [&]( const AbstractPattern::IndexRange& relIndexRange) {
-    result.push_back(std::string(range.first + relIndexRange.first, range.first + relIndexRange.second));
+  if (in.bad())
+    throw Exception("Can't read the file");
+
+  Data<> buffer;
+  std::vector<std::string> result;
+
+  AbstractPattern::EmitFunction function = std::function<void(std::string)>([&](const std::string& str) {
+    std::cout << str << std::endl;
+    result.push_back(str);
   });
 
-  while (range.first != range.second) {
+  while (in.good() || !buffer.empty()) {
     for (const auto& pattern : patterns) {
-      // Each pattern is a small FCM, if FCM succeds, skip the iteration
-      if (pattern -> consume(range, function))
+      if (pattern -> consume({in, buffer}, function))
         break;
     }
-    range.first++;
+    buffer.popFirst();
   }
-  return result;*/
+
+  return result;
 }

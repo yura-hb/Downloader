@@ -30,8 +30,11 @@ class FileDownloader {
      *    @param[in] url - string representation of the url
      *    @param[in] filepath - relative reference from the current directory where to save file
      *
+     *  Output:
+     *    @param[out] - response object containing headers
+     *
      */
-    virtual void download(const RemoteReference& ref, const LocalReference& filepath) const;
+    virtual Response download(const RemoteReference& ref, const LocalReference& filepath) const;
   protected:
     HTTPClient client;
     ResponseSaveManager saveManager;

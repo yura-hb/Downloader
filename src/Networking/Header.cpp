@@ -56,9 +56,3 @@ Header::Header(const Data<>& header) {
 std::string Header::description() const {
   return store[static_cast<int>(header)] + ": " + parameters.stringRepresentation();
 }
-
-std::ostream& operator<< (std::ostream& output, const Header& header) {
-  output << header.description();
-  return output;
-}
-

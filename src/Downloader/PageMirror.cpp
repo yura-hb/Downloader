@@ -12,9 +12,18 @@ void PageMirror::mirror(const RemoteReference& ref) {
 
 }
 
-void PageMirror::download(const RemoteReference& ref, const LocalReference& filepath) const {
-  FileDownloader::download(ref, filepath);
-  // - TODO: - Add analyzer
+Response PageMirror::download(const RemoteReference& ref, const LocalReference& filepath) const {
+  Response response = FileDownloader::download(ref, filepath);
+
+  for (const auto& header: response.headers)
+    std::cout << header.description() << std::endl;
+
+  if (response.loadHeader(Header::_Header::CONTENT_TYPE) == "text/html") {
+    HTMLAnalyzer analyzer;
+    std::vector<std::string> refs = analyzer.loadReferences(filepath);
+  }
+
+  return response;
 }
 
 void PageMirror::prepare(const RemoteReference& ref) {

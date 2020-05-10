@@ -21,11 +21,15 @@ struct Request {
       const Version &version = Version::_Version::v1_1,
       const std::vector<Header>& headers = {}): url(url), method(method), version(version), headers(headers) {}
   /**
-   * Creates request in the next format:
-   *    `METHOD` SPACE `HOST_QUERY` SPACE `VERSION` CRLF
-   *    `HEADER: value` CRLF
-   *    CRLF
-   * !!! Ends the request message with CRLF for more info, please check RFC2068
+   *  Discussion:
+   *    Creates request in the next format:
+   *       `METHOD` SPACE `HOST_QUERY` SPACE `VERSION` CRLF
+   *       `HEADER: value` CRLF
+   *       CRLF
+   *    !!! Ends the request message with CRLF for more info, please check RFC2068
+   *
+   *  Output:
+   *   - @param[out] - string representation of the request
    */
   std::string createRequest();
 

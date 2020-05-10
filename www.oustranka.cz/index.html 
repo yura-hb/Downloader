@@ -336,10 +336,10 @@ e-mail:
  <!--
  var prefix = '&#109;a' + 'i&#108;' + '&#116;o';
  var path = 'hr' + 'ef' + '=';
- var addy73668 = 'str&#97;nk&#97;' + '&#64;';
- addy73668 = addy73668 + '&#105;&#111;l' + '&#46;' + 'cz';
- document.write( '<a ' + path + '\'' + prefix + ':' + addy73668 + '\'>' );
- document.write( addy73668 );
+ var addy18288 = 'str&#97;nk&#97;' + '&#64;';
+ addy18288 = addy18288 + '&#105;&#111;l' + '&#46;' + 'cz';
+ document.write( '<a ' + path + '\'' + prefix + ':' + addy18288 + '\'>' );
+ document.write( addy18288 );
  document.write( '<\/a>' );
  //-->\n </script><script language='JavaScript' type='text/javascript'>
  <!--
@@ -356,10 +356,10 @@ e-mail:
  <!--
  var prefix = '&#109;a' + 'i&#108;' + '&#116;o';
  var path = 'hr' + 'ef' + '=';
- var addy28746 = '&#105;nf&#111;' + '&#64;';
- addy28746 = addy28746 + '&#111;&#117;str&#97;nk&#97;' + '&#46;' + 'cz';
- document.write( '<a ' + path + '\'' + prefix + ':' + addy28746 + '\'>' );
- document.write( addy28746 );
+ var addy5392 = '&#105;nf&#111;' + '&#64;';
+ addy5392 = addy5392 + '&#111;&#117;str&#97;nk&#97;' + '&#46;' + 'cz';
+ document.write( '<a ' + path + '\'' + prefix + ':' + addy5392 + '\'>' );
+ document.write( addy5392 );
  document.write( '<\/a>' );
  //-->\n </script><script language='JavaScript' type='text/javascript'>
  <!--
@@ -423,11 +423,11 @@ Starosta: 	 &Scaron;tefan Dvor&scaron;č&iacute;k<br />
 				<div class="moduletable">
 							<h3>
 					Kdo je tu?				</h3>
-				<!--Právě zde je/jsou<br />-->1 host<!-- online-->		</div>
+						</div>
 				<div class="moduletable">
 							<h3>
 					Počet přístupů od 1.11.2008:				</h3>
-				<strong>Přístupů:</strong> 2240427
+				<strong>Přístupů:</strong> 2240495
 		</div>
 										</div>
 							</div>
@@ -473,4 +473,4 @@ Copyright &copy; 2020 Obecní úřad STRÁNKA. All rights reserved.<br />
 
 </div>
 </body>
-</html><!-- 1589118912 -->
+</html><!-- 1589129067 -->

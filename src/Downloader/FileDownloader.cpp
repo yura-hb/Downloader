@@ -1,6 +1,6 @@
 #include "FileDownloader.hpp"
 
-void FileDownloader::download(const RemoteReference& ref, const LocalReference& filepath) const {
+Response FileDownloader::download(const RemoteReference& ref, const LocalReference& filepath) const {
   URL url(ref.requestUrl(""));
   Response response;
 
@@ -10,6 +10,8 @@ void FileDownloader::download(const RemoteReference& ref, const LocalReference& 
   } catch (const Exception& exc) {
     std::cerr << exc.what() << std::endl << std::endl;
   }
+
+  return response;
 }
 
 void FileDownloader::sendRequest(const URL& url, Response& response, bool followRedirection = true) const {

@@ -108,6 +108,16 @@ class Data {
     bool empty() const { return store.empty(); }
     /**
      * Discussion:
+     *   Pops the first element from the data, if exists.
+     *
+     * Complexity: O(1)
+     */
+    void popFirst() {
+      if (!empty())
+        store.pop_front();
+    }
+    /**
+     * Discussion:
      *   Replaces all occurrences of the old sequence with the new sequence
      *
      * Input:
@@ -199,6 +209,52 @@ class Data {
     }
     /**
      * Discussion:
+     *   Validates, if the sequence begins with some sequence.
+     *
+     * Input:
+     *   @param[in] sequence - sequence of the elements to find.
+     *
+     * Output:
+     *   @param[out] - boolean, value, indicating, if the sequence begins with some subsequence
+     *
+     * Complexity: O(m), where m is subsequence size.
+     */
+    bool beginsWith(const Data<Comparator>& sequence) const {
+      if (sequence.size() > size())
+        return false;
+
+      auto begin = sequence.begin();
+      auto storeBegin = store.begin();
+
+      while (begin != sequence.end() && *begin == *storeBegin) { begin++; storeBegin++; }
+
+      return begin == sequence.end();
+    }
+    /**
+     * Discussion:
+     *   Validates, if the sequence begins with some sequence.
+     *
+     * Input:
+     *   @param[in] sequence - sequence of the elements to find.
+     *
+     * Output:
+     *   @param[out] - boolean, value, indicating, if the sequence ends with some subsequence
+     *
+     * Complexity: O(m), where m is subsequence size.
+     */
+    bool endsWith(const Data<Comparator>& sequence) const {
+      if (sequence.size() > size())
+        return false;
+
+      auto begin = sequence.store.rbegin();
+      auto storeBegin = store.rbegin();
+
+      while (begin != sequence.store.rend() && *begin == *storeBegin) { begin++; storeBegin++; }
+
+      return begin == sequence.store.rend();
+    }
+    /**
+     * Discussion:
      *   Find first subsequence and returns the iterator to it
      *
      * Input:
@@ -239,7 +295,7 @@ class Data {
      *   @param[in] shouldAdvance - flag indicating, if the iterator, should be advances to the end of found sequence.
      *
      * Output:
-     *   @param[out] - iterator pointing to the position, where data subsequence begins.
+     *   @param[out] - iterator pointing to the position, where data subsequence begins (ends in case, if shouldAdvance).
      *
      * Complexity: O(n)
      */
@@ -384,7 +440,7 @@ class Data {
       size_t begin = 0;
 
       uint8_t byte = 0;
-      while (begin != size && in.read((char *)&byte, 1)) {
+      while (in.good() && begin != size && in.read((char *)&byte, 1)) {
         store.push_back(byte);
         begin++;
       }

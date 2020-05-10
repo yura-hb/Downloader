@@ -1,6 +1,6 @@
 .PHONY: doc
 
-CXX = clang++
+CXX = ASAN_OPTIONS=detect_leaks=1 clang++
 LD = g++
 FLAGS = -std=c++14 -Wall -pedantic -g -fsanitize=address,leak -Wno-long-long
 

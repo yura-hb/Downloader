@@ -28,26 +28,26 @@ Cíl:
 
  	 1. Přesměrování s jedné stránky na druhou.
   	 2. Zpracování dat v formátu chunku.
-         3. Možnost vytvářet různé dotazy pomocí dodání HTTP header.
-         4. Podpora robots.txt, které upřesňuje, které soubory lze stehnout s webové stránky.
+         3. Možnost vytvářet různé dotazy pomocí dodání HTTP headerů.
+         4. Podpora robots.txt, které upřesňuje, které soubory lze stahnout s webové stránky.
          5. Jako další rozšíření chtěl bych implementoval compress a gzip zpracování a trvalé připojení k socketu.
 
-	Pak bude podporovat nutné požadavky, jako 
+	Pak řešení bude podporovat nutné požadavky, jako
 	 1. převedení všech URL tak, aby odkazovaly na správné soubory na disku.
          2. prochází stránky rekurzivně (bez opakovaného stahování).
          3. umožňuje omezit hloubku rekurzivního procházení (hodnotou, omezením na podporované URL).
          4. BFS a DFS procházení.
 
-        Všechny tyto položky budou vyřešený pomocí stromu, který representuje všechny soubory v nějaké lokální položce. 
-        Uzlem stromu jsou struktury s jménem soubora nebo složky s meta informaci, třeba informaci, jestli nějaký soubor byl stahnut nebo ne.
+        Všechny tyto položky budou vyřešený pomocí stromu, který representuje všechny soubory v nějaké lokální položce.
+        Uzlem stromu jsou struktury s jménem souboru nebo složky s meta informaci, třeba informaci, jestli nějaký soubor byl stahnut nebo ne.
         Omezení na hloubku stahovaní bude vzdálenost od kořene stromu.
 
 Polymorfismus:
-	
+
 	1. První místo, kde se polymorfismus využívá jsou patterny, které hledají v textu výskyty odkazů na soubory. Základní třídou je AbstractPattern,
-	   který umí základní operace čtení, ale se nedokáže rozhodnout, co přečetl. Jeho potomky jako Comment a Attribute už umí poznat, co ony 		   přečetly, a říct to `Analyzerovi`.
-       
-        2. Analyzer je třída, která implementuje základní algoritmus procházení souboru a hledání odkazů. Její potomky HTMLAnalyzer a CSSAnalyzer jsou 	 	   třídy, které poskytují soubor patternů.
+	   která je abstraktní třídou. Jeho potomky jako Comment a Attribute už umí poznat, co ony 		   přečetly, a říct to `Analyzerovi`.
+
+        2. Analyzer je třída, která implementuje základní algoritmus procházení souboru a hledání odkazů. Její potomky HTMLAnalyzer a CSSAnalyzer jsou 	 	   třídy, které poskytují soubor paternů.
 
 	3. FileDownloader je třída, která implementuje základní stahování jednoho souboru. Její nadstavba je třída, PageMirror, která bude implementovat  	   stahování celé webové stránky.
 

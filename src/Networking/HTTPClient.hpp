@@ -19,19 +19,37 @@ class HTTPClient {
   private:
     std::string port = "80";
     /**
-     * Performs the whole pipeline of the HTTP request:
-     *  1. Creates socket and connects to it
-     *  2. Upload message
-     *  3. Fetch message
-     *  4. Disconnects from the server
+     *  Discussion:
+     *    Performs the whole pipeline of the HTTP request:
+     *     1. Creates socket and connects to it
+     *     2. Upload message
+     *     3. Fetch message
+     *     4. Disconnects from the server
+     *
+     *  Input:
+     *    - @param[in] request
+     *    - @param[in] result - reference to the data.
+     *
+     *  Output:
+     *    - @param[out] - true, in case, if no error occurred.
      */
     bool performRequest(Request request, Data<> &result) const;
     /**
-     * Converts string url to the URL object
+     *  Discussion:
+     *    Converts string url to the URL object.
+     *
+     *  Input:
+     *    - @param[in] url - string representation of the url.
+     *
+     *  Output:
+     *    - @param[out] - url object
      */
     URL convertLink(const std::string& url) const;
     /**
-     * Make basic request
+     *  Input:
+     *    - @param[in] url - url object.
+     *  Output:
+     *    - @param[out] - request object.
      */
     Request makeRequest(const URL& url) const;
 };

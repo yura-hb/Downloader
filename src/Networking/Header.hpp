@@ -40,18 +40,34 @@ struct Header {
     // - Content string
     Data<> parameters;
     /**
-     * Parses string and converts it in the header type and parameters
+     *  Discussion:
+     *    Parses string and converts it in the header type and parameters.
+     *    The format of the header is the next, Header: params\r\n.
+     *
+     *  Input:
+     *    - @param[in] header - data representation of the header.
+     *
+     *  Throws:
+     *    * In case, if header type is not found, throws Exception.
+     *    * In case, if header is in the incorrect format, throws Exception.
+     *
      */
     Header(const Data<>& header);
     /**
-     * Base construct, which is ready to be parsed to string
+     * Discussion:
+     *   Base construct, which is ready to be parsed to string
+     *
+     * Input:
+     *   - @param[in] header - header type
+     *   - @param[in] parameters - parameters of the header
      */
     Header(const _Header& header, const std::string& parameters) noexcept: header(header), parameters(parameters) {}
     ~Header() {}
-
+    /**
+     *  Output:
+     *   - @param[out] - string representation of the header.
+     */
     std::string description() const;
-
-    friend std::ostream& operator<< (std::ostream& output, const Header& header);
   private:
     static const std::vector<std::string> store;
 };
