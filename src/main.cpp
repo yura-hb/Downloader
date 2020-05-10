@@ -1,16 +1,15 @@
 #include <iostream>
-#include "HTTPClient.hpp"
+
+#include "Downloader/PageMirror.hpp"
+#include "Downloader/Helpers/DownloadFileTree.hpp"
 
 int main() {
+  FileDownloader downloader;
+  downloader.download(RemoteReference("https://www.zdravionline.cz/imgs/articles/858-1_vychod_slunce_main.jpg"), LocalReference("test.jpg"));
 
-  HTTPClient client;
+  PageMirror mirror;
+  mirror.mirror(RemoteReference("www.oustranka.cz"));
 
-  std::string buf = "";
-  std::string url = "www.google.com";
-
-  client.loadPage(url, buf);
-
-  std::cout << buf << std::endl;
 
   return 0;
 }
