@@ -142,7 +142,9 @@ void Socket::logError(Socket::SocketError error, std::string info) const {
       break;
     case SEND_ERROR:
       std::cerr << "Socket: Failed to send  " << info << std::endl;
+      break;
     case DOWNLOAD_ERROR:
       std::cerr << "Socket: Download failed" << info << std::endl;
+      break;
   }
 }

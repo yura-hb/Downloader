@@ -18,8 +18,10 @@ std::string URL::requestUrl() const {
       break;
     case Protocol::ftp:
       result += "ftp://";
+      break;
     case Protocol::undefined:
       result += "";
+      break;
   }
 
   result += port +  domain + query;
