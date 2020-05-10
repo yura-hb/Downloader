@@ -37,7 +37,9 @@ struct Reference {
     virtual std::unique_ptr<Reference> addAbsoluteReference(const std::string& str) const = 0;
     virtual std::unique_ptr<Reference> addPath(const std::string& str) const = 0;
     virtual URL requestUrl(const std::string& domain) const = 0;
+
     virtual std::string getPath() const = 0;
+    virtual std::string filename() const = 0;
   protected:
     std::string path;
 };

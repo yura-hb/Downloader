@@ -3,6 +3,7 @@
 const std::string PageMirror::robotsFileQuery = "/robots.txt";
 const std::string PageMirror::allUsersRobotsLockHeader = "User-agent: *";
 const std::string PageMirror::disallowKey = "Disallow";
+
 void PageMirror::mirror(const RemoteReference& ref) {
   prepare(ref);
 }
@@ -67,13 +68,12 @@ void PageMirror::processRobotsFile(const LocalReference& ref) {
 
     data = data.subsequence(parameterIter, end);
 
-    LocalReference ref(data.stringRepresentation(), true);
-    lockedReferences.push_back(ref);
+    try {
+      downloadTree.add(std::make_unique<LocalReference>(data.stringRepresentation(), true), true, false);
+    } catch (const Exception& exc) {
+      std::cerr << exc.what() << std::endl;
+    }
 
     data = {};
-  }
-
-  for (const auto& ref: lockedReferences) {
-    std::cout << ref.getPath() << std::endl;
   }
 }

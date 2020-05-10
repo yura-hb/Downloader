@@ -6,11 +6,10 @@
 #include <vector>
 #include <algorithm>
 
-#include "../Templates/StringConvertible.hpp"
 #include "../Templates/Exception.hpp"
 #include "../Templates/Data.hpp"
 
-struct Header: public StringConvertible {
+struct Header {
   public:
     // - Nested
     enum class _Header {
@@ -50,7 +49,7 @@ struct Header: public StringConvertible {
     Header(const _Header& header, const std::string& parameters) noexcept: header(header), parameters(parameters) {}
     ~Header() {}
 
-    std::string description() const override;
+    std::string description() const;
 
     friend std::ostream& operator<< (std::ostream& output, const Header& header);
   private:

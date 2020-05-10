@@ -15,7 +15,13 @@ class Analyzer {
     virtual ~Analyzer() = default;
     /**
      * Discussion:
-     *   Iterate
+     *   Reads bytes from the input file and checks for the url.
+     *
+     * Input:
+     *   @param[in] str - reference to the local file
+     *
+     * Output:
+     *   @param[out] - vector of the references
      */
     virtual std::vector<std::string> loadReferences(const LocalReference& str) const;
   protected:

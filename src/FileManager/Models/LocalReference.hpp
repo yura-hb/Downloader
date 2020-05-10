@@ -71,6 +71,14 @@ struct LocalReference: public Reference {
     std::string getPath() const override;
     /*
      *  Output:
+     *    - @param[out] - filename, in case if directory
+     *
+     *  Throws:
+     *    In case, if current file is not directory
+     */
+    std::string filename() const override;
+    /*
+     *  Output:
      *    - @param[out] - path splitted on the / components
      */
     std::list<std::string> loadComponents() const;

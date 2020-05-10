@@ -24,6 +24,18 @@ std::string LocalReference::getPath() const {
   return path;
 }
 
+std::string LocalReference::filename() const {
+  size_t separatorPosition = 0;
+  std::string separator = "/";
+
+  if (isDirectory() || (separatorPosition = path.rfind(separator)) != std::string::npos)
+    throw Exception("Is directory. [Hint: Local reference]");
+
+  separatorPosition += separator.size();
+
+  return path.substr(separatorPosition);
+}
+
 URL LocalReference::requestUrl(const std::string& domain) const {
   URL url;
   url.protocol = URL::Protocol::http;
@@ -34,9 +46,7 @@ URL LocalReference::requestUrl(const std::string& domain) const {
 }
 
 std::list<std::string> LocalReference::loadComponents() const {
-  if (type == Type::EXTERNAL_LINK)
-    return {};
-
+  // TODO - Remove as better implement with DATA
   std::list<std::string> list;
 
   auto begin = path.begin();

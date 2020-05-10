@@ -19,6 +19,8 @@
 
 #include "../FileManager/FileManager.hpp"
 
+#include "Helpers/DownloadFileTree.hpp"
+
 /**
  *  Downloader, which will be responsible for mirroring the page and all it underlying sources.
  */
@@ -29,7 +31,7 @@ class PageMirror: public FileDownloader {
      *   @param[in] depth - the depth of the recursive download.
      *
      */
-    PageMirror(int maximalDepth = 1): FileDownloader(), maximalDepth(maximalDepth), lockedReferences({}) {};
+    PageMirror(int maximalDepth = 1): FileDownloader(), maximalDepth(maximalDepth) {};
 
     virtual ~PageMirror() = default;
     /**
@@ -78,14 +80,9 @@ class PageMirror: public FileDownloader {
     std::queue<Request> loadQueue;
     /**
      * Discussion:
-     *   Already loaded references
+     *   Download file tree
      */
-  //  std::unordered_map<const Request, const LocalReference> loadedReferences = {};
-    /**
-     * Discussion:
-     *   References, which are locked by the server
-     */
-    std::vector<LocalReference> lockedReferences;
+    DownloadFileTree downloadTree;
     /**
      * Discussion:
      *   Prepares before mirroring the web site: sets the locked reference and downloads robots.txt

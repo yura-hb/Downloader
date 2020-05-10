@@ -8,9 +8,7 @@
 #include <iterator>
 #include <algorithm>
 
-#include "../Templates/StringConvertible.hpp"
-
-struct ResponseStatus: public StringConvertible {
+struct ResponseStatus {
   public:
     enum class _ResponseStatusCode {
       CONTINUE = 100,
@@ -90,7 +88,7 @@ struct ResponseStatus: public StringConvertible {
      * Discussion:
      *   Converts to string
      */
-    std::string description() const override;
+    std::string description() const;
 };
 
 #endif

@@ -26,7 +26,6 @@ DOXYGEN_FILE = doxygex.dox
 MODULES = $(OUTPUT_PATH)/main.o \
     \
     $(OUTPUT_PATH)/Data.o $(OUTPUT_PATH)/Exception.o \
-		$(OUTPUT_PATH)/StringConvertible.o \
     \
 		$(OUTPUT_PATH)/Socket.o $(OUTPUT_PATH)/HTTPClient.o \
 	  $(OUTPUT_PATH)/Receiver.o $(OUTPUT_PATH)/Request.o $(OUTPUT_PATH)/URL.o \
@@ -39,6 +38,8 @@ MODULES = $(OUTPUT_PATH)/main.o \
 	  $(OUTPUT_PATH)/AbstractPattern.o $(OUTPUT_PATH)/Attribute.o \
 		$(OUTPUT_PATH)/Comment.o $(OUTPUT_PATH)/Analyzer.o $(OUTPUT_PATH)/CSSAnalyzer.o \
 		$(OUTPUT_PATH)/HTMLAnalyzer.o \
+		\
+		$(OUTPUT_PATH)/DownloadFileTree.o \
     \
 		$(OUTPUT_PATH)/ChunkMerger.o $(OUTPUT_PATH)/ResponseSaveManager.o \
 		$(OUTPUT_PATH)/FileDownloader.o $(OUTPUT_PATH)/PageMirror.o

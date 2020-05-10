@@ -199,7 +199,7 @@ class Data {
     }
     /**
      * Discussion:
-     *   Find first subsequence and returns iterator to it
+     *   Find first subsequence and returns the iterator to it
      *
      * Input:
      *   @param[in] sequence - sequence of the elements to find
@@ -226,6 +226,28 @@ class Data {
 
         iter++;
       }
+
+      return iter;
+    }
+    /**
+     * Discussion:
+     *   Find first subsequence and returns the iterator to it. Adds possibility to move iterator to the end of the found sequence.
+     *
+     * Input:
+     *   @param[in] sequence - sequence of the elements to find.
+     *   @param[in] startPos - iterator to the start position, from which search will begin.
+     *   @param[in] shouldAdvance - flag indicating, if the iterator, should be advances to the end of found sequence.
+     *
+     * Output:
+     *   @param[out] - iterator pointing to the position, where data subsequence begins.
+     *
+     * Complexity: O(n)
+     */
+    iterator find(const Data<Comparator>& sequence, iterator startPos, bool shouldAdvance) const {
+      auto iter = find(sequence, startPos);
+
+      if (iter != store.end() && shouldAdvance)
+        std::advance(iter, sequence.size());
 
       return iter;
     }

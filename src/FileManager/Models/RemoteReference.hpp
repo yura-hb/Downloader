@@ -57,6 +57,16 @@ struct RemoteReference: public Reference {
      *    - @param[out] - string representation of the url domain
      */
     std::string domain() const;
+    /**
+     *  Discussion:
+     *    Returns the filename from the URL.
+     *    In case, if the current query is directory then the filename is index.html.
+     *    In case, if there are some parameters add them to the filaname with standard ? separator.
+     *
+     *  Output:
+     *    @param[out] - filename
+     */
+    std::string filename() const override;
     /*
      *  Output:
      *    - @param[out] - string representation of the url query as a path

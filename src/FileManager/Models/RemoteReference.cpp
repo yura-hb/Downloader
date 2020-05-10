@@ -26,6 +26,22 @@ std::string RemoteReference::domain() const {
   return url.domain;
 }
 
+std::string RemoteReference::filename() const {
+  std::string filename;
+
+  if (isDirectory())
+    filename = "index.html";
+
+  if (!url.parameters.empty() && isDirectory())
+    filename += "?" + url.parameters;
+
+  return filename;
+}
+
+
 std::string RemoteReference::getPath() const {
+  if (isDirectory())
+    return url.query + filename();
+
   return url.query;
 }

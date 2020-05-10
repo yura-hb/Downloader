@@ -4,9 +4,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "../Templates/StringConvertible.hpp"
 
-struct RequestMethod: public StringConvertible {
+struct RequestMethod {
   public:
     /**
      * HTTP Method:
@@ -32,7 +31,7 @@ struct RequestMethod: public StringConvertible {
 
     RequestMethod(const _RequestMethod method): method(method) {}
 
-    std::string description() const override;
+    std::string description() const;
   private:
     static const std::vector<std::string> store;
     _RequestMethod method;
