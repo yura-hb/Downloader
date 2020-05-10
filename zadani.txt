@@ -30,7 +30,7 @@ Cíl:
   	 2. Zpracování dat v formátu chunku.
          3. Možnost vytvářet různé dotazy pomocí dodání HTTP header.
          4. Podpora robots.txt, které upřesňuje, které soubory lze stehnout s webové stránky.
-         5. Jako další rozšíření chtěl bych implementoval compress a gzip zpracování a trvalé připojení k socketu, ale to už bude nad rámec semestrální 	    práce
+         5. Jako další rozšíření chtěl bych implementoval compress a gzip zpracování a trvalé připojení k socketu.
 
 	Pak bude podporovat nutné požadavky, jako 
 	 1. převedení všech URL tak, aby odkazovaly na správné soubory na disku.

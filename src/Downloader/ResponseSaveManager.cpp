@@ -29,10 +29,8 @@ void ResponseSaveManager::resolveTransferEncoding(const Response& response, cons
     try {
       if (data == "chunked") {
         ChunkMerger::mergeChunks(filepath);
-      } else if (data == "gzip") {
-
-      } else if (data == "deflate") {
-
+      //} else if (data == "gzip") {
+      //} else if (data == "deflate") {
       } else {
         return;
       }

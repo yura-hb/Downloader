@@ -6,7 +6,7 @@
 #include <iterator>
 #include <fstream>
 
-#include "../../Templates/Data.hpp"
+#include "../../Base/Data.hpp"
 #include "../../FileManager/Models/LocalReference.hpp"
 
 class ChunkMerger {

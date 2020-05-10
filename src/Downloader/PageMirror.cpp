@@ -6,6 +6,10 @@ const std::string PageMirror::disallowKey = "Disallow";
 
 void PageMirror::mirror(const RemoteReference& ref) {
   prepare(ref);
+  // TODO - Implement better solution
+  LocalReference saveRef = *dynamic_cast<LocalReference *>(LocalReference(ref.domain()).addPath(ref.getPath()).get());
+  download(ref, saveRef);
+
 }
 
 void PageMirror::download(const RemoteReference& ref, const LocalReference& filepath) const {
@@ -14,6 +18,7 @@ void PageMirror::download(const RemoteReference& ref, const LocalReference& file
 }
 
 void PageMirror::prepare(const RemoteReference& ref) {
+
   std::string domain = ref.domain();
 
   URL url;

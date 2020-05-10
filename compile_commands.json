@@ -163,23 +163,6 @@
    "-fsanitize=address,leak",
    "-Wno-long-long",
    "-c",
-   "src/Templates/StringConvertible.cpp",
-   "-o",
-   "hayeuyur/StringConvertible.o"
-  ],
-  "file": "src/Templates/StringConvertible.cpp"
- },
- {
-  "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
-  "arguments": [
-   "clang++",
-   "-std=c++14",
-   "-Wall",
-   "-pedantic",
-   "-g",
-   "-fsanitize=address,leak",
-   "-Wno-long-long",
-   "-c",
    "src/Networking/ResponseStatus.cpp",
    "-o",
    "hayeuyur/ResponseStatus.o"
@@ -316,11 +299,11 @@
    "-fsanitize=address,leak",
    "-Wno-long-long",
    "-c",
-   "src/Templates/Data.cpp",
+   "src/Base/Data.cpp",
    "-o",
    "hayeuyur/Data.o"
   ],
-  "file": "src/Templates/Data.cpp"
+  "file": "src/Base/Data.cpp"
  },
  {
   "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
@@ -333,11 +316,11 @@
    "-fsanitize=address,leak",
    "-Wno-long-long",
    "-c",
-   "src/Templates/Exception.cpp",
+   "src/Base/Exception.cpp",
    "-o",
    "hayeuyur/Exception.o"
   ],
-  "file": "src/Templates/Exception.cpp"
+  "file": "src/Base/Exception.cpp"
  },
  {
   "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
@@ -457,5 +440,39 @@
    "hayeuyur/FileDownloader.o"
   ],
   "file": "src/Downloader/FileDownloader.cpp"
+ },
+ {
+  "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
+  "arguments": [
+   "clang++",
+   "-std=c++14",
+   "-Wall",
+   "-pedantic",
+   "-g",
+   "-fsanitize=address,leak",
+   "-Wno-long-long",
+   "-c",
+   "src/Downloader/Helpers/DownloadFileTree.cpp",
+   "-o",
+   "hayeuyur/DownloadFileTree.o"
+  ],
+  "file": "src/Downloader/Helpers/DownloadFileTree.cpp"
+ },
+ {
+  "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
+  "arguments": [
+   "clang++",
+   "-std=c++14",
+   "-Wall",
+   "-pedantic",
+   "-g",
+   "-fsanitize=address,leak",
+   "-Wno-long-long",
+   "-c",
+   "src/Downloader/PageMirror.cpp",
+   "-o",
+   "hayeuyur/PageMirror.o"
+  ],
+  "file": "src/Downloader/PageMirror.cpp"
  }
 ]

@@ -1,11 +1,16 @@
 #include "LocalReference.hpp"
 
 std::unique_ptr<Reference> LocalReference::addAbsoluteReference(const std::string& str) const {
-  return std::make_unique<LocalReference>(str + "/" + path);
+  if (isRelative())
+    return std::make_unique<LocalReference>(str + path, true);
+  return std::make_unique<LocalReference>(str + "/" + path, true);
 }
 
 std::unique_ptr<Reference> LocalReference::addPath(const std::string& str) const {
-  return std::make_unique<LocalReference>(path + "/" + str);
+  if (isDirectory())
+    return std::make_unique<LocalReference>(path + str, true);
+
+  return std::make_unique<LocalReference>(path + "/" + str,  true);
 }
 
 std::unique_ptr<Reference> LocalReference::addFileExtension(const std::string& str) const {
@@ -13,6 +18,8 @@ std::unique_ptr<Reference> LocalReference::addFileExtension(const std::string& s
 }
 
 bool LocalReference::isDirectory() const {
+  if (path.empty())
+    return true;
   return path.at(path.size() - 1) == '/';
 }
 

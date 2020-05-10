@@ -2,7 +2,7 @@
 #define __RECEIVER_H__
 
 #include "Socket.hpp"
-#include "../Templates/Data.hpp"
+#include "../Base/Data.hpp"
 
 /**
  * Help class, to manage reading the message from the socket

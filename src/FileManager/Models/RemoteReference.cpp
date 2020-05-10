@@ -11,7 +11,9 @@ std::unique_ptr<Reference> RemoteReference::addPath(const std::string& str) cons
 }
 
 bool RemoteReference::isDirectory() const {
-  return url.query.at(path.size() - 1) == '/';;
+  if (url.query.empty())
+    return true;
+  return url.query.at(url.query.size() - 1) == '/';;
 }
 
 bool RemoteReference::isRelative() const {
@@ -27,7 +29,7 @@ std::string RemoteReference::domain() const {
 }
 
 std::string RemoteReference::filename() const {
-  std::string filename;
+  std::string filename = "";
 
   if (isDirectory())
     filename = "index.html";

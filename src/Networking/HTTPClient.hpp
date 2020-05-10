@@ -8,7 +8,7 @@
 #include "Request.hpp"
 #include "Response.hpp"
 #include "ResponseStatus.hpp"
-#include "../Templates/Data.hpp"
+#include "../Base/Data.hpp"
 
 class HTTPClient {
   public:

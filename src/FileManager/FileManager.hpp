@@ -11,8 +11,8 @@
 #include <list>
 #include <algorithm>
 #include "Models/LocalReference.hpp"
-#include "../Templates/Exception.hpp"
-#include "../Templates/Data.hpp"
+#include "../Base/Exception.hpp"
+#include "../Base/Data.hpp"
 
 class FileManager {
   public:

@@ -6,8 +6,8 @@
 #include <vector>
 #include <algorithm>
 
-#include "../Templates/Exception.hpp"
-#include "../Templates/Data.hpp"
+#include "../Base/Exception.hpp"
+#include "../Base/Data.hpp"
 
 struct Header {
   public:

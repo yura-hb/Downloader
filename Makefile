@@ -10,7 +10,7 @@ PROGRAM_NAME = downloader.o
 
 SRC = $(SRC_PATH)/%.cpp
 NETWORKING_SRC = $(SRC_PATH)/Networking/%.cpp
-TEMPLATES_SRC = $(SRC_PATH)/Templates/%.cpp
+BASE_SRC = $(SRC_PATH)/Base/%.cpp
 FILE_MANAGER_SRC = $(SRC_PATH)/FileManager/%.cpp
 FILE_MANAGER_MODELS_SRC = $(SRC_PATH)/FileManager/Models/%.cpp
 SYNTAX_ANALYZER_SRC = $(SRC_PATH)/SyntaxAnalyzer/%.cpp
@@ -70,7 +70,7 @@ $(OUTPUT) : $(SRC)
 $(OUTPUT) : $(NETWORKING_SRC)
 	$(CXX) $(FLAGS) -c $^ -o $@
 
-$(OUTPUT) : $(TEMPLATES_SRC)
+$(OUTPUT) : $(BASE_SRC)
 	$(CXX) $(FLAGS) -c $^ -o $@
 
 $(OUTPUT) : $(DOWNLOADER_SRC)

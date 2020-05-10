@@ -64,8 +64,6 @@ class ResponseSaveManager {
      *
      */
     void resolveTransferEncoding(const Response& response, const LocalReference& filepath) const;
-   // const std::string Response::headerParametersSeparator = ", ";
-   // const std::string Response::textContentTypePrefix = "text/";
 };
 
 

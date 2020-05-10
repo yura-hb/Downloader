@@ -8,7 +8,7 @@
 #include "URL.hpp"
 #include "Header.hpp"
 #include "ResponseStatus.hpp"
-#include "../Templates/Data.hpp"
+#include "../Base/Data.hpp"
 
 struct Response {
   public:

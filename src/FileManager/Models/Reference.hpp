@@ -8,7 +8,7 @@
 #include <list>
 #include <functional>
 #include "../../Networking/URL.hpp"
-#include "../../Templates/Exception.hpp"
+#include "../../Base/Exception.hpp"
 /**
  *  Discussion:
  *    In HTML and CSS there are several types of references:
