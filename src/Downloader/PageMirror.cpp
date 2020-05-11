@@ -1,33 +1,70 @@
 #include "PageMirror.hpp"
 
 const std::string PageMirror::robotsFileQuery = "/robots.txt";
+const std::string PageMirror::htmlFileContentType = "text/html";
+const std::string PageMirror::cssFileContentType = "css/html";
 const std::string PageMirror::allUsersRobotsLockHeader = "User-agent: *";
 const std::string PageMirror::disallowKey = "Disallow";
 
 void PageMirror::mirror(const RemoteReference& ref) {
   prepare(ref);
+  mirrorDomain = ref.domain();
   // TODO - Implement better solution
   LocalReference saveRef = *dynamic_cast<LocalReference *>(LocalReference(ref.domain()).addPath(ref.getPath()).get());
   download(ref, saveRef);
 
 }
 
-Response PageMirror::download(const RemoteReference& ref, const LocalReference& filepath) const {
+Response PageMirror::download(const RemoteReference& ref, const LocalReference& filepath) {
   Response response = FileDownloader::download(ref, filepath);
 
   for (const auto& header: response.headers)
     std::cout << header.description() << std::endl;
 
-  if (response.loadHeader(Header::_Header::CONTENT_TYPE) == "text/html") {
+  const Data<> contentType = response.loadHeader(Header::_Header::CONTENT_TYPE);
+  std::vector<std::string> references;
+
+  if (contentType == htmlFileContentType) {
     HTMLAnalyzer analyzer;
-    std::vector<std::string> refs = analyzer.loadReferences(filepath);
+    references = analyzer.loadReferences(filepath);
+  } else if (contentType == cssFileContentType) {
+    CSSAnalyzer analyzer;
+    references = analyzer.loadReferences(filepath);
+  } else {
+    return response;
+  }
+
+
+  try {
+    for (const std::string& relatedReference: references) {
+      URL url(relatedReference);
+
+      std::cout << relatedReference << std::endl;
+
+      if (url.isValid()) {
+        if (URL::compareDomains(url.domain, mirrorDomain))
+          downloadTree.add(std::make_unique<RemoteReference>(url));
+      } else {
+        std::unique_ptr<Reference> localRef = std::make_unique<LocalReference>(relatedReference);
+
+        if (localRef -> isRelative())
+          downloadTree.add(localRef);
+        else
+          downloadTree.add(localRef -> addAbsoluteReference(ref.getPath()));
+      }
+
+      downloadTree.logTreeDescription();
+    }
+
+    downloadTree.logTreeDescription();
+  } catch (const Exception& exc) {
+    std::cerr << exc.what() << std::endl;
   }
 
   return response;
 }
 
 void PageMirror::prepare(const RemoteReference& ref) {
-
   std::string domain = ref.domain();
 
   URL url;
@@ -83,6 +120,7 @@ void PageMirror::processRobotsFile(const LocalReference& ref) {
     data = data.subsequence(parameterIter, end);
 
     try {
+      std::cout << data.stringRepresentation();
       downloadTree.add(std::make_unique<LocalReference>(data.stringRepresentation(), true), true, false);
     } catch (const Exception& exc) {
       std::cerr << exc.what() << std::endl;

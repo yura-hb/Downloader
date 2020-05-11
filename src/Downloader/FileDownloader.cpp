@@ -1,6 +1,6 @@
 #include "FileDownloader.hpp"
 
-Response FileDownloader::download(const RemoteReference& ref, const LocalReference& filepath) const {
+Response FileDownloader::download(const RemoteReference& ref, const LocalReference& filepath) {
   URL url(ref.requestUrl(""));
   Response response;
 

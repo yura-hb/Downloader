@@ -16,6 +16,7 @@
 #include "../Networking/HTTPClient.hpp"
 
 #include "../SyntaxAnalyzer/HTMLAnalyzer.hpp"
+#include "../SyntaxAnalyzer/CSSAnalyzer.hpp"
 
 #include "../FileManager/FileManager.hpp"
 
@@ -59,7 +60,7 @@ class PageMirror: public FileDownloader {
      *
      */
     virtual Response download(const RemoteReference& ref,
-                          const LocalReference& filepath) const override;
+                              const LocalReference& filepath) override;
   protected:
     /**
      * Model for storing info about the Request and download position
@@ -80,6 +81,11 @@ class PageMirror: public FileDownloader {
     std::queue<Request> loadQueue;
     /**
      * Discussion:
+     *   As mirroring is done only be one site domain, need to hold mirror domain
+     */
+    std::string mirrorDomain;
+    /**
+     * Discussion:
      *   Download file tree
      */
     DownloadFileTree downloadTree;
@@ -95,6 +101,8 @@ class PageMirror: public FileDownloader {
     void processRobotsFile(const LocalReference& ref);
 
     static const std::string robotsFileQuery;
+    static const std::string htmlFileContentType;
+    static const std::string cssFileContentType;
     static const std::string allUsersRobotsLockHeader;
     static const std::string disallowKey;
 };

@@ -32,7 +32,7 @@ struct DownloadFileTree {
      *    @param[in] isDownloaded - boolead flag indicating, that the element is downloaded
      *
      *  Throws:
-     *    Throws an exception, in case, if isLocked state is set on the file reference
+     *    Throws an exception, in case, if is the reference is not relative.
      *
      */
     void add(const std::unique_ptr<Reference>& ref, bool isLocked = false, bool isDownloaded = false);
@@ -44,7 +44,7 @@ struct DownloadFileTree {
      *    @param[in] ref - reference, containing the relative path from the current directory
      *
      *  Throws:
-     *    Throws an exception, in case, if isLocked state is set on the file reference
+     *    Throws an exception, in case, if the reference doesn't points to the file.
      *
      */
     void setDownloaded(const std::unique_ptr<Reference>& ref);
@@ -56,7 +56,7 @@ struct DownloadFileTree {
      *    @param[in] ref - reference, containing the relative path from the current directory
      *
      *  Throws:
-     *    Throws an exception, in case, if isLocked state is set on the file reference
+     *    Throws an exception, in case, if the reference doesn't points to the file.
      *
      */
     void setLocked(const std::unique_ptr<Reference>& ref);
@@ -68,10 +68,23 @@ struct DownloadFileTree {
      *    @param[in] ref - reference, containing the relative path from the current directory
      *
      *  Throws:
-     *    Throws an exception, in case, if isLocked state is set on the file reference
+     *    Throws an exception, in case, if the reference doesn't points to the file.
      *
      */
     void setFailed(const std::unique_ptr<Reference>& ref);
+    /**
+     *  Discussion:
+     *    Walks the tree and provides next download element.
+     *
+     *  Output:
+     *    - @param[out] - string path to the file, in case, if some finded, otherwise empty string.
+     */
+    std::string nextDownloadReference() const;
+    /**
+     *  Discussion:
+     *    Prints out the state of the tree and each node
+     */
+    void logTreeDescription() const;
   private:
     class LockedReferenceException: public std::exception {
       public:
@@ -154,6 +167,12 @@ struct DownloadFileTree {
      *
      */
     void search(std::shared_ptr<Node>& node, const std::unique_ptr<Reference>& ref, bool insertItemsDuringSearch);
+    /**
+     *  Input:
+     *    - @param[in] node - node, from which start printing.
+     *    - @param[in] level - level of printing the node.
+     */
+    void logTreeDescription(const std::shared_ptr<Node>& node, int level = 0) const;
 };
 
 #endif

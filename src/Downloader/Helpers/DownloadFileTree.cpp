@@ -33,6 +33,24 @@ void DownloadFileTree::setFailed(const std::unique_ptr<Reference>& ref) {
     tmp -> state.isDownloaded = true;
 }
 
+std::string DownloadFileTree::nextDownloadReference() const {
+  return "";
+}
+
+void DownloadFileTree::logTreeDescription() const {
+  logTreeDescription(root, 0);
+}
+
+void DownloadFileTree::logTreeDescription(const std::shared_ptr<Node>& node, int level) const {
+  std::cout << std::string(level * 2, ' ') << node -> name << std::endl;
+
+  for (const auto& ref: node -> children)
+    if (ref -> isLeaf)
+      std::cout << std::string(level * 2, ' ') << ref -> name << " [LEAF] " << std::endl;
+    else
+      logTreeDescription(ref, level + 1);
+}
+
 void DownloadFileTree::addNewNode(std::shared_ptr<Node>& parent, const std::string& name, bool isLeaf) {
   std::shared_ptr<Node> newNode = std::make_shared<Node>(name);
   newNode -> isLeaf = isLeaf;

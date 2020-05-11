@@ -302,8 +302,11 @@ class Data {
     iterator find(const Data<Comparator>& sequence, iterator startPos, bool shouldAdvance) const {
       auto iter = find(sequence, startPos);
 
-      if (iter != store.end() && shouldAdvance)
-        std::advance(iter, sequence.size());
+      if (iter != store.end() && shouldAdvance) {
+        auto size = 0;
+
+        while (size != sequence.size() && iter != store.end()) { iter++; size++; }
+      }
 
       return iter;
     }
@@ -494,6 +497,20 @@ class Data {
     }
     bool operator == (const std::string& str) const {
       return str == *this;
+    }
+    bool operator == (const Data<Comparator>& data) {
+      if (size() == data.size()) {
+        auto i = begin();
+        auto j = data.begin();
+
+        while (data.cmp(*i, *j)) { i++; j++; }
+
+        if (i != end())
+          return false;
+
+        return true;
+      }
+      return false;
     }
   private:
     /**

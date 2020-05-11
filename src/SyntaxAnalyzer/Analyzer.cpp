@@ -13,7 +13,6 @@ std::vector<std::string> Analyzer::loadReferences(const LocalReference& str) con
   std::vector<std::string> result;
 
   AbstractPattern::EmitFunction function = std::function<void(std::string)>([&](const std::string& str) {
-    std::cout << str << std::endl;
     result.push_back(str);
   });
 

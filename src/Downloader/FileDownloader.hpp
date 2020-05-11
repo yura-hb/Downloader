@@ -34,7 +34,7 @@ class FileDownloader {
      *    @param[out] - response object containing headers
      *
      */
-    virtual Response download(const RemoteReference& ref, const LocalReference& filepath) const;
+    virtual Response download(const RemoteReference& ref, const LocalReference& filepath);
   protected:
     HTTPClient client;
     ResponseSaveManager saveManager;

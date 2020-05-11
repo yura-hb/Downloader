@@ -1,6 +1,9 @@
 #include "URL.hpp"
 
-const std::string URL::regexString = "^(http\\:\\/\\/|https\\:\\/\\/|ftp\\:\\/\\/)?([a-z0-9\\-\\.]+)(\\:[0-9]+)?(\\/[^?]+)?[\\?]?(.*)?$";
+const std::string URL::httpPrefix = "http://";
+const std::string URL::httpsPrefix = "https://";
+const std::string URL::ftpPrefix = "ftp://";
+const std::string URL::wwwPrefix = "www.";
 
 URL::URL(const std::string &url) {
   parse(url);
@@ -22,10 +25,11 @@ std::string URL::requestUrl() const {
       result += "";
   }
 
-  result += port +  domain + query;
+  result += domain + query;
 
   if (parameters != "")
     result += "?" + parameters;
+
   return result;
 }
 
@@ -36,30 +40,73 @@ bool URL::isValid() const {
     std::any_of(domain.begin(), domain.end(), [](char c) { return isalpha(c); });
 }
 
-void URL::parse(const std::string &url) {
-  try {
-    std::regex regex(URL::regexString);
-    std::smatch match;
-    if (std::regex_search(url, match, regex) && match.size() == 6) {
+void URL::parse(const std::string &urlString) {
+  Data<> url = urlString;
 
-      std::string protocolMatch = match.str(1);
-
-      if (protocolMatch == "http://") {
-        protocol = Protocol::http;
-      } else if (protocolMatch == "https://") {
-        protocol = Protocol::https;
-      } else if (protocolMatch == "ftp://") {
-        protocol = Protocol::ftp;
-      } else if (protocolMatch == "") {
-        protocol = Protocol::http;
-      }
-
-      domain = match.str(2);
-      port = match.str(3);
-      query = match.str(4).empty() ? "/" : match.str(4);
-      parameters = match.str(5);
-    }
-  } catch (std::regex_error& error) {
-    std::cerr << "URL: parse error" << error.code() << std::endl;
+  if (url.beginsWith(httpPrefix)) {
+    url.eraseFirst(httpPrefix, url.begin());
+    protocol = Protocol::http;
+  } else if (url.beginsWith(httpsPrefix)) {
+    url.eraseFirst(httpsPrefix, url.begin());
+    protocol = Protocol::https;
+  } else if (url.beginsWith(ftpPrefix)) {
+    url.eraseFirst(ftpPrefix, url.begin());
+    protocol = Protocol::ftp;
+  } else {
+    protocol = Protocol::http;
   }
+
+  std::vector<uint8_t> separators = { '/', '?' };
+
+  auto begin = url.begin();
+
+  while (begin != url.end()) {
+    auto separatorIndex = separators.begin();
+    if ((separatorIndex = std::find(separators.begin(), separators.end(), *begin)) != separators.end()) {
+      if (domain.empty()) {
+        if (*separatorIndex == '/') {
+          domain = url.subsequence(url.begin(), begin).stringRepresentation();
+          url.eraseSequence(url.begin(), begin);
+        } else if (*separatorIndex == '?') {
+          domain = url.subsequence(url.begin(), begin).stringRepresentation();
+          begin++;
+          parameters = url.subsequence(begin, url.end()).stringRepresentation();
+          query = "/";
+          break;
+        }
+      } else {
+        if (*separatorIndex == '?') {
+          query = url.subsequence(url.begin(), begin).stringRepresentation();
+          begin++;
+          parameters = url.subsequence(begin, url.end()).stringRepresentation();
+          break;
+        }
+      }
+    }
+
+    begin++;
+  }
+
+  if (!url.empty()) {
+    if (domain.empty()) {
+      domain = url.stringRepresentation();
+    } else {
+      query = url.stringRepresentation();
+    }
+  }
+
+  if (query.empty())
+    query = "/";
+}
+
+bool URL::compareDomains(const std::string& lhs, const std::string& rhs) {
+  std::string lhsCopy = lhs, rhsCopy = rhs;
+
+  if (lhsCopy.find(wwwPrefix) == 0)
+    lhsCopy.erase(0, wwwPrefix.size());
+
+  if (rhsCopy.find(wwwPrefix) == 0)
+    rhsCopy.erase(0, wwwPrefix.size());
+
+  return lhsCopy == rhsCopy;
 }
