@@ -21,7 +21,7 @@ struct Request {
       const Version &version = Version::_Version::v1_1,
       const std::vector<Header>& headers = {}): url(url), method(method), version(version), headers(headers) {}
   /**
-   *  Discussion:
+   *  @brief
    *    Creates request in the next format:
    *       `METHOD` SPACE `HOST_QUERY` SPACE `VERSION` CRLF
    *       `HEADER: value` CRLF
@@ -31,7 +31,7 @@ struct Request {
    *  Output:
    *   - @param[out] - string representation of the request
    */
-  std::string createRequest();
+  std::string createRequest() const;
 
   private:
     std::string spaceSeparator = " ";

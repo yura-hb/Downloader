@@ -23,7 +23,7 @@ struct AbstractPattern {
                     const std::string& end): begin(begin), separator(separator), end(end) {}
     virtual ~AbstractPattern() = default;
     /**
-     *  Discussion:
+     *  @brief
      *    Consumes the bytes from the input stream, and in case, if the pattern matches fill calls emit function.
      *    Otherwise caches the bytes, in buffer.
      *

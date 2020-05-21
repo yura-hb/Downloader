@@ -23,7 +23,7 @@ class FileDownloader {
     FileDownloader() {};
     virtual ~FileDownloader() {};
     /**
-     *  Discussion:
+     *  @brief
      *    Downloads the file and saves it on the specific filepath. The filepath should contain filename
      *
      *  Input:
@@ -39,7 +39,7 @@ class FileDownloader {
     HTTPClient client;
     ResponseSaveManager saveManager;
     /**
-     *  Discussion:
+     *  @brief
      *    Commit the request cycle with the possible redirection and returns response
      *
      *  Input:
@@ -55,7 +55,7 @@ class FileDownloader {
      */
     void sendRequest(const URL& url, Response& response, bool followRedirection) const;
     /**
-     *  Discussion:
+     *  @brief
      *    Saves the response object on the specific filepath.
      *    In case of successful save the response data is being discarded, as can be accessed from the file at the filepath.
      *

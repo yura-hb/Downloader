@@ -11,7 +11,7 @@ struct RemoteReference: public Reference {
     RemoteReference(const URL& url): Reference(Type::EXTERNAL_LINK), url(url) {}
     ~RemoteReference() = default;
     /**
-     *  Discussion:
+     *  @brief
      *    Doesn't do anything, as not appliable on the links
      *
      *  Input:
@@ -22,7 +22,7 @@ struct RemoteReference: public Reference {
      */
     std::unique_ptr<Reference> addAbsoluteReference(const std::string& str) const override;
     /**
-     *  Discussion:
+     *  @brief
      *    Add path to the url query
      *
      *  Input:
@@ -33,7 +33,7 @@ struct RemoteReference: public Reference {
      */
     std::unique_ptr<Reference> addPath(const std::string& str) const override;
     /**
-     *  Discussion:
+     *  @brief
      *    Validates, if the query points to the directory
      *
      *  Output:
@@ -58,7 +58,7 @@ struct RemoteReference: public Reference {
      */
     std::string domain() const;
     /**
-     *  Discussion:
+     *  @brief
      *    Returns the filename from the URL.
      *    In case, if the current query is directory then the filename is index.html.
      *    In case, if there are some parameters add them to the filaname with standard ? separator.

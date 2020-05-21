@@ -17,7 +17,7 @@ class Logger {
     };
 
     /**
-     *  Discussion:
+     *  @brief
      *    Logs the request sent to the server
      *
      *  Input:
@@ -26,7 +26,7 @@ class Logger {
      */
     static void logRequest(const Request& request, Level level);
     /**
-     *  Discussion:
+     *  @brief
      *    Logs the parsed headers from the server
      *
      *  Input:
@@ -35,7 +35,7 @@ class Logger {
      */
     static void logResponse(const Response& response, Level level);
     /**
-     *  Discussion:
+     *  @brief
      *    Logs different exceptions
      *
      *  Input:

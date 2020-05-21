@@ -29,17 +29,17 @@ struct URL {
     URL(const std::string &url);
     ~URL() = default;
     /**
-     * Discussion:
+     * @brief
      *   Convert url from components to string format
      */
     std::string requestUrl() const;
     /**
-     * Discussion:
+     * @brief
      *   Validaties if the URL is valid
      */
     bool isValid() const;
     /**
-     * Discussion:
+     * @brief
      *   Compares two domains, if they are equal. Skips www domain.
      *   Note:
      *    There can be a wide range of public suffixes in the URL.
@@ -48,7 +48,7 @@ struct URL {
     static bool compareDomains(const std::string& lhs, const std::string& rhs);
   private:
     /**
-     * Discussion:
+     * @brief
      *   Consumes the string and sets all URL parameters
      */
     void parse(const std::string &urlString);

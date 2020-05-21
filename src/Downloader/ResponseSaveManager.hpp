@@ -9,7 +9,7 @@
 class ResponseSaveManager {
   public:
     /**
-     *  Discussion:
+     *  @brief
      *    Processes the pure response from the server and saves to the filepath.
      *    In case of successful file save discards the response data.
      *
@@ -27,7 +27,7 @@ class ResponseSaveManager {
      */
     void process(Response& response, const LocalReference& filepath) const;
     /**
-     *  Discussion:
+     *  @brief
      *    If response is the text/html or text/css content type, overwrite local references with
      *    the links.
      *    !!! Important, this is done in the blindfold way without validating, if the file thr file exists on the disk or not
@@ -45,7 +45,7 @@ class ResponseSaveManager {
     static const std::string parameterSeparator;
 
     /**
-     *  Discussion:
+     *  @brief
      *    Resolves transfer encoding of the file data downloaded from the server.
      *
      *    There are several of them:

@@ -107,7 +107,7 @@ class Data {
      */
     bool empty() const { return store.empty(); }
     /**
-     * Discussion:
+     * @brief
      *   Pops the first element from the data, if exists.
      *
      * Complexity: O(1)
@@ -117,7 +117,7 @@ class Data {
         store.pop_front();
     }
     /**
-     * Discussion:
+     * @brief
      *   Replaces all occurrences of the old sequence with the new sequence
      *
      * Input:
@@ -136,7 +136,7 @@ class Data {
       }
     }
     /**
-     * Discussion:
+     * @brief
      *   Replaces all occurrences of the old sequence with the new sequence
      *
      * Input:
@@ -149,7 +149,7 @@ class Data {
       replace(Data(oldSequence), newSequence);
     }
     /**
-     * Discussion:
+     * @brief
      *   Erases all occurrences of the sequence starting from position
      *
      * Input:
@@ -168,7 +168,7 @@ class Data {
         iter = eraseFirst(sequence, iter);
     }
     /**
-     * Discussion:
+     * @brief
      *   Erases data in the interval [begin, end)
      *
      * Input:
@@ -184,7 +184,7 @@ class Data {
       return store.erase(begin, end);
     }
     /**
-     * Discussion:
+     * @brief
      *   Erases first occurrence of the specic sequence and returns the iterator in the new sequence
      *
      * Input:
@@ -208,7 +208,7 @@ class Data {
       return iter;
     }
     /**
-     * Discussion:
+     * @brief
      *   Validates, if the sequence begins with some sequence.
      *
      * Input:
@@ -231,7 +231,7 @@ class Data {
       return begin == sequence.end();
     }
     /**
-     * Discussion:
+     * @brief
      *   Validates, if the sequence begins with some sequence.
      *
      * Input:
@@ -254,7 +254,7 @@ class Data {
       return begin == sequence.store.rend();
     }
     /**
-     * Discussion:
+     * @brief
      *   Find first subsequence and returns the iterator to it
      *
      * Input:
@@ -286,7 +286,7 @@ class Data {
       return iter;
     }
     /**
-     * Discussion:
+     * @brief
      *   Find first subsequence and returns the iterator to it. Adds possibility to move iterator to the end of the found sequence.
      *
      * Input:
@@ -396,7 +396,7 @@ class Data {
       return out;
     }
     /**
-     * Discussion:
+     * @brief
      *   Reads the data until some sequence is found or some error occurs
      *
      * Input:
@@ -427,7 +427,7 @@ class Data {
       return in;
     }
     /**
-     * Discussion:
+     * @brief
      *   Reads the data of the specific size from the input file, in case, if some error occurs stop the read
      *
      * Input:
@@ -451,7 +451,7 @@ class Data {
       return in;
     }
     /**
-     * Discussion:
+     * @brief
      *   Converts each byte in char and outputs it to the stream. Returns true, if both objects have the same data
      *
      * Input:
@@ -471,7 +471,7 @@ class Data {
       return stream;
     }
     /**
-     * Discussion:
+     * @brief
      *   Compares each char of the strings object with the data object. Returns true, if both objects have the same data
      *
      * Input:

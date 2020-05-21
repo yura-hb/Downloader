@@ -19,7 +19,7 @@ class HTTPClient {
   private:
     std::string port = "80";
     /**
-     *  Discussion:
+     *  @brief
      *    Performs the whole pipeline of the HTTP request:
      *     1. Creates socket and connects to it
      *     2. Upload message
@@ -35,7 +35,7 @@ class HTTPClient {
      */
     bool performRequest(Request request, Data<> &result) const;
     /**
-     *  Discussion:
+     *  @brief
      *    Converts string url to the URL object.
      *
      *  Input:

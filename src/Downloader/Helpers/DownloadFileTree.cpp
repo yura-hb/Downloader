@@ -2,12 +2,17 @@
 
 void DownloadFileTree::add(const std::unique_ptr<Reference>& ref, bool isLocked, bool isDownloaded) {
   try {
+    logTreeDescription();
     auto tmp = root;
     search(tmp, ref, true);
 
-    tmp -> state.isLocked = isLocked;
-    tmp -> state.isDownloaded = isDownloaded;
+    if (tmp != root) {
+      tmp -> state.isLocked = isLocked;
+      tmp -> state.isDownloaded = isDownloaded;
+    }
   } catch (const LockedReferenceException& exc) {
+    std::cout << exc.what() << std::endl;
+  } catch (const OutOfMaximalDepthException& exc) {
     std::cout << exc.what() << std::endl;
   }
 }
@@ -34,6 +39,13 @@ void DownloadFileTree::setFailed(const std::unique_ptr<Reference>& ref) {
 }
 
 std::string DownloadFileTree::nextDownloadReference() const {
+  switch (traverseStyle) {
+  case TraverseStyle::BREADTH_FIRST_SEARCH:
+    break;
+  case TraverseStyle::DEPTH_FIRST_SEARCH:
+    break;
+  }
+
   return "";
 }
 
@@ -42,7 +54,7 @@ void DownloadFileTree::logTreeDescription() const {
 }
 
 void DownloadFileTree::logTreeDescription(const std::shared_ptr<Node>& node, int level) const {
-  std::cout << std::string(level * 2, ' ') << node -> name << std::endl;
+  std::cout << std::string(level * 2, ' ') << node -> name << "[LOCKED]" << node -> state.isLocked << std::endl;
 
   for (const auto& ref: node -> children)
     if (ref -> isLeaf)
@@ -80,22 +92,36 @@ void DownloadFileTree::search(std::shared_ptr<Node>& node, const std::unique_ptr
   Data<> path(ref -> getPath());
   std::string separator = "/";
 
-  auto prev = path.find(separator, path.begin(), true);
-  auto next = prev;
+  uint8_t depth = 0;
 
-  while ((next = path.find(separator, next)) != path.end()) {
-    Data<> component = path.subsequence(prev, next);
+  while (true) {
+    if (depth > this -> depth)
+      throw OutOfMaximalDepthException(this -> depth);
+
+    auto begin = path.at(1), separatorIndex = path.find(separator, begin);
+    Data<> component = path.subsequence(begin, separatorIndex);
+    bool isLeaf = separatorIndex == path.end();
+
+    if (separatorIndex != path.end())
+      std::advance(separatorIndex, 1);
+    path.eraseSequence(begin, separatorIndex);
+
     std::string name = component.stringRepresentation();
 
-    std::advance(next, separator.size());
-    prev = next;
+    if (name.empty())
+      break;
 
-    auto index = node -> find(name, false);
+   if (node -> state.isLocked) {
+      node = root;
+      throw LockedReferenceException();
+    }
+
+    auto index = node -> find(name, isLeaf);
 
     if (index == node -> children.end()) {
-
       if (insertItemsDuringSearch) {
-        addNewNode(node, name, false);
+        addNewNode(node, name, isLeaf);
+        depth++;
         continue;
       }
 
@@ -103,26 +129,10 @@ void DownloadFileTree::search(std::shared_ptr<Node>& node, const std::unique_ptr
       return;
     }
 
-    if (node -> state.isLocked) {
-      node = root;
-      throw LockedReferenceException();
-    }
-
     node = *index;
+    depth++;
+
+    if (node -> isLeaf)
+      return;
   }
-  Data<> filename = path.subsequence(prev, next);
-  std::string name = filename.stringRepresentation();
-
-  if (name.empty())
-    return;
-
-  auto index = node -> find(name, false);
-
-  if (index == node -> children.end())
-    if (insertItemsDuringSearch)
-      addNewNode(node, name, true);
-    else
-      node = root;
-  else
-    node = *index;
 }

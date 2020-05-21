@@ -60,7 +60,7 @@ struct ResponseStatus {
 
     ResponseStatus() = default;
     /**
-     *  Discussion:
+     *  @brief
      *   Initialize ResponseStatus using first line of the responce message
      *   The format of the responce is the next:
      *     `Version of HTTP -space- Status code -space- message`
@@ -75,7 +75,7 @@ struct ResponseStatus {
      */
     bool isFailed() const;
     /**
-     *  Discussion:
+     *  @brief
      *    Equivalent to !isFailed()
      */
     bool isSuccessful() const;
@@ -85,7 +85,7 @@ struct ResponseStatus {
      */
     bool isRedirection() const;
     /**
-     * Discussion:
+     * @brief
      *   Converts to string
      */
     std::string description() const;

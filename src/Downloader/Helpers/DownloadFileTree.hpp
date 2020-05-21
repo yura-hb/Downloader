@@ -11,7 +11,7 @@
 #include "../../Base/Data.hpp"
 
 /**
- *  Discussion:
+ *  @brief
  *    Help class to store locked and downloaded file references in the tree format.
  *
  *    Each node can be either be path component or the "/" separator. The leaf of the tree is the Node,
@@ -19,11 +19,23 @@
  */
 struct DownloadFileTree {
   public:
-    DownloadFileTree() {
+    enum class TraverseStyle {
+      BREADTH_FIRST_SEARCH,
+      DEPTH_FIRST_SEARCH
+    };
+    /**
+     * @brief
+     *   Initiates the download tree.
+     *
+     * Input:
+     *   - @param[in] depth - maximal depth from the root of the tree. (The root of the tree is /)
+     *   - @param[in] traverseStyle - the style of traversal
+     */
+    DownloadFileTree(const uint8_t& depth, const TraverseStyle& traverseStyle): depth(depth), traverseStyle(traverseStyle) {
       root = std::make_unique<Node>("/");
     }
     /**
-     *  Discussion:
+     *  @brief
      *    Adds the element to the tree.
      *
      *  Input:
@@ -37,7 +49,7 @@ struct DownloadFileTree {
      */
     void add(const std::unique_ptr<Reference>& ref, bool isLocked = false, bool isDownloaded = false);
     /**
-     *  Discussion:
+     *  @brief
      *    Sets the download flag on the element at the specific reference
      *
      *  Input:
@@ -49,7 +61,7 @@ struct DownloadFileTree {
      */
     void setDownloaded(const std::unique_ptr<Reference>& ref);
     /**
-     *  Discussion:
+     *  @brief
      *    Sets the locked flag at the specific file path
      *
      *  Input:
@@ -61,7 +73,7 @@ struct DownloadFileTree {
      */
     void setLocked(const std::unique_ptr<Reference>& ref);
     /**
-     *  Discussion:
+     *  @brief
      *    Sets the locked flag at the specific file path
      *
      *  Input:
@@ -73,7 +85,7 @@ struct DownloadFileTree {
      */
     void setFailed(const std::unique_ptr<Reference>& ref);
     /**
-     *  Discussion:
+     *  @brief
      *    Walks the tree and provides next download element.
      *
      *  Output:
@@ -81,7 +93,7 @@ struct DownloadFileTree {
      */
     std::string nextDownloadReference() const;
     /**
-     *  Discussion:
+     *  @brief
      *    Prints out the state of the tree and each node
      */
     void logTreeDescription() const;
@@ -92,21 +104,34 @@ struct DownloadFileTree {
           return "The reference is locked, can't continue";
         }
     };
+    class OutOfMaximalDepthException: public std::exception {
+      public:
+        OutOfMaximalDepthException(const uint8_t& maximalDepth) {
+          description = "The item is out of the maximal depth, can't add";
+          description += " [ Limit: " + std::to_string(maximalDepth) + " ]";
+        }
+
+        const char * what() const noexcept {
+          return description.c_str();
+        }
+      private:
+        std::string description;
+    };
     struct Node {
       struct State {
         /**
-         *  Discussion:
+         *  @brief
          *    Validates if the file is downloaded, so the true statement is equivalent to that the
          *    element is a file. However, it is not equivalent to the
          */
         bool isDownloaded = false;
         /**
-         *  Discussion:
+         *  @brief
          *    Validates if the directory is locked, so the directory can't have any child, under that path.
          */
         bool isLocked = false;
         /**
-         *  Discussion:
+         *  @brief
          *    Validates if the directory is failed, so the directory can't have any child, under that path.
          */
         bool isFailed = false;
@@ -119,7 +144,7 @@ struct DownloadFileTree {
 
       Node(const std::string& str): name(str) {}
       /**
-       *  Discussion:
+       *  @brief
        *    Finds children in the current node by the name and type of the node.
        *
        *  Input:
@@ -134,6 +159,8 @@ struct DownloadFileTree {
       }
     };
 
+    const uint8_t depth;
+    const TraverseStyle traverseStyle;
     std::shared_ptr<Node> root;
     /**
      *  Input:
@@ -149,7 +176,7 @@ struct DownloadFileTree {
      */
     void find(std::shared_ptr<Node>& node, const std::unique_ptr<Reference>& ref);
     /**
-     *  Discussion:
+     *  @brief
      *    Searches the element in the tree and sets the reference on the some Node.
      *    Ends searching, in case if some reference is locked.
      *

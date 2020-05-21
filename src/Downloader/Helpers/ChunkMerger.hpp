@@ -12,7 +12,7 @@
 class ChunkMerger {
   public:
     /**
-     *  Discussion:
+     *  @brief
      *    Processes the file at the file path and removes the chunk separation in it.
      *
      *  Input:

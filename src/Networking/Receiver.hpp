@@ -10,7 +10,7 @@
 class Receiver {
   public:
     /**
-     * Implements logic for downloading the whole page with the blocks of the bufSize, until CR LF is received.
+     * @brief Implements logic for downloading the whole page with the blocks of the bufSize, until CR LF is received.
      *
      * @param[in] - str - output string reference
      * @param[in] - socket - connected socket

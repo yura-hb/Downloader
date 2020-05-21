@@ -14,7 +14,7 @@ struct LocalReference: public Reference {
     }
     ~LocalReference() = default;
     /**
-     *  Discussion:
+     *  @brief
      *    Add reference path to the current reference from the left
      *
      *  Input:
@@ -25,7 +25,7 @@ struct LocalReference: public Reference {
      */
     std::unique_ptr<Reference> addAbsoluteReference(const std::string& str) const override;
     /**
-     *  Discussion:
+     *  @brief
      *    Add path to the reference query
      *
      *  Input:
@@ -44,7 +44,7 @@ struct LocalReference: public Reference {
      */
     std::unique_ptr<Reference> addFileExtension(const std::string& str) const;
     /**
-     *  Discussion:
+     *  @brief
      *    Validates, if the path is the directory
      *
      *  Output:
@@ -57,7 +57,7 @@ struct LocalReference: public Reference {
      */
     bool isRelative() const override;
     /*
-     *  Discussion:
+     *  @brief
      *    Constructs url with the path as the query and the domain
      *
      *  Output:
@@ -83,7 +83,7 @@ struct LocalReference: public Reference {
      */
     std::list<std::string> loadComponents() const;
     /*
-     *  Discussion:
+     *  @brief
      *    Simplifies the path and removes all occurrences . // and ../ from the path.
      */
     void simplify();

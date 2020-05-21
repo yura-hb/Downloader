@@ -10,7 +10,7 @@
 #include "../../Networking/URL.hpp"
 #include "../../Base/Exception.hpp"
 /**
- *  Discussion:
+ *  @brief
  *    In HTML and CSS there are several types of references:
  *      1. External link - link to the external source, which contains HTTP and HTTPs
  *      2. Hyperlinks - relative links to the source files

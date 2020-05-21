@@ -18,7 +18,7 @@ class FileManager {
   public:
     FileManager() = default;
     /**
-     * Discussion:
+     * @brief
      *   Creates folder at the current directory with the specific name and returns the full path to the folder
      *
      * Input:
@@ -26,7 +26,7 @@ class FileManager {
      */
     void createFolder(const LocalReference& reference) const;
     /**
-     * Discussion:
+     * @brief
      *  Write file to the specific directory at the relative path in the folder with data.
      *  In case, if there are no folders with the specific path, creates them.
      *  Doesn't operate out of the folderName
@@ -41,7 +41,7 @@ class FileManager {
      */
     void saveFile(const LocalReference& reference, const Data<>& data, const Data<>::iterator& startPosition) const;
     /**
-     *  Discussion:
+     *  @brief
      *    Clears the directory by calling rm -r * on some path
      *
      *  Input:
@@ -53,7 +53,7 @@ class FileManager {
     FileManager(FileManager &manager) {};
     FileManager& operator = (const FileManager& manager) { return *this; };
     /**
-     *  Discussion:
+     *  @brief
      *    Creates subdirectories, if they doesn't exist in the current directory
      *
      *  Input:

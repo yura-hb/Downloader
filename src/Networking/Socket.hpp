@@ -30,7 +30,7 @@ class Socket {
     ~Socket();
 
     /**
-     * Discussion:
+     * @brief
      *   Connects to the socket at the specific port and hostname.
      *   The connection logic is the next:
      *     1. Load address info. It is the linked list of the struct addrinfo
@@ -41,12 +41,12 @@ class Socket {
      */
     bool connect();
     /**
-     * Discussion:
+     * @brief
      *   Disconnects from the server
      */
     bool disconnect();
     /**
-     *  Discussion:
+     *  @brief
      *    Sends message to the server.
      *
      *    This method consists of the 3 steps:
@@ -66,7 +66,7 @@ class Socket {
      */
     bool send(const std::string &message, uint32_t &sent) const;
     /**
-     *  Discussion:
+     *  @brief
      *    Reads a buffer size from the socket.
      *
      *    This method consists of the 3 steps:
@@ -92,7 +92,7 @@ class Socket {
     static const int EMPTY_SOCKET = -1;
     //  - Helpers
     /**
-     *  Discussion:
+     *  @brief
      *    Logs the socket error to the error channel
      *
      *  Input:
@@ -101,12 +101,12 @@ class Socket {
      */
     void logError(SocketError error, std::string info = "") const;
     /**
-     *  Discussion:
+     *  @brief
      *    Configure socket loader hints
      */
     void setupHints();
     /**
-     *  Discussion:
+     *  @brief
      *    Frees the old address and setups the new one
      *
      *  Output:
@@ -114,12 +114,12 @@ class Socket {
      */
     bool loadAddrInfo();
     /**
-     *  Discussion:
+     *  @brief
      *    Frees address info
      */
     void freeAddrInfo();
     /**
-     *  Discussion:
+     *  @brief
      *    Returns true, while connected to some socket
      *
      *  Output:

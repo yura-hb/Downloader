@@ -17,7 +17,7 @@ class Analyzer {
     Analyzer(const std::vector<std::shared_ptr<AbstractPattern>>& patterns): patterns(patterns) {}
     virtual ~Analyzer() = default;
     /**
-     * Discussion:
+     * @brief
      *   Reads bytes from the input file and checks for the url.
      *
      * Input:
