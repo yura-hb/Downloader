@@ -1,8 +1,7 @@
 #include "DownloadFileTree.hpp"
 
-void DownloadFileTree::add(const std::unique_ptr<Reference>& ref, bool isLocked, bool isDownloaded) {
+void DownloadFileTree::add(const Reference& ref, bool isLocked, bool isDownloaded) {
   try {
-    logTreeDescription();
     auto tmp = root;
     search(tmp, ref, true);
 
@@ -17,21 +16,21 @@ void DownloadFileTree::add(const std::unique_ptr<Reference>& ref, bool isLocked,
   }
 }
 
-void DownloadFileTree::setDownloaded(const std::unique_ptr<Reference>& ref) {
+void DownloadFileTree::setDownloaded(const Reference& ref) {
   auto tmp = root;
   find(tmp, ref);
   if (tmp != root)
     tmp -> state.isDownloaded = true;
 }
 
-void DownloadFileTree::setLocked(const std::unique_ptr<Reference>& ref) {
+void DownloadFileTree::setLocked(const Reference& ref) {
   auto tmp = root;
   find(tmp, ref);
   if (tmp != root)
     tmp -> state.isDownloaded = true;
 }
 
-void DownloadFileTree::setFailed(const std::unique_ptr<Reference>& ref) {
+void DownloadFileTree::setFailed(const Reference& ref) {
   auto tmp = root;
   find(tmp, ref);
   if (tmp != root)
@@ -70,7 +69,7 @@ void DownloadFileTree::addNewNode(std::shared_ptr<Node>& parent, const std::stri
   parent = newNode;
 }
 
-void DownloadFileTree::find(std::shared_ptr<Node>& node, const std::unique_ptr<Reference>& ref) {
+void DownloadFileTree::find(std::shared_ptr<Node>& node, const Reference& ref) {
   try {
     auto tmp = root;
     search(tmp, ref, false);
@@ -85,11 +84,11 @@ void DownloadFileTree::find(std::shared_ptr<Node>& node, const std::unique_ptr<R
   }
 }
 
-void DownloadFileTree::search(std::shared_ptr<Node>& node, const std::unique_ptr<Reference>& ref, bool insertItemsDuringSearch) {
-  if (!ref -> isRelative())
+void DownloadFileTree::search(std::shared_ptr<Node>& node, const Reference& ref, bool insertItemsDuringSearch) {
+  if (!ref.isRelative())
     throw Exception("Can't work with not relative directory");
 
-  Data<> path(ref -> getPath());
+  Data<> path(ref.getPath());
   std::string separator = "/";
 
   uint8_t depth = 0;
@@ -136,3 +135,4 @@ void DownloadFileTree::search(std::shared_ptr<Node>& node, const std::unique_ptr
       return;
   }
 }
+

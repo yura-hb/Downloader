@@ -1,6 +1,6 @@
 #include "Attribute.hpp"
 
-std::vector<char> Attribute::whitespaces = { '\n', ' ', '\t', 12 };
+const std::vector<char> Attribute::whitespaces = { '\n', ' ', '\t', 12 };
 
 bool Attribute::consume(const Input& input, const EmitFunction& func) const {
   if (input.second.size() < begin.size())
@@ -20,7 +20,7 @@ bool Attribute::consume(const Input& input, const EmitFunction& func) const {
 
   auto linkBegin = input.second.find(quoteSeparator, input.second.begin(), true);
 
-  func(input.second.subsequence(linkBegin, --input.second.end()).stringRepresentation());
+  func(input.second.subsequence(linkBegin, --input.second.end()));
 
   input.second = {};
 

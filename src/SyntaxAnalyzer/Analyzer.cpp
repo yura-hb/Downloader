@@ -12,8 +12,8 @@ std::vector<std::string> Analyzer::loadReferences(const LocalReference& str) con
   Data<> buffer;
   std::vector<std::string> result;
 
-  AbstractPattern::EmitFunction function = std::function<void(std::string)>([&](const std::string& str) {
-    result.push_back(str);
+  AbstractPattern::EmitFunction function = std::function<void(const Data<>&)>([&](const Data<>& str) {
+    result.push_back(str.stringRepresentation());
   });
 
   while (in.good() || !buffer.empty()) {

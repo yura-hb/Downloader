@@ -35,7 +35,7 @@ MODULES = $(OUTPUT_PATH)/main.o \
 		$(OUTPUT_PATH)/Reference.o $(OUTPUT_PATH)/LocalReference.o $(OUTPUT_PATH)/RemoteReference.o \
 		$(OUTPUT_PATH)/FileManager.o \
 		\
-	  $(OUTPUT_PATH)/AbstractPattern.o $(OUTPUT_PATH)/Attribute.o \
+	  $(OUTPUT_PATH)/AbstractPattern.o $(OUTPUT_PATH)/Attribute.o $(OUTPUT_PATH)/HTMLAttribute.o \
 		$(OUTPUT_PATH)/Comment.o $(OUTPUT_PATH)/Analyzer.o $(OUTPUT_PATH)/CSSAnalyzer.o \
 		$(OUTPUT_PATH)/HTMLAnalyzer.o \
 		\

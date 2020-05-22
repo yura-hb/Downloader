@@ -16,7 +16,7 @@ struct AbstractPattern {
     /**
      * Function, which emits range of the substring values
      */
-    using EmitFunction = std::function<void(const std::string& str)>;
+    using EmitFunction = std::function<void(const Data<>& str)>;
 
     AbstractPattern(const std::string& begin,
                     const std::string& separator,

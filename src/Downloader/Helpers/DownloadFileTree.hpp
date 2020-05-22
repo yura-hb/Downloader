@@ -6,6 +6,7 @@
 #include <vector>
 #include <memory>
 #include <exception>
+#include <queue>
 
 #include "../../FileManager/Models/Reference.hpp"
 #include "../../Base/Data.hpp"
@@ -47,7 +48,7 @@ struct DownloadFileTree {
      *    Throws an exception, in case, if is the reference is not relative.
      *
      */
-    void add(const std::unique_ptr<Reference>& ref, bool isLocked = false, bool isDownloaded = false);
+    void add(const Reference& ref, bool isLocked = false, bool isDownloaded = false);
     /**
      *  @brief
      *    Sets the download flag on the element at the specific reference
@@ -59,7 +60,7 @@ struct DownloadFileTree {
      *    Throws an exception, in case, if the reference doesn't points to the file.
      *
      */
-    void setDownloaded(const std::unique_ptr<Reference>& ref);
+    void setDownloaded(const Reference& ref);
     /**
      *  @brief
      *    Sets the locked flag at the specific file path
@@ -71,7 +72,7 @@ struct DownloadFileTree {
      *    Throws an exception, in case, if the reference doesn't points to the file.
      *
      */
-    void setLocked(const std::unique_ptr<Reference>& ref);
+    void setLocked(const Reference& ref);
     /**
      *  @brief
      *    Sets the locked flag at the specific file path
@@ -83,10 +84,10 @@ struct DownloadFileTree {
      *    Throws an exception, in case, if the reference doesn't points to the file.
      *
      */
-    void setFailed(const std::unique_ptr<Reference>& ref);
+    void setFailed(const Reference& ref);
     /**
      *  @brief
-     *    Walks the tree and provides next download element.
+     *    Recursively traverses download tree, depending on the style and returns the relative path on the server.
      *
      *  Output:
      *    - @param[out] - string path to the file, in case, if some finded, otherwise empty string.
@@ -140,6 +141,7 @@ struct DownloadFileTree {
       std::string name;
       bool isLeaf = false;
       std::vector<std::shared_ptr<Node>> children;
+      std::weak_ptr<Node> parent;
       State state;
 
       Node(const std::string& str): name(str) {}
@@ -174,7 +176,7 @@ struct DownloadFileTree {
      *    - @param[in] node - node, from which the search begins.
      *    - @param[in] ref - relative reference to some element.
      */
-    void find(std::shared_ptr<Node>& node, const std::unique_ptr<Reference>& ref);
+    void find(std::shared_ptr<Node>& node, const Reference& ref);
     /**
      *  @brief
      *    Searches the element in the tree and sets the reference on the some Node.
@@ -193,13 +195,17 @@ struct DownloadFileTree {
      *    - In case, if the reference is locked
      *
      */
-    void search(std::shared_ptr<Node>& node, const std::unique_ptr<Reference>& ref, bool insertItemsDuringSearch);
+    void search(std::shared_ptr<Node>& node, const Reference& ref, bool insertItemsDuringSearch);
     /**
      *  Input:
      *    - @param[in] node - node, from which start printing.
      *    - @param[in] level - level of printing the node.
      */
     void logTreeDescription(const std::shared_ptr<Node>& node, int level = 0) const;
+
+    std::string breadthFirstSearch() const;
+
+    std::string depthFirstSearch() const;
 };
 
 #endif

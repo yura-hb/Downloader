@@ -11,7 +11,7 @@ void PageMirror::mirror(const RemoteReference& ref) {
   mirrorDomain = ref.domain();
   // TODO - Implement better solution
   std::unique_ptr<Reference> localRef = LocalReference(ref.domain()).addPath(ref.getPath());
-  downloadTree.add(std::make_unique<LocalReference>(ref.getPath()));
+  downloadTree.add(LocalReference(ref.getPath()));
 
   LocalReference saveRef = *dynamic_cast<LocalReference *>(localRef.get());
   download(ref, saveRef);
@@ -20,8 +20,10 @@ void PageMirror::mirror(const RemoteReference& ref) {
 Response PageMirror::download(const RemoteReference& ref, const LocalReference& filepath) {
   Response response = FileDownloader::download(ref, filepath);
 
-  for (const auto& header: response.headers)
-    std::cout << header.description() << std::endl;
+  if (response.status.isFailed())
+    downloadTree.setFailed(ref);
+  else
+    downloadTree.setDownloaded(ref);
 
   const Data<> contentType = response.loadHeader(Header::_Header::CONTENT_TYPE);
   std::vector<std::string> references;
@@ -42,14 +44,15 @@ Response PageMirror::download(const RemoteReference& ref, const LocalReference& 
 
       if (url.isValid()) {
         if (URL::compareDomains(url.domain, mirrorDomain))
-          downloadTree.add(std::make_unique<RemoteReference>(url));
+          downloadTree.add(RemoteReference(url));
       } else {
         std::unique_ptr<Reference> localRef = std::make_unique<LocalReference>(relatedReference);
 
+        std::cout << localRef -> getPath() << std::endl;
         if (localRef -> isRelative())
-          downloadTree.add(localRef);
+          downloadTree.add(*localRef);
         else
-          downloadTree.add(localRef -> addAbsoluteReference(ref.getPath()));
+          downloadTree.add(*localRef -> addAbsoluteReference(ref.getPath()).get());
       }
     }
 
@@ -73,6 +76,7 @@ void PageMirror::prepare(const RemoteReference& ref) {
 
   saveRef.simplify();
 
+  downloadTree.add(robotsReference, false, false);
   try {
     FileDownloader::download(robotsReference, saveRef);
     processRobotsFile(saveRef);
@@ -117,7 +121,7 @@ void PageMirror::processRobotsFile(const LocalReference& ref) {
     data = data.subsequence(parameterIter, end);
 
     try {
-      downloadTree.add(std::make_unique<LocalReference>(data.stringRepresentation(), true), true, false);
+      downloadTree.add(LocalReference(data.stringRepresentation(), true), true, false);
     } catch (const Exception& exc) {
       std::cerr << exc.what() << std::endl;
     }

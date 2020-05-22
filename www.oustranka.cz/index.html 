@@ -1,0 +1,476 @@
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Obecní úřad STRÁNKA - Úvod</title>
+<meta name="description" content="Obecní úřad Stránka - vesnička na Mělnicku" />
+<meta name="keywords" content="Obecní úřad Stránka OÚ Stránka Mšeno" />
+<meta name="Generator" content="Joomla! - Copyright (C) 2008 OU Stranka. All rights reserved." />
+<meta name="robots" content="index, follow" />
+	<link rel="shortcut icon" href="http://oustranka.cz/images/favicon.ico" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="http://oustranka.cz/templates/td_dimje/css/green.css" rel="stylesheet" type="text/css"/>
+<link href="http://oustranka.cz/templates/td_dimje/css/green.css" rel="stylesheet" type="text/css" title="Green"/>
+<link href="http://oustranka.cz/templates/td_dimje/css/red.css" rel="stylesheet" type="text/css" title="Red"/>
+<link href="http://oustranka.cz/templates/td_dimje/css/blue.css" rel="stylesheet" type="text/css" title="Blue"/>
+<link href="http://oustranka.cz/templates/td_dimje/css/orange.css" rel="stylesheet" type="text/css" title="Orange"/>
+<link href="http://oustranka.cz/templates/td_dimje/css/purple.css" rel="stylesheet" type="text/css" title="Purple"/>
+<link rel="shortcut icon" href="http://oustranka.cz/images/favicon.ico" />
+<script language="javascript" type="text/javascript" src="http://oustranka.cz/templates/td_dimje/scripts/td_stylechanger.js"></script>
+<script language="javascript" type="text/javascript" src="http://oustranka.cz/templates/td_dimje/scripts/td_colorchanger.js"></script>
+<script language="javascript" type="text/javascript" src="http://oustranka.cz/templates/td_dimje/scripts/prototype.lite.js"></script>
+<script language="javascript" type="text/javascript" src="http://oustranka.cz/templates/td_dimje/scripts/moo.fx.js"></script>
+<script type="text/javascript">
+// Initialise the website tools effect
+var containerHeight2;
+window.onload = function() {
+	containerHeight = new fx.Height('toolsdiv', {duration: 400});
+	containerHeight.hide();
+}
+</script>
+<!--[if lte IE 6]>
+<style type="text/css">
+div#rightblock{margin: 0px -3px;} table.contentpane{width: 90%;} 
+</style>
+<![endif]-->
+<!--[if IE 7]>
+<style type="text/css">
+div#footercontent{padding-top: 15px;}
+</style>
+<![endif]-->
+</head>
+
+<body>
+<div align="center">
+
+	<!-- START: MOO.FX -->
+	<div id="toolsdiv">
+		<div id="tools">
+						<div id="colorsdiv"> <!-- start: color chooser -->
+				<div id="colors">
+					<img src="http://oustranka.cz/templates/td_dimje/images/color_chooser.gif" alt="" /><a href="javascript:void(0)" onclick="setActiveStyleSheet('Red'); return false;"><img src="http://oustranka.cz/templates/td_dimje/images/red_button.gif" alt="Cervena" title="Cervena" /></a><a href="javascript:void(0)" onclick="setActiveStyleSheet('Blue'); return false;"><img src="http://oustranka.cz/templates/td_dimje/images/blue_button.gif" alt="Modra" title="Modra" /></a><a href="javascript:void(0)" onclick="setActiveStyleSheet('Green'); return false;"><img src="http://oustranka.cz/templates/td_dimje/images/green_button.gif" alt="Zelena" title="Zelena" /></a><a href="javascript:void(0)" onclick="setActiveStyleSheet('Orange'); return false;"><img src="http://oustranka.cz/templates/td_dimje/images/orange_button.gif" alt="Oranzova" title="Oranzova" /></a><a href="javascript:void(0)" onclick="setActiveStyleSheet('Purple'); return false;"><img src="http://oustranka.cz/templates/td_dimje/images/purple_button.gif" alt="Fialova" title="Fialova" /></a>
+				</div>
+			</div> <!-- end: color chooser -->
+			<div id="fontsdiv"> <!-- start: fonts resizer -->
+				<div id="fonts">
+					<img src="http://oustranka.cz/templates/td_dimje/images/font_resizer.gif" alt="" /><a href="javascript:void(0)" title="Zmenseni velikosti textu" onclick="changeFontSize(-1);return false;"><img src="http://oustranka.cz/templates/td_dimje/images/font_decrease.gif" alt="Zmenseni velikosti textu" /></a><a href="javascript:void(0)" title="Navrat do puvodni velikosti" onclick="revertStyles(); return false;"><img src="http://oustranka.cz/templates/td_dimje/images/font_reset.gif" alt="Navrat do puvodni velikosti" /></a><a href="javascript:void(0)" title="Zvetseni velikosti textu" onclick="changeFontSize(1);return false;"><img src="http://oustranka.cz/templates/td_dimje/images/font_increase.gif" alt="Zvetseni velikosti textu" /></a>
+				</div>
+			</div> <!-- end: fonts resizer -->
+			<div class="clr"></div>
+		</div>
+	</div>
+	<!-- END: MOO.FX -->
+	
+	<div id="wrapbg"> <!-- start: wrapbg -->
+		<div id="wrapper"> <!-- START: WRAPPER -->
+			<div id="inner"> <!-- START: INNER -->
+			
+				<!-- START: WEBSITE TOOLS -->
+				<div id="sitetoolsdiv">
+					<div id="sitetools">
+						<a href="javascript:void(0)" onclick="containerHeight.toggle();">Barvy a Text</a>
+					</div>
+				</div>
+				<!-- END: WEBSITE TOOLS -->
+				
+				<!-- START: TOP AREA -->
+				<div id="topareadiv">
+					<div id="toparea">
+						<div id="logo">
+							<!-- -->
+						</div>
+						<div id="bannerdiv">
+							<script language="javascript" type="text/javascript" src="http://oustranka.cz/templates/td_dimje/scripts/flashobject.js"></script>
+<div id="flashcontent">
+Bohuzel. Flash player neni nainstalovan nebo je zastaraly.<a href="http://www.macromedia.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash">Zde</a> najdete aktualni verzi potrebnou pro zobrazen� teto casti.
+</div>
+<script type="text/javascript">
+// <![CDATA[
+var fo = new FlashObject("./templates/td_dimje/images/header.swf", "topflash", "100%", "198", "1");
+fo.addParam("wmode", "transparent");
+fo.write("flashcontent");
+// ]]>
+</script>
+						</div>
+						
+					</div>
+					<div class="clr"></div>
+				</div>
+				<!-- END: TOP AREA -->
+
+				
+				<!-- START: SUCKERFISH -->
+				<div id="navdiv">
+					<div id="nav">
+						<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+
+sfHover = function() {
+	var sfEls = document.getElementById("nav").getElementsByTagName("LI");
+	for (var i=0; i<sfEls.length; i++) {
+		sfEls[i].onmouseover=function() {
+			this.className+=" sfhover";
+		}
+		sfEls[i].onmouseout=function() {
+			this.className=this.className.replace(new RegExp(" sfhover\\b"), "");
+		}
+	}
+}
+if (window.attachEvent) window.attachEvent("onload", sfHover);
+
+//--><!]]>
+</script>
+
+<ul>
+<li><a href="http://oustranka.cz/index.php">Úvod</a></li>
+<li><a href="http://oustranka.cz/index.php?option=com_content&amp;task=section&amp;id=1&amp;Itemid=2">Aktuality</a></li>
+<li><a href="http://oustranka.cz/index.php?option=com_content&amp;task=section&amp;id=5&amp;Itemid=38">Z úřadu</a></li>
+<li><a href="http://oustranka.cz/index.php?option=com_content&amp;task=section&amp;id=6&amp;Itemid=39">Kultura</a></li>
+<li><a href="http://oustranka.cz/index.php?option=com_content&amp;task=category&amp;sectionid=4&amp;id=22&amp;Itemid=40">Služby</a></li>
+<li><a href="http://oustranka.cz/index.php?option=com_contact&amp;Itemid=3">Kontakty</a></li>
+<li><a href="http://oustranka.cz/index.php?option=com_content&amp;task=category&amp;sectionid=4&amp;id=21&amp;Itemid=41">Fotogalerie</a></li>
+<li><a href="http://oustranka.cz/index.php?option=com_content&amp;task=view&amp;id=200&amp;Itemid=45">Mělnicko</a></li>
+<li><a href="http://oustranka.cz/index.php?option=com_search&amp;Itemid=5">Hledej...</a></li>
+<li><a href="http://oustranka.cz/index.php?option=com_xmap&amp;Itemid=28">Mapa webu</a></li>
+</ul>					</div>
+				</div>
+				<!-- END: SUCKERFISH -->
+				
+				<!-- START: MAIN CONTENT -->
+				<div id="maincontentdiv">
+					<div id="maincontent">
+					
+						<!-- START: LEFT BLOCK -->
+												<div id="leftblock">
+							<div id="leftdiv">
+								<div id="left">
+											<div class="moduletable">
+							<h3>
+					Hlavní nabídka				</h3>
+				
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr align="left"><td><a href="http://oustranka.cz/index.php?option=com_frontpage&amp;Itemid=1" class="mainlevel" id="active_menu">Úvod</a></td></tr>
+<tr align="left"><td><a href="http://oustranka.cz/index.php?option=com_content&amp;task=category&amp;sectionid=1&amp;id=75&amp;Itemid=64" class="mainlevel" >Aktuality</a></td></tr>
+<tr align="left"><td><a href="http://oustranka.cz/index.php?option=com_content&amp;task=category&amp;sectionid=4&amp;id=15&amp;Itemid=32" class="mainlevel" >Obec Stránka</a></td></tr>
+<tr align="left"><td><a href="http://oustranka.cz/index.php?option=com_content&amp;task=category&amp;sectionid=4&amp;id=14&amp;Itemid=43" class="mainlevel" >Historie obce</a></td></tr>
+<tr align="left"><td><a href="http://oustranka.cz/index.php?option=com_content&amp;task=section&amp;id=5&amp;Itemid=31" class="mainlevel" >Z Obecního úřadu</a></td></tr>
+<tr align="left"><td><a href="http://oustranka.cz/index.php?option=com_content&amp;task=section&amp;id=6&amp;Itemid=36" class="mainlevel" >Kultura a spolky</a></td></tr>
+<tr align="left"><td><a href="http://oustranka.cz/index.php?option=com_contact&amp;Itemid=3" class="mainlevel" >Kontakty</a></td></tr>
+<tr align="left"><td><a href="http://oustranka.cz/index.php?option=com_content&amp;task=category&amp;sectionid=4&amp;id=22&amp;Itemid=34" class="mainlevel" >Služby v obci</a></td></tr>
+<tr align="left"><td><a href="http://oustranka.cz/index.php?option=com_content&amp;task=category&amp;sectionid=4&amp;id=21&amp;Itemid=33" class="mainlevel" >Fotogalerie</a></td></tr>
+<tr align="left"><td><a href="http://oustranka.cz/index.php?option=com_weblinks&amp;Itemid=23" class="mainlevel" >Užitečné odkazy</a></td></tr>
+<tr align="left"><td><a href="http://oustranka.cz/index.php?option=com_easybook&amp;Itemid=27" class="mainlevel" >Kniha návštěv</a></td></tr>
+<tr align="left"><td><a href="http://oustranka.cz/index.php?option=com_content&amp;task=category&amp;sectionid=5&amp;id=26&amp;Itemid=46" class="mainlevel" >Úřední deska</a></td></tr>
+<tr align="left"><td><a href="http://oustranka.cz/index.php?option=com_content&amp;task=view&amp;id=227&amp;Itemid=47" class="mainlevel" >Projekt: Internetizace Kokořínska</a></td></tr>
+<tr align="left"><td><a href="http://oustranka.cz/index.php?option=com_content&amp;task=view&amp;id=931&amp;Itemid=60" class="mainlevel" >Ochrana osobních údajů</a></td></tr>
+<tr align="left"><td><a href="http://oustranka.cz/index.php?option=com_content&amp;task=category&amp;sectionid=5&amp;id=49&amp;Itemid=62" class="mainlevel" >Krizové řízení</a></td></tr>
+</table>		</div>
+				<div class="moduletable">
+							<h3>
+					Změny na webu				</h3>
+					
+		<script type="text/javascript" language="Javascript">
+		
+		function buildLink(site, link)
+		{
+			var id = document.selectFeed.feeds.value;
+			
+			url = '/index.php?option=com_rd_rss&id=';
+			url = site.concat(url);
+			url = url.concat(id);
+			url = url.concat(link);
+			
+			if(id==0)
+			{
+				alert("Vyberte zdroj RSS");	
+			}
+			else
+			{
+				 window.location=url;
+			}			
+		}
+			
+		</script>
+		
+		<form method="post" name="selectFeed">
+				
+		<div class="syndicate">
+		
+<select name="feeds" class="inputbox" size="1" >
+	<option value="0">Select RSS Feed</option>
+	<option value="4">Co je nového na webu?</option>
+</select>
+		<div align="center">
+			<a href="javascript:buildLink('http://oustranka.cz','&feed=RSS0.91')">
+				<img src="http://oustranka.cz/images/M_images/rss091.gif"  alt="RSS 0.91" name="RSS091" align="middle" border="0" /></a>
+		</div>
+				<div align="center">
+			<a href="javascript:buildLink('http://oustranka.cz','&feed=RSS1.0')">
+				<img src="http://oustranka.cz/images/M_images/rss10.gif"  alt="RSS 1.0" name="RSS10" align="middle" border="0" /></a>
+		</div>
+				<div align="center">
+			<a href="javascript:buildLink('http://oustranka.cz','&feed=RSS2.0')">
+				<img src="http://oustranka.cz/images/M_images/rss20.gif"  alt="RSS 2.0" name="RSS20" align="middle" border="0" /></a>
+		</div>
+				<div align="center">
+			<a href="javascript:buildLink('http://oustranka.cz','&feed=ATOM0.3')">
+				<img src="http://oustranka.cz/images/M_images/atom03.gif"  alt="ATOM 0.3" name="ATOM03" align="middle" border="0" /></a>
+		</div>
+				<div align="center">
+			<a href="javascript:buildLink('http://oustranka.cz','&feed=OPML')">
+				<img src="http://oustranka.cz/images/M_images/opml.png"  alt="OPML" name="OPML" align="middle" border="0" /></a>
+		</div>
+		</div>
+</form>
+		
+		
+		
+				</div>
+										</div>
+							</div>
+						</div>
+												<!-- END: LEFT BLOCK -->
+						
+						<!-- START: CENTER BLOCK -->
+						<div id="centerblock">
+							<div id="centerdiv">
+							
+																
+								<!-- start: user2 & user1 modules -->
+																<div id="topusersdiv">
+									<div id="user2div" style="width:49%;">
+										<div id="user2">
+													<div class="moduletable">
+							<h3>
+					Nejnovější články				</h3>
+				<ul class="latestnews">
+	<li class="latestnews">
+		<a href="http://oustranka.cz/index.php?option=com_content&amp;task=view&amp;id=1190&amp;Itemid=64" class="latestnews">
+			Nabídka prodeje - Mělnické Vtelno</a>
+	</li>
+		<li class="latestnews">
+		<a href="http://oustranka.cz/index.php?option=com_content&amp;task=view&amp;id=1191&amp;Itemid=31" class="latestnews">
+			14. 5. 2020 - Závěrečný účet Svazku VKM za rok 2019</a>
+	</li>
+		<li class="latestnews">
+		<a href="http://oustranka.cz/index.php?option=com_content&amp;task=view&amp;id=1163&amp;Itemid=64" class="latestnews">
+			Stránecký běh - 10. ročník - INFO</a>
+	</li>
+		<li class="latestnews">
+		<a href="http://oustranka.cz/index.php?option=com_content&amp;task=view&amp;id=1189&amp;Itemid=31" class="latestnews">
+			5. 5. 2020 - NOUZOVÝ STAV - aktualní opatření</a>
+	</li>
+		<li class="latestnews">
+		<a href="http://oustranka.cz/index.php?option=com_content&amp;task=view&amp;id=1187&amp;Itemid=64" class="latestnews">
+			Rekonstrukce vstupní brány pokračuje</a>
+	</li>
+		<li class="latestnews">
+		<a href="http://oustranka.cz/index.php?option=com_content&amp;task=view&amp;id=1186&amp;Itemid=31" class="latestnews">
+			23. 4. 2020 - SOK - závěrečný účet a zpráva 2019</a>
+	</li>
+		<li class="latestnews">
+		<a href="http://oustranka.cz/index.php?option=com_content&amp;task=view&amp;id=1184&amp;Itemid=31" class="latestnews">
+			17. 4. 2020 - NOUZOVÝ STAV - opatření</a>
+	</li>
+	</ul>		</div>
+												</div>
+									</div>
+									<div id="user1div" style="width:49%;">
+										<div id="user1">
+													<div class="moduletable">
+							<h3>
+					Hlášení místního rozhlasu				</h3>
+				
+		<table class="contentpaneopen">
+				<tr>
+			<td valign="top" colspan="2">
+				<p><a href="http://www.oustranka.cz/index.php?option=com_content&amp;task=view&amp;id=1181&amp;Itemid=64" target="_self">15. 4. od 18.00 - schůze ZO</a></p>
+<p><a href="https://www.zsmseno.cz/aktuality/skolni-rok-2019-2020/zapis-do-1-tridy-sk-rok-2020-2021-274cs.html" target="_blank">Z&aacute;pis do 1. ročn&iacute;ku Z&Scaron; M&scaron;eno</a></p>
+<p>&nbsp;</p>
+<p><a href="http://www.mestomseno.cz/index.php?cmd=home" target="_blank">Aktu&aacute;ln&iacute; akce ve M&scaron;eně</a></p>			</td>
+		</tr>
+				</table>
+
+		<span class="article_seperator">&nbsp;</span>
+
+				</div>
+				<div class="moduletable">
+							<h3>
+					Upozornění 				</h3>
+						</div>
+												</div>
+									</div>
+									<div class="clr"></div>
+								</div>
+																<!-- end: user2 & user1 modules -->
+								
+								<div id="center">
+									<table class="blog" cellpadding="0" cellspacing="0"><tr><td valign="top"><div>				<table class="contentpaneopen">
+			<tr>
+								<td class="contentheading" width="100%">
+					Vítáme Vás									</td>
+							</tr>
+			</table>
+			
+		<table class="contentpaneopen">
+				<tr>
+			<td valign="top" colspan="2">
+				<h2 style="text-align: center;">V&iacute;t&aacute;me V&aacute;s na webu obce Str&aacute;nka!</h2>
+<h3 style="text-align: center;"><a href="http://www.virtualtravel.cz/export/stranka/" target="_blank"><b>Virtu&aacute;ln&iacute; leteck&aacute; prohl&iacute;dka obce Str&aacute;nka</b></a></h3>
+<p style="text-align: justify;">Obec Str&aacute;nka - vesnice, m&aacute; jm&eacute;no od str&aacute;n&iacute;, na kter&yacute;ch lež&iacute;, anebo že to byla vesnice položen&aacute; stranou od hlavn&iacute; cesty. &Uacute;dol&iacute;, na jehož obou str&aacute;n&iacute;ch se ves rozkl&aacute;d&aacute;, jde tudy ode M&scaron;ena a potom se t&aacute;hne k jihov&yacute;chodu pod Ledcemi a d&aacute;le do okresu Mlad&aacute; Boleslav.<span style="font-size: larger;"><b><img alt="Dominanta obce" adlesse_been_here="true" src="http://www.oustranka.cz/images/stories/obec/titul_01.jpg" width="180" vspace="3" hspace="3" height="80" align="left" /></b></span></p>
+<p style="text-align: justify;">Str&aacute;nka lež&iacute; 17 km severov&yacute;chodně od Měln&iacute;ka. Okolo Str&aacute;nky vede okresn&iacute; silnice do Mlad&eacute; Boleslavi. <br />
+Str&aacute;nka se nal&eacute;z&aacute; v krajině &uacute;rodn&eacute; a lesnat&eacute; a m&aacute; dobrou polohu.<img alt="Rybn&iacute;k na n&aacute;vsi" adlesse_been_here="true" src="http://www.oustranka.cz/images/stories/obec/rybnik.jpg" width="200" vspace="3" hspace="3" height="120" align="right" /></p>
+<p style="text-align: center;"><span style="font-size: larger;"><b>Str&aacute;nka</b></span>, katastr&aacute;ln&iacute; obec, tvoř&iacute; s obcemi <span style="font-size: larger;"><b>Tajn&aacute;</b></span> a <span style="font-size: larger;"><b>Ostr&yacute;</b></span> katastr<br />
+patř&iacute;c&iacute; pod <span style="font-size: larger;"><b>Obecn&iacute; &uacute;řad ve Str&aacute;nce</b>. <br />
+</span></p>
+<p style="text-align: left;"><br />
+Adresa: 	 <b>Str&aacute;nka 70, 277 35 M&scaron;eno</b><br />
+telefon a fax: 	 315 693 342<br />
+ofici&aacute;ln&iacute; www: 	 www.oustranka.cz<br />
+e-mail: 
+ <script language='JavaScript' type='text/javascript'>
+ <!--
+ var prefix = '&#109;a' + 'i&#108;' + '&#116;o';
+ var path = 'hr' + 'ef' + '=';
+ var addy98981 = 'str&#97;nk&#97;' + '&#64;';
+ addy98981 = addy98981 + '&#105;&#111;l' + '&#46;' + 'cz';
+ document.write( '<a ' + path + '\'' + prefix + ':' + addy98981 + '\'>' );
+ document.write( addy98981 );
+ document.write( '<\/a>' );
+ //-->\n </script><script language='JavaScript' type='text/javascript'>
+ <!--
+ document.write( '<span style=\'display: none;\'>' );
+ //-->
+ </script>Tato adresa je chráněna proti spamování, pro její zobrazení potřebujete mít Java scripty povoleny 
+ <script language='JavaScript' type='text/javascript'>
+ <!--
+ document.write( '</' );
+ document.write( 'span>' );
+ //-->
+ </script>, 
+ <script language='JavaScript' type='text/javascript'>
+ <!--
+ var prefix = '&#109;a' + 'i&#108;' + '&#116;o';
+ var path = 'hr' + 'ef' + '=';
+ var addy27249 = '&#105;nf&#111;' + '&#64;';
+ addy27249 = addy27249 + '&#111;&#117;str&#97;nk&#97;' + '&#46;' + 'cz';
+ document.write( '<a ' + path + '\'' + prefix + ':' + addy27249 + '\'>' );
+ document.write( addy27249 );
+ document.write( '<\/a>' );
+ //-->\n </script><script language='JavaScript' type='text/javascript'>
+ <!--
+ document.write( '<span style=\'display: none;\'>' );
+ //-->
+ </script>Tato adresa je chráněna proti spamování, pro její zobrazení potřebujete mít Java scripty povoleny 
+ <script language='JavaScript' type='text/javascript'>
+ <!--
+ document.write( '</' );
+ document.write( 'span>' );
+ //-->
+ </script><br />
+IČO: 	 00662216<br />
+Datov&aacute; schr&aacute;nka: eb5avi6</p>
+<p style="text-align: left;"><a href="https://www.profilzadavatele.cz/profil-zadavatele/obec-stranka_5190/" target="_blank">Profil zadavatele</a><br />
+Starosta: 	 &Scaron;tefan Dvor&scaron;č&iacute;k<br />
+&Uacute;ředn&iacute; hodiny: 	 středa 17 - 19 hod.</p>
+<p style="text-align: center;"><a target="_self" href="http://www.oustranka.cz/index.php?option=com_content&amp;task=view&amp;id=342&amp;Itemid=48"><b><span style="font-size: larger;">Turistick&eacute; zaj&iacute;mavosti v okol&iacute;</span></b></a></p>
+<p style="text-align: center;"><a href="http://www.slunecno.cz/mista/stranka-2753"><img adlesse_been_here="true" alt="Počas&iacute; Str&aacute;nka - Slunečno.cz" style="border: 0px;" src="http://www.slunecno.cz/predpoved-na-web.php?m=2753&amp;p1=33AB08&amp;p2=FFFFFF&amp;v=2" /></a></p>
+<div style="text-align:right;"><script src="http://www.tixik.cz/cs/api/mapout/?public=a&amp;lang=en&amp;x=14.6597352&amp;y=50.4238103&amp;w=480&amp;h=300&amp;z=15&amp;tm=HYBRID&amp;n=oustranka.cz&amp;mt=t&amp;place=Stránka 70, 277 35 &amp;border=3&amp;hbubble=false&amp;round=3&amp;shadow=true&amp;rt=0&amp;">
+	</script> 	<br />
+<a title="Měln&iacute;k" href="http://www.tixik.cz/melnik-1954603.htm">Tixik.com 	</a></div>
+<noscript><a href="http://www.tixik.cz/melnik-1954603.htm" 
+	title="Mělník">Tixik.com</a>
+	</noscript>
+<p style="text-align: left;">Aktualizace 19. 5. 2020</p>			</td>
+		</tr>
+				</table>
+
+		<span class="article_seperator">&nbsp;</span>
+
+		</div></td></tr></table>								</div>
+								
+								<!-- start: user6 & user5 modules -->
+																<!-- end: user6 & user5 modules -->
+								
+								
+								
+							</div>
+						</div>
+						<!-- END: CENTER BLOCK -->
+						
+						<!-- START: RIGHT BLOCK -->
+												<div id="rightblock">
+							<div id="rightdiv">
+								<div id="right">
+											<div class="moduletable">
+							<h3>
+					Nepřehlédněte				</h3>
+				<link rel='stylesheet' href='http://oustranka.cz/modules/mod_content_links.css' type='text/css'/><div class='mod_content_links_block'>
+<a  href='http://oustranka.cz/index.php?option=com_content&task=view&id=1185&Itemid=31'>ZZ č. 2 - 15. 4. 2020</a><br />
+<a  href='http://oustranka.cz/index.php?option=com_content&task=view&id=1169&Itemid=31'>Zpráva o výsledku hospodaření - 2019</a><br />
+<a  href='http://oustranka.cz/index.php?option=com_content&task=view&id=784&Itemid=1'>Odkoupení nemovitostí od Řádu sv. Augustina</a><br />
+<a  href='http://oustranka.cz/index.php?option=com_content&task=view&id=712&Itemid=34'>Kořenová čistírna odpadních vod</a><br />
+<a  href='http://oustranka.cz/index.php?option=com_content&task=view&id=342&Itemid=32'>Turistické zajímavosti v okolí</a><br />
+<a  href='http://oustranka.cz/index.php?option=com_content&task=view&id=270&Itemid=34'>Czech POINT</a><br />
+<a  href='http://oustranka.cz/index.php?option=com_content&task=view&id=13&Itemid=43'>Samostatnost obce</a><br />
+
+
+</div>		</div>
+				<div class="moduletable">
+							<h3>
+					Kdo je tu?				</h3>
+				<!--Právě zde je/jsou<br />-->1 host<!-- online-->		</div>
+				<div class="moduletable">
+							<h3>
+					Počet přístupů od 1.11.2008:				</h3>
+				<strong>Přístupů:</strong> 2253368
+		</div>
+										</div>
+							</div>
+						</div>
+												<!-- END: RIGHT BLOCK -->
+						<div class="clr"></div>
+					</div>
+				</div>
+				<!-- END: MAIN CONTENT -->
+				<!-- start: user8 & user9 modules -->
+																<!-- end: user8 & user9 modules -->
+				<!-- START: FOOTER -->
+<!-- BEGIN: BANNER -->
+<div id="td-downts">
+		<div class="moduletable">
+			<a href="http://oustranka.cz/index.php?option=com_banners&amp;task=click&amp;bid=2" target="_blank"><img src="http://oustranka.cz/images/banners/sto2.jpg" border="0" alt="Advertisement" /></a>		</div>
+		</div>
+<!-- END: BANNER -->
+				<div id="footercontentdiv">
+					<div id="footercontent">
+						<div id="footerdiv">
+							<div id="footer">
+								
+<!-- Copyright Information -->
+Copyright &copy; 2020 Obecní úřad STRÁNKA. All rights reserved.<br />
+<span id="footercopyright">
+<a href="http://www.oustranka.cz/administrator" target="_blank">Administrace</a></span>							</div>
+						</div>
+						<div id="w3cdiv">
+							<div id="w3c">
+								<a href="http://validator.w3.org" target="_blank"><img src="http://oustranka.cz/templates/td_dimje/images/w3c_xhtml_icon.gif" alt="" title="Valid W3C XHTML 1.0 Transitional" border="0" /></a>
+								<a href="http://jigsaw.w3.org/css-validator/validator?uri=http%3A%2F%2Fwww.oustranka.cz&profile=css21&usermedium=all&warning=1&lang=en" target="_blank"><img src="http://oustranka.cz/templates/td_dimje/images/w3c_css_icon.gif" alt="" title="Valid CSS" border="0" /></a>
+							</div>
+						</div>
+						<div class="clr"></div>
+					</div>
+				</div>	
+				<!-- END: FOOTER -->
+			
+			</div> <!-- END: INNER -->
+		</div> <!-- END: WRAPPER -->
+	</div> <!-- end: wrapbg -->
+
+</div>
+</body>
+</html><!-- 1590132182 -->

@@ -10,6 +10,7 @@
 #include "Models/Comment.hpp"
 #include "Models/AbstractPattern.hpp"
 #include "Models/Attribute.hpp"
+#include "Models/HTMLAttribute.hpp"
 #include "../FileManager/Models/LocalReference.hpp"
 
 class Analyzer {
