@@ -19,6 +19,7 @@ void DownloadFileTree::add(const Reference& ref, bool isLocked, bool isDownloade
 void DownloadFileTree::setDownloaded(const Reference& ref) {
   auto tmp = root;
   find(tmp, ref);
+  std::cout << "Set downloaded" << tmp -> name << ref.getPath() << std::endl;
   if (tmp != root)
     tmp -> state.isDownloaded = true;
 }
@@ -38,14 +39,39 @@ void DownloadFileTree::setFailed(const Reference& ref) {
 }
 
 std::string DownloadFileTree::nextDownloadReference() const {
+  std::shared_ptr<Node> node;
+
+  std::function<bool(const std::shared_ptr<Node>)> predicate = [](const std::shared_ptr<Node>& node) {
+    return node -> isDownloadable();
+  };
+
   switch (traverseStyle) {
   case TraverseStyle::BREADTH_FIRST_SEARCH:
+    node = breadthFirstSearch(predicate);
     break;
   case TraverseStyle::DEPTH_FIRST_SEARCH:
+    node = depthFirstSearch(predicate);
     break;
   }
 
-  return "";
+  if (node == root)
+    return "";
+
+  std::string path = "";
+
+  std::weak_ptr<Node> tmp = node;
+
+  while (true) {
+    auto nodeValue = tmp.lock();
+
+    if (!nodeValue || nodeValue == root)
+      break;
+
+    path = "/" + nodeValue -> name + path;
+    tmp = nodeValue -> parent;
+  }
+
+  return path;
 }
 
 void DownloadFileTree::logTreeDescription() const {
@@ -65,6 +91,10 @@ void DownloadFileTree::logTreeDescription(const std::shared_ptr<Node>& node, int
 void DownloadFileTree::addNewNode(std::shared_ptr<Node>& parent, const std::string& name, bool isLeaf) {
   std::shared_ptr<Node> newNode = std::make_shared<Node>(name);
   newNode -> isLeaf = isLeaf;
+
+  std::weak_ptr<Node> weakParent = parent;
+  newNode -> parent = weakParent;
+
   parent -> children.push_back(newNode);
   parent = newNode;
 }
@@ -110,7 +140,7 @@ void DownloadFileTree::search(std::shared_ptr<Node>& node, const Reference& ref,
     if (name.empty())
       break;
 
-   if (node -> state.isLocked) {
+    if (node -> state.isLocked) {
       node = root;
       throw LockedReferenceException();
     }
@@ -118,6 +148,7 @@ void DownloadFileTree::search(std::shared_ptr<Node>& node, const Reference& ref,
     auto index = node -> find(name, isLeaf);
 
     if (index == node -> children.end()) {
+
       if (insertItemsDuringSearch) {
         addNewNode(node, name, isLeaf);
         depth++;
@@ -136,3 +167,40 @@ void DownloadFileTree::search(std::shared_ptr<Node>& node, const Reference& ref,
   }
 }
 
+std::shared_ptr<DownloadFileTree::Node> DownloadFileTree::breadthFirstSearch(std::function<bool(const std::shared_ptr<Node>)>& predicate) const {
+  std::queue<std::shared_ptr<Node>> queue;
+
+  queue.push(root);
+
+  while (!queue.empty()) {
+    std::shared_ptr<Node> node = queue.front();
+    queue.pop();
+
+    if (predicate(node))
+      return node;
+
+    for (const auto& child: node -> children)
+      queue.push(child);
+  }
+
+  return root;
+}
+
+std::shared_ptr<DownloadFileTree::Node> DownloadFileTree::depthFirstSearch(std::function<bool(const std::shared_ptr<Node>)>& predicate) const {
+  std::stack<std::shared_ptr<Node>> stack;
+
+  stack.push(root);
+
+  while (!stack.empty()) {
+    std::shared_ptr<Node> node = stack.top();
+    stack.pop();
+
+    if (predicate(node))
+      return node;
+
+    for (const auto& child: node -> children)
+      stack.push(child);
+  }
+
+  return root;
+}

@@ -7,6 +7,8 @@
 #include <memory>
 #include <exception>
 #include <queue>
+#include <stack>
+#include <functional>
 
 #include "../../FileManager/Models/Reference.hpp"
 #include "../../Base/Data.hpp"
@@ -33,7 +35,7 @@ struct DownloadFileTree {
      *   - @param[in] traverseStyle - the style of traversal
      */
     DownloadFileTree(const uint8_t& depth, const TraverseStyle& traverseStyle): depth(depth), traverseStyle(traverseStyle) {
-      root = std::make_unique<Node>("/");
+      root = std::make_shared<Node>("/");
     }
     /**
      *  @brief
@@ -159,6 +161,11 @@ struct DownloadFileTree {
           return node -> name == name && node -> isLeaf == isLeaf;
         });
       }
+
+
+      bool isDownloadable() const {
+        return isLeaf && !state.isDownloaded && !state.isLocked && !state.isFailed;
+      }
     };
 
     const uint8_t depth;
@@ -202,10 +209,22 @@ struct DownloadFileTree {
      *    - @param[in] level - level of printing the node.
      */
     void logTreeDescription(const std::shared_ptr<Node>& node, int level = 0) const;
-
-    std::string breadthFirstSearch() const;
-
-    std::string depthFirstSearch() const;
+    /**
+     *  @brief
+     *    Simplified version of the Breadth First Search, as the tree doesn't containt loops
+     *
+     *  Input:
+     *    - @param[in] predicate - function to validate, if the node is the result or not
+     */
+    std::shared_ptr<Node> breadthFirstSearch(std::function<bool(const std::shared_ptr<Node>)>& predicate) const;
+    /**
+     *  @brief
+     *    Simplified version of the Depth First Search, as the tree doesn't containt loops
+     *
+     *  Input:
+     *    - @param[in] predicate - function to validate, if the node is the result or not
+     */
+    std::shared_ptr<Node> depthFirstSearch(std::function<bool(const std::shared_ptr<Node>)>& predicate) const;
 };
 
 #endif

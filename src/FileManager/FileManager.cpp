@@ -50,11 +50,12 @@ void FileManager::createRelativePathDirectories(const LocalReference& reference)
 
   auto begin = list.begin();
   auto end = list.end();
-
+  begin++;
   end--;
 
   while (begin != end) {
-    std::string path;
+    std::string path = "";
+
     // Create path
     for (auto it = list.begin(); it != begin; it++)
       path += *it + "/";
@@ -82,7 +83,9 @@ void FileManager::createRelativePathDirectories(const LocalReference& reference)
 void FileManager::openDirectory(const LocalReference& reference, DIR *& dir) const {
   std::string path = reference.getPath();
   // In case of empty directory, check current
-  path = path + path == "" ? "." : "";
+  path = path + (path == "" ? "." : "");
+
+  std::cout << "KKKK" << reference.getPath() << " " << path  << std::endl;
 
   dir = opendir(path.c_str());
 

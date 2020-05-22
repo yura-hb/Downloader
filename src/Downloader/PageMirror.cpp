@@ -15,6 +15,20 @@ void PageMirror::mirror(const RemoteReference& ref) {
 
   LocalReference saveRef = *dynamic_cast<LocalReference *>(localRef.get());
   download(ref, saveRef);
+
+  std::string downloadReference = "";
+
+  while ((downloadReference = downloadTree.nextDownloadReference()) != "") {
+    URL url;
+    url.domain = ref.domain();
+    url.query = downloadReference;
+
+    RemoteReference downloadRemoteReference(url);
+    std::unique_ptr<Reference> tmp = LocalReference(downloadRemoteReference.domain()).addPath(downloadRemoteReference.getPath());
+    LocalReference downloadSaveRef = *dynamic_cast<LocalReference *>(tmp.get());
+
+    download(downloadRemoteReference, downloadSaveRef);
+  }
 }
 
 Response PageMirror::download(const RemoteReference& ref, const LocalReference& filepath) {
@@ -50,11 +64,13 @@ Response PageMirror::download(const RemoteReference& ref, const LocalReference& 
 
         std::cout << localRef -> getPath() << std::endl;
         if (localRef -> isRelative())
-          downloadTree.add(*localRef);
+          downloadTree.add(*localRef, false, false);
         else
-          downloadTree.add(*localRef -> addAbsoluteReference(ref.getPath()).get());
+          downloadTree.add(*localRef -> addAbsoluteReference(ref.getPath()).get(), false, false);
       }
     }
+
+    std::cout << downloadTree.nextDownloadReference() << std::endl;
 
     downloadTree.logTreeDescription();
   } catch (const Exception& exc) {
@@ -78,7 +94,7 @@ void PageMirror::prepare(const RemoteReference& ref) {
 
   downloadTree.add(robotsReference, false, false);
   try {
-    FileDownloader::download(robotsReference, saveRef);
+    download(robotsReference, saveRef);
     processRobotsFile(saveRef);
   } catch (const Exception& exc) {
 
