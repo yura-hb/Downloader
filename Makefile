@@ -25,7 +25,7 @@ DOXYGEN_FILE = doxygex.dox
 
 MODULES = $(OUTPUT_PATH)/main.o \
     \
-    $(OUTPUT_PATH)/Data.o $(OUTPUT_PATH)/Exception.o \
+    $(OUTPUT_PATH)/Data.o $(OUTPUT_PATH)/Exception.o $(OUTPUT_PATH)/Logger.o \
     \
 		$(OUTPUT_PATH)/Socket.o $(OUTPUT_PATH)/HTTPClient.o \
 	  $(OUTPUT_PATH)/Receiver.o $(OUTPUT_PATH)/Request.o $(OUTPUT_PATH)/URL.o \
