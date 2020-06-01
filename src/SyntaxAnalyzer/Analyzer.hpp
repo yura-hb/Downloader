@@ -11,6 +11,7 @@
 #include "Models/AbstractPattern.hpp"
 #include "Models/Attribute.hpp"
 #include "Models/HTMLAttribute.hpp"
+#include "Models/BeginEndAttribute.hpp"
 #include "../FileManager/Models/LocalReference.hpp"
 
 class Analyzer {

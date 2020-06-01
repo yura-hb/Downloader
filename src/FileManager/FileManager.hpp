@@ -13,6 +13,7 @@
 #include "Models/LocalReference.hpp"
 #include "../Base/Exception.hpp"
 #include "../Base/Data.hpp"
+#include "../Base/Logger.hpp"
 
 class FileManager {
   public:

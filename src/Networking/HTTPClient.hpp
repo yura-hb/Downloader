@@ -9,6 +9,7 @@
 #include "Response.hpp"
 #include "ResponseStatus.hpp"
 #include "../Base/Data.hpp"
+#include "../Base/Logger.hpp"
 
 class HTTPClient {
   public:

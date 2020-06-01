@@ -2,7 +2,7 @@
 #define __REMOTE_REFERENCE__
 
 #include <iostream>
-#include "Reference.hpp"
+#include "LocalReference.hpp"
 #include "../../Networking/URL.hpp"
 
 struct RemoteReference: public Reference {
@@ -72,6 +72,11 @@ struct RemoteReference: public Reference {
      *    - @param[out] - string representation of the url query as a path
      */
     std::string getPath() const override;
+    /**
+     *  Output:
+     *    - @param[out] - returns url query as a path
+     */
+    std::string getDirectoryPath() const override;
   private:
     URL url;
 };

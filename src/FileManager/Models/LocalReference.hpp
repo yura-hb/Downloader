@@ -51,12 +51,12 @@ struct LocalReference: public Reference {
      *    - @param[out] - boolean value validating, if the element is the reference
      */
     bool isDirectory() const override;
-    /*
+    /**
      *  Output:
      *    - @param[out] - true, in case, if the reference is relative to some directory. (Starts with "/").
      */
     bool isRelative() const override;
-    /*
+    /**
      *  @brief
      *    Constructs url with the path as the query and the domain
      *
@@ -64,12 +64,17 @@ struct LocalReference: public Reference {
      *    - @param[out] - true, in case, if the reference is relative to some directory. (Starts with "/").
      */
     URL requestUrl(const std::string& domain) const override;
-    /*
+    /**
      *  Output:
      *    - @param[out] - current path
      */
     std::string getPath() const override;
-    /*
+    /**
+     *  Output:
+     *    - @param[out] - returns the path of the current directory
+     */
+    std::string getDirectoryPath() const override;
+    /**
      *  Output:
      *    - @param[out] - filename, in case if directory
      *
@@ -77,12 +82,12 @@ struct LocalReference: public Reference {
      *    In case, if current file is not directory
      */
     std::string filename() const override;
-    /*
+    /**
      *  Output:
      *    - @param[out] - path splitted on the / components
      */
     std::list<std::string> loadComponents() const;
-    /*
+    /**
      *  @brief
      *    Simplifies the path and removes all occurrences . // and ../ from the path.
      */

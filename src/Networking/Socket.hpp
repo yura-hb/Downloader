@@ -1,6 +1,8 @@
 #ifndef __SOCKET_H__
 #define __SOCKET_H__
 
+// Base
+#include "../Base/Logger.hpp"
 // C++ Core
 #include <iostream>
 #include <cstdio>

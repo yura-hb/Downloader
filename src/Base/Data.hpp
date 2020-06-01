@@ -118,6 +118,16 @@ class Data {
     }
     /**
      * @brief
+     *   Pops the last element from the data, if exists.
+     *
+     * Complexity: O(1)
+     */
+    void popLast() {
+      if (!empty())
+        store.pop_back();
+    }
+    /**
+     * @brief
      *   Replaces all occurrences of the old sequence with the new sequence
      *
      * Input:

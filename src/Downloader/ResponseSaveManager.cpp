@@ -17,7 +17,7 @@ void ResponseSaveManager::process(Response& response, const LocalReference& file
 
     resolveTransferEncoding(response, filepath);
   } catch (const Exception& exc) {
-    std::cerr << exc.what() << std::endl;
+    Logger::logError(exc);
     return;
   }
 }
@@ -29,13 +29,11 @@ void ResponseSaveManager::resolveTransferEncoding(const Response& response, cons
     try {
       if (data == "chunked") {
         ChunkMerger::mergeChunks(filepath);
-      //} else if (data == "gzip") {
-      //} else if (data == "deflate") {
       } else {
         return;
       }
     } catch (const Exception& exc) {
-      std::cerr << exc.what() << std::endl;
+      Logger::logError(exc);
     }
   });
 }

@@ -2,7 +2,7 @@
 
 const std::string PageMirror::robotsFileQuery = "/robots.txt";
 const std::string PageMirror::htmlFileContentType = "text/html";
-const std::string PageMirror::cssFileContentType = "css/html";
+const std::string PageMirror::cssFileContentType = "text/css";
 const std::string PageMirror::allUsersRobotsLockHeader = "User-agent: *";
 const std::string PageMirror::disallowKey = "Disallow";
 
@@ -42,10 +42,10 @@ Response PageMirror::download(const RemoteReference& ref, const LocalReference& 
   const Data<> contentType = response.loadHeader(Header::_Header::CONTENT_TYPE);
   std::vector<std::string> references;
 
-  if (contentType == htmlFileContentType) {
+  if (contentType.find(htmlFileContentType, contentType.begin()) != contentType.end()) {
     HTMLAnalyzer analyzer;
     references = analyzer.loadReferences(filepath);
-  } else if (contentType == cssFileContentType) {
+  } else if (contentType.find(cssFileContentType, contentType.begin()) != contentType.end()) {
     CSSAnalyzer analyzer;
     references = analyzer.loadReferences(filepath);
   } else {
@@ -54,6 +54,7 @@ Response PageMirror::download(const RemoteReference& ref, const LocalReference& 
 
   try {
     for (const std::string& relatedReference: references) {
+      std::cout << relatedReference << std::endl;
       URL url(relatedReference);
 
       if (url.isValid()) {
@@ -62,19 +63,15 @@ Response PageMirror::download(const RemoteReference& ref, const LocalReference& 
       } else {
         std::unique_ptr<Reference> localRef = std::make_unique<LocalReference>(relatedReference);
 
-        std::cout << localRef -> getPath() << std::endl;
-        if (localRef -> isRelative())
+        if (localRef -> isRelative()) {
           downloadTree.add(*localRef, false, false);
-        else
-          downloadTree.add(*localRef -> addAbsoluteReference(ref.getPath()).get(), false, false);
+        } else {
+          downloadTree.add(*localRef -> addAbsoluteReference(ref.getDirectoryPath()).get(), false, false);
+        }
       }
     }
-
-    std::cout << downloadTree.nextDownloadReference() << std::endl;
-
-    downloadTree.logTreeDescription();
   } catch (const Exception& exc) {
-    std::cerr << exc.what() << std::endl;
+    Logger::logError(exc);
   }
 
   return response;
@@ -139,7 +136,7 @@ void PageMirror::processRobotsFile(const LocalReference& ref) {
     try {
       downloadTree.add(LocalReference(data.stringRepresentation(), true), true, false);
     } catch (const Exception& exc) {
-      std::cerr << exc.what() << std::endl;
+      Logger::logError(exc);
     }
 
     data = {};

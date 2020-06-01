@@ -5,7 +5,7 @@ void DownloadFileTree::add(const Reference& ref, bool isLocked, bool isDownloade
     auto tmp = root;
     search(tmp, ref, true);
 
-    if (tmp != root) {
+    if (tmp != root && tmp -> isDownloadable()) {
       tmp -> state.isLocked = isLocked;
       tmp -> state.isDownloaded = isDownloaded;
     }
@@ -19,7 +19,7 @@ void DownloadFileTree::add(const Reference& ref, bool isLocked, bool isDownloade
 void DownloadFileTree::setDownloaded(const Reference& ref) {
   auto tmp = root;
   find(tmp, ref);
-  std::cout << "Set downloaded" << tmp -> name << ref.getPath() << std::endl;
+
   if (tmp != root)
     tmp -> state.isDownloaded = true;
 }

@@ -39,6 +39,15 @@ struct AbstractPattern {
     const std::string begin;
     const std::string separator;
     const std::string end;
+    /**
+     * @brief
+     *   Validates, if the input begins with the begin pattern
+     *
+     * @param[in] input - input model
+     *
+     * @return bool - when the input begins with the pattern, otherwise false
+     */
+    bool validateBegin(const Input& input) const;
 };
 
 #endif

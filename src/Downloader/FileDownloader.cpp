@@ -7,8 +7,10 @@ Response FileDownloader::download(const RemoteReference& ref, const LocalReferen
   try {
     sendRequest(url, response, true);
     save(response, filepath);
+
+    Logger::logResponse(response);
   } catch (const Exception& exc) {
-    std::cerr << exc.what() << std::endl << std::endl;
+    Logger::logError(exc);
   }
 
   return response;

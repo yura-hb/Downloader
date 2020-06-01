@@ -47,3 +47,11 @@ std::string RemoteReference::getPath() const {
 
   return url.query;
 }
+
+std::string RemoteReference::getDirectoryPath() const {
+  if (isDirectory())
+    return url.query;
+
+  LocalReference ref(url.query);
+  return ref.getDirectoryPath();
+}

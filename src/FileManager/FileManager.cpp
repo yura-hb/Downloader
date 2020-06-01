@@ -3,9 +3,8 @@
 void FileManager::createFolder(const LocalReference& reference) const {
   int result;
 
-  // TODO: - Replace cerr with the specified logger
   if ((result = mkdir(reference.getPath().c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)) != 0)
-    std::cerr << "Fail during creating directory" << std::endl;
+    Logger::logError(Exception("Fail during creating directory"));
 
   // In case of error, try to open directory with the name
   if (result) {
@@ -50,7 +49,6 @@ void FileManager::createRelativePathDirectories(const LocalReference& reference)
 
   auto begin = list.begin();
   auto end = list.end();
-  begin++;
   end--;
 
   while (begin != end) {
@@ -84,8 +82,6 @@ void FileManager::openDirectory(const LocalReference& reference, DIR *& dir) con
   std::string path = reference.getPath();
   // In case of empty directory, check current
   path = path + (path == "" ? "." : "");
-
-  std::cout << "KKKK" << reference.getPath() << " " << path  << std::endl;
 
   dir = opendir(path.c_str());
 

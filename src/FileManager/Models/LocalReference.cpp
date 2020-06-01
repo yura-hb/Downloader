@@ -31,6 +31,23 @@ std::string LocalReference::getPath() const {
   return path;
 }
 
+std::string LocalReference::getDirectoryPath() const {
+  if (isDirectory())
+    return path;
+
+  auto components = loadComponents();
+
+  if (!components.empty())
+    components.pop_back();
+
+  std::string path = "";
+
+  for (const auto& component: components)
+    path += component + "/";
+
+  return path;
+}
+
 std::string LocalReference::filename() const {
   size_t separatorPosition = 0;
   std::string separator = "/";
@@ -94,6 +111,8 @@ void LocalReference::simplify() {
   std::string prefix = isRelative() ? "/" : "";
   path = prefix + std::accumulate(components.begin(), components.end(), std::string(), accumulator);
 
-  if (path.at(path.size() - 1) == '/')
-    path.at(path.size() - 1) = isDirectoryPath ? '/' : ' ';
+  if (path.at(path.size() - 1) == '/' && isDirectoryPath)
+    path.at(path.size() - 1) = '/';
+  else
+    path.pop_back();
 }

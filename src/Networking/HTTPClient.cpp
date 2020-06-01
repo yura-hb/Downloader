@@ -3,6 +3,8 @@
 bool HTTPClient::loadPage(const URL& url, Response& response) const {
   Request request = makeRequest(url);
 
+  Logger::logRequest(request);
+
   Data<> data("");
 
   if (!performRequest(request, data))
@@ -11,7 +13,7 @@ bool HTTPClient::loadPage(const URL& url, Response& response) const {
   try {
     response = { data, url };
   } catch (const Exception &exc) {
-    std::cerr << exc.what() << std::endl;
+    Logger::logError(exc);
     return false;
   }
 
@@ -45,9 +47,8 @@ bool HTTPClient::performRequest(Request request, Data<> &result) const {
 URL HTTPClient::convertLink(const std::string& url) const {
   URL link(url);
 
-  if (!link.isValid() || link.protocol != URL::Protocol::http) {
-    std::cerr << "HTTPClient: Link is incorrect or protocol is not SUPPORTED" << std::endl;
-  }
+  if (!link.isValid() || link.protocol != URL::Protocol::http)
+    Logger::logError(Exception("HTTPClient: Link is incorrect or protocol is not SUPPORTED"));
 
   return link;
 }

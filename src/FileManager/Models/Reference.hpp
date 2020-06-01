@@ -39,6 +39,7 @@ struct Reference {
     virtual URL requestUrl(const std::string& domain) const = 0;
 
     virtual std::string getPath() const = 0;
+    virtual std::string getDirectoryPath() const = 0;
     virtual std::string filename() const = 0;
   protected:
     std::string path;

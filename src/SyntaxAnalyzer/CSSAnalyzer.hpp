@@ -6,7 +6,7 @@
 class CSSAnalyzer: public Analyzer {
   public:
     CSSAnalyzer() : Analyzer({
-      std::make_shared<Attribute>("url(", "", ")"),
+      std::make_shared<BeginEndAttribute>("url(", "", ")", true),
       std::make_shared<Comment>("//", "", "\n"),
       std::make_shared<Comment>("/*", "", "*/")
     }) {}
