@@ -10,68 +10,62 @@ void DownloadFileTree::add(const Reference& ref, bool isLocked, bool isDownloade
       tmp -> state.isDownloaded = isDownloaded;
     }
   } catch (const LockedReferenceException& exc) {
+    // TODO: - Add support to logger
     std::cout << exc.what() << std::endl;
   } catch (const OutOfMaximalDepthException& exc) {
     std::cout << exc.what() << std::endl;
   }
 }
 
-void DownloadFileTree::setDownloaded(const Reference& ref) {
+void DownloadFileTree::setDownloaded(const Reference& ref, const std::string& contentType) {
   auto tmp = root;
   find(tmp, ref);
 
-  if (tmp != root)
+  if (tmp != root) {
     tmp -> state.isDownloaded = true;
+    tmp -> state.contentType = contentType;
+  }
 }
 
 void DownloadFileTree::setLocked(const Reference& ref) {
   auto tmp = root;
   find(tmp, ref);
   if (tmp != root)
-    tmp -> state.isDownloaded = true;
+    tmp -> state.isLocked = true;
 }
 
 void DownloadFileTree::setFailed(const Reference& ref) {
   auto tmp = root;
   find(tmp, ref);
   if (tmp != root)
-    tmp -> state.isDownloaded = true;
+    tmp -> state.isFailed = true;
+}
+
+void DownloadFileTree::setOverwritten(const Reference& ref) {
+  auto tmp = root;
+  find(tmp, ref);
+  if (tmp != root)
+    tmp -> state.isOverwritten = true;
 }
 
 std::string DownloadFileTree::nextDownloadReference() const {
-  std::shared_ptr<Node> node;
-
   std::function<bool(const std::shared_ptr<Node>)> predicate = [](const std::shared_ptr<Node>& node) {
     return node -> isDownloadable();
   };
 
-  switch (traverseStyle) {
-  case TraverseStyle::BREADTH_FIRST_SEARCH:
-    node = breadthFirstSearch(predicate);
-    break;
-  case TraverseStyle::DEPTH_FIRST_SEARCH:
-    node = depthFirstSearch(predicate);
-    break;
-  }
+  std::shared_ptr<Node> node = traverse(predicate);
 
-  if (node == root)
-    return "";
+  return getPath(node);
+}
 
-  std::string path = "";
+std::tuple<std::string, std::string> DownloadFileTree::nextOverwriteReference() const {
+  std::function<bool(const std::shared_ptr<Node>)> predicate = [](const std::shared_ptr<Node>& node) {
+    return node -> state.isDownloaded && !node -> state.isOverwritten;
+  };
 
-  std::weak_ptr<Node> tmp = node;
+  std::shared_ptr<Node> node = traverse(predicate);
 
-  while (true) {
-    auto nodeValue = tmp.lock();
-
-    if (!nodeValue || nodeValue == root)
-      break;
-
-    path = "/" + nodeValue -> name + path;
-    tmp = nodeValue -> parent;
-  }
-
-  return path;
+  return std::make_tuple(getPath(node), node -> state.contentType);
 }
 
 void DownloadFileTree::logTreeDescription() const {
@@ -164,6 +158,36 @@ void DownloadFileTree::search(std::shared_ptr<Node>& node, const Reference& ref,
 
     if (node -> isLeaf)
       return;
+  }
+}
+
+std::string DownloadFileTree::getPath(const std::shared_ptr<Node>& node) const {
+  if (node == root)
+    return "";
+
+  std::string path = "";
+
+  std::weak_ptr<Node> tmp = node;
+
+  while (true) {
+    auto nodeValue = tmp.lock();
+
+    if (!nodeValue || nodeValue == root)
+      break;
+
+    path = "/" + nodeValue -> name + path;
+    tmp = nodeValue -> parent;
+  }
+
+  return path;
+}
+
+std::shared_ptr<DownloadFileTree::Node> DownloadFileTree::traverse(std::function<bool(const std::shared_ptr<Node>)>& predicate) const {
+  switch (traverseStyle) {
+  case TraverseStyle::BREADTH_FIRST_SEARCH:
+    return breadthFirstSearch(predicate);
+  case TraverseStyle::DEPTH_FIRST_SEARCH:
+    return depthFirstSearch(predicate);
   }
 }
 

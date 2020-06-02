@@ -19,8 +19,6 @@ bool Attribute::consume(const Input& input, const EmitFunction& func) const {
 
   func(input.second.subsequence(linkBegin, --input.second.end()));
 
-  input.second = {};
-
   return true;
 }
 

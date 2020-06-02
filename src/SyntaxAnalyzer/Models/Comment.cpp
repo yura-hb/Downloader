@@ -12,7 +12,5 @@ bool Comment::consume(const Input& input, const EmitFunction& func) const {
   if (input.first.eof())
     return false;
 
-  input.second = {};
-
   return true;
 }

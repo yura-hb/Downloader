@@ -19,7 +19,5 @@ bool BeginEndAttribute::consume(const Input& input, const EmitFunction& func) co
 
   func(reference);
 
-  input.second = {};
-
   return true;
 }

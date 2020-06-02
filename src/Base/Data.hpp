@@ -128,38 +128,6 @@ class Data {
     }
     /**
      * @brief
-     *   Replaces all occurrences of the old sequence with the new sequence
-     *
-     * Input:
-     *   @param[in] oldSequence - sequence of elements, which will be replaced
-     *   @param[in] newSequence - sequence of elements, which will replace
-     *
-     * Complexity: O(nm), where n is the size of the sequence, m is the size of the oldSequence
-     */
-    void replace(const Data& oldSequence, const Data& newSequence) {
-      auto iter = store.begin();
-      while (iter != store.end()) {
-        iter = eraseFirst(oldSequence, iter);
-
-        for (const auto& item: newSequence)
-          store.insert(iter, item);
-      }
-    }
-    /**
-     * @brief
-     *   Replaces all occurrences of the old sequence with the new sequence
-     *
-     * Input:
-     *   @param[in] oldSequence - string representation of data
-     *   @param[in] newSequence - sequence of elements, which will replace
-     *
-     * Complexity: O(nm), where n is the size of the sequence, m is the size of the oldSequence
-     */
-    void replace(const std::string& oldSequence, const Data<Comparator>& newSequence) {
-      replace(Data(oldSequence), newSequence);
-    }
-    /**
-     * @brief
      *   Erases all occurrences of the sequence starting from position
      *
      * Input:
@@ -172,8 +140,8 @@ class Data {
       if (position >= size())
         return;
 
-      auto iter = store.begin();
-      std::advance(iter, position);
+      auto iter = at(position);
+
       while (iter != store.end())
         iter = eraseFirst(sequence, iter);
     }
@@ -202,7 +170,7 @@ class Data {
      *   @param[in] position - iterator to the start position, from which search will begin
      *
      * Output:
-     *   @param[out] - iterator pointing to the position, where data subsequence was removed
+     *   @param[out] - iterator pointing to the position, where data subsequence was removed or end iterator
      *
      * Complexity: O(n)
      */
@@ -215,7 +183,37 @@ class Data {
         return eraseSequence(iter, sequenceEndIter);
       }
 
-      return iter;
+      return end();
+    }
+    /**
+    * @brief
+    *   Replaces all occurrences of the old sequence with the new sequence
+    *
+    * Input:
+    *   @param[in] oldSequence - sequence of elements, which will be replaced
+    *   @param[in] newSequence - sequence of elements, which will replace
+    *
+    * Complexity: O(nm), where n is the size of the sequence, m is the size of the oldSequence
+    */
+    void replace(const Data<Comparator>& oldSequence, const Data<Comparator>& newSequence) {
+      iterator iter = store.begin();
+
+      while ((iter = eraseFirst(oldSequence, iter)) != store.end())
+        for (const auto& item: newSequence)
+          store.insert(iter, item);
+    }
+    /**
+     * @brief
+     *   Replaces all occurrences of the old sequence with the new sequence
+     *
+     * Input:
+     *   @param[in] oldSequence - string representation of data
+     *   @param[in] newSequence - sequence of elements, which will replace
+     *
+     * Complexity: O(nm), where n is the size of the sequence, m is the size of the oldSequence
+     */
+    void replace(const std::string& oldSequence, const Data<Comparator>& newSequence) {
+      replace(Data(oldSequence), newSequence);
     }
     /**
      * @brief

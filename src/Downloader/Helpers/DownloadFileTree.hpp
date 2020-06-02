@@ -9,6 +9,7 @@
 #include <queue>
 #include <stack>
 #include <functional>
+#include <tuple>
 
 #include "../../FileManager/Models/Reference.hpp"
 #include "../../Base/Data.hpp"
@@ -57,22 +58,15 @@ struct DownloadFileTree {
      *
      *  Input:
      *    @param[in] ref - reference, containing the relative path from the current directory
-     *
-     *  Throws:
-     *    Throws an exception, in case, if the reference doesn't points to the file.
-     *
      */
-    void setDownloaded(const Reference& ref);
+    void setDownloaded(const Reference& ref, const std::string& contentType);
     /**
      *  @brief
      *    Sets the locked flag at the specific file path
      *
      *  Input:
-     *    @param[in] ref - reference, containing the relative path from the current directory
-     *
-     *  Throws:
-     *    Throws an exception, in case, if the reference doesn't points to the file.
-     *
+     *    @param[in] ref - reference, containing the relative path from the current directory.
+     *    @param[in] contentType - content type of the file from the reference.
      */
     void setLocked(const Reference& ref);
     /**
@@ -81,12 +75,16 @@ struct DownloadFileTree {
      *
      *  Input:
      *    @param[in] ref - reference, containing the relative path from the current directory
-     *
-     *  Throws:
-     *    Throws an exception, in case, if the reference doesn't points to the file.
-     *
      */
     void setFailed(const Reference& ref);
+    /**
+     *  @brief
+     *    Sets the overwritten flag at the specific file path
+     *
+     *  Input:
+     *    @param[in] ref - reference, containing the relative path from the current directory
+     */
+    void setOverwritten(const Reference& ref);
     /**
      *  @brief
      *    Recursively traverses download tree, depending on the style and returns the relative path on the server.
@@ -95,6 +93,13 @@ struct DownloadFileTree {
      *    - @param[out] - string path to the file, in case, if some finded, otherwise empty string.
      */
     std::string nextDownloadReference() const;
+    /**
+     *  @brief
+     *    Traverses the dowload tree, depending on the style and returns the relative path on the server
+     *
+     *  @return tuple of the path and the file content type
+     */
+    std::tuple<std::string, std::string> nextOverwriteReference() const;
     /**
      *  @brief
      *    Prints out the state of the tree and each node
@@ -138,6 +143,16 @@ struct DownloadFileTree {
          *    Validates if the directory is failed, so the directory can't have any child, under that path.
          */
         bool isFailed = false;
+        /**
+         *  @brief
+         *   Flag, which indicates, that the references of file at the specific path were overwritten
+         */
+        bool isOverwritten = false;
+        /**
+         *  @brief
+         *    Content type of the file
+         */
+        std::string contentType = "";
       };
 
       std::string name;
@@ -209,6 +224,22 @@ struct DownloadFileTree {
      *    - @param[in] level - level of printing the node.
      */
     void logTreeDescription(const std::shared_ptr<Node>& node, int level = 0) const;
+    /**
+     * @brief
+     *   Creates the path from the current node to the root
+     *
+     * @param[in] node - some node from the tree
+     * @return - string path to the root
+     */
+    std::string getPath(const std::shared_ptr<Node>& node) const;
+    /**
+     *  @brief
+     *    Traverses the tree by the flag specified in the config
+     *
+     *  @param[in] predicate - function to validate, if the node is the result or not
+     *  @return - shared_ptr to the node or root, in case if no node was found
+     */
+    std::shared_ptr<Node> traverse(std::function<bool(const std::shared_ptr<Node>)>& predicate) const;
     /**
      *  @brief
      *    Simplified version of the Breadth First Search, as the tree doesn't containt loops

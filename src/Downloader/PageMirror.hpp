@@ -15,12 +15,10 @@
 #include "../Networking/URL.hpp"
 #include "../Networking/HTTPClient.hpp"
 
-#include "../SyntaxAnalyzer/HTMLAnalyzer.hpp"
-#include "../SyntaxAnalyzer/CSSAnalyzer.hpp"
-
 #include "../FileManager/FileManager.hpp"
 
 #include "Helpers/DownloadFileTree.hpp"
+#include "Helpers/ReferenceConverter.hpp"
 
 /**
  *  Downloader, which will be responsible for mirroring the page and all it underlying sources.
@@ -98,8 +96,6 @@ class PageMirror: public FileDownloader {
     void processRobotsFile(const LocalReference& ref);
 
     static const std::string robotsFileQuery;
-    static const std::string htmlFileContentType;
-    static const std::string cssFileContentType;
     static const std::string allUsersRobotsLockHeader;
     static const std::string disallowKey;
 };

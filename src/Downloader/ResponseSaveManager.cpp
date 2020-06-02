@@ -37,7 +37,3 @@ void ResponseSaveManager::resolveTransferEncoding(const Response& response, cons
     }
   });
 }
-
-void ResponseSaveManager::overwriteReferences(const Response& response, const LocalReference& filepath) const {
-
-}
