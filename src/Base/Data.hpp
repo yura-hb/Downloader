@@ -311,7 +311,7 @@ class Data {
       auto iter = find(sequence, startPos);
 
       if (iter != store.end() && shouldAdvance) {
-        auto size = 0;
+        size_t size = 0;
 
         while (size != sequence.size() && iter != store.end()) { iter++; size++; }
       }

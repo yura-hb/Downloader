@@ -198,6 +198,8 @@ std::shared_ptr<DownloadFileTree::Node> DownloadFileTree::traverse(std::function
   case TraverseStyle::DEPTH_FIRST_SEARCH:
     return depthFirstSearch(predicate);
   }
+
+  return root;
 }
 
 std::shared_ptr<DownloadFileTree::Node> DownloadFileTree::breadthFirstSearch(std::function<bool(const std::shared_ptr<Node>)>& predicate) const {

@@ -5,8 +5,8 @@ CXX = g++
 FLAGS = -std=c++14 -Wall -pedantic -g -fsanitize=address -Wno-long-long
 
 SRC_PATH = src
-OUTPUT_PATH = hayeuyur
-PROGRAM_NAME = downloader.o
+OUTPUT_PATH = compiled
+PROGRAM_NAME = hayeuyur
 
 SRC = $(SRC_PATH)/%.cpp
 NETWORKING_SRC = $(SRC_PATH)/Networking/%.cpp
@@ -19,7 +19,7 @@ DOWNLOADER_SRC = $(SRC_PATH)/Downloader/%.cpp
 DOWNLOADER_HELPERS_SRC = $(SRC_PATH)/Downloader/Helpers/%.cpp
 
 OUTPUT = $(OUTPUT_PATH)/%.o
-PROGRAM_PATH = $(OUTPUT_PATH)/$(PROGRAM_NAME)
+PROGRAM_PATH = $(PROGRAM_NAME)
 DOC_PATH = doc
 DOXYGEN_FILE = doxygex.dox
 
@@ -64,6 +64,7 @@ gen_ycm:
 
 clean:
 	rm -rf $(OUTPUT_PATH)/*
+	rm $(PROGRAM_PATH)
 
 $(OUTPUT) : $(SRC)
 	$(CXX) $(FLAGS) -c $^ -o $@
