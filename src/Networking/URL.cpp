@@ -56,29 +56,31 @@ void URL::parse(const std::string &urlString) {
     protocol = Protocol::http;
   }
 
-  std::vector<uint8_t> separators = { '/', '?' };
+  std::string querySeparator = "/", parametersSeparator = "?";
+  std::vector<uint8_t> separators = { (uint8_t)querySeparator[0], (uint8_t)parametersSeparator[0] };
 
   auto begin = url.begin();
 
   while (begin != url.end()) {
     auto separatorIndex = separators.begin();
+
     if ((separatorIndex = std::find(separators.begin(), separators.end(), *begin)) != separators.end()) {
       if (domain.empty()) {
-        if (*separatorIndex == '/') {
-          domain = url.subsequence(url.begin(), begin).stringRepresentation();
+        if (*separatorIndex == querySeparator.at(0)) {
+          domain = url.subsequence(url.begin(), begin).string();
           url.eraseSequence(url.begin(), begin);
-        } else if (*separatorIndex == '?') {
-          domain = url.subsequence(url.begin(), begin).stringRepresentation();
+        } else if (*separatorIndex == parametersSeparator.at(0)) {
+          domain = url.subsequence(url.begin(), begin).string();
           begin++;
-          parameters = url.subsequence(begin, url.end()).stringRepresentation();
-          query = "/";
+          parameters = url.subsequence(begin, url.end()).string();
+          query = querySeparator;
           break;
         }
       } else {
-        if (*separatorIndex == '?') {
-          query = url.subsequence(url.begin(), begin).stringRepresentation();
+        if (*separatorIndex == parametersSeparator.at(0)) {
+          query = url.subsequence(url.begin(), begin).string();
           begin++;
-          parameters = url.subsequence(begin, url.end()).stringRepresentation();
+          parameters = url.subsequence(begin, url.end()).string();
           break;
         }
       }
@@ -88,15 +90,14 @@ void URL::parse(const std::string &urlString) {
   }
 
   if (!url.empty()) {
-    if (domain.empty()) {
-      domain = url.stringRepresentation();
-    } else {
-      query = url.stringRepresentation();
-    }
+    if (domain.empty() && url.find(querySeparator, url.begin()) == url.end())
+      domain = url.string();
+    else
+      query = url.string();
   }
 
   if (query.empty())
-    query = "/";
+    query = querySeparator;
 }
 
 bool URL::compareDomains(const std::string& lhs, const std::string& rhs) {

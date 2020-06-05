@@ -13,7 +13,7 @@ std::vector<std::string> Analyzer::loadReferences(const LocalReference& str) con
   std::vector<std::string> result;
 
   AbstractPattern::EmitFunction function = std::function<void(const Data<>&)>([&](const Data<>& str) {
-    result.push_back(str.stringRepresentation());
+    result.push_back(str.string());
   });
 
   while (in.good() || !buffer.empty()) {
@@ -29,28 +29,24 @@ std::vector<std::string> Analyzer::loadReferences(const LocalReference& str) con
   return result;
 }
 
-bool Analyzer::overwriteReferences(const LocalReference& file,
-                                   const LocalReference& outputFile,
+bool Analyzer::overwriteReferences(const std::string& inputFilePath,
+                                   const std::string& outputFilePath,
                                    const std::function<Data<>(Data<>)>& convertReferenceFunctor) const {
-
-  if (file.isDirectory() || outputFile.isDirectory())
-    throw Exception("Can't work with the directories");
-
-  if (file.getPath() == outputFile.getPath())
+  if (inputFilePath == outputFilePath)
     throw Exception("In and out references are equal, can't continue");
 
-  std::ifstream in(file.getPath(), std::ios::in);
+  std::ifstream in(inputFilePath, std::ios::in);
 
   if (in.bad())
     throw Exception("Can't read the file");
 
-  std::ofstream out(outputFile.getPath(), std::ios::out | std::ios::trunc);
+  std::ofstream out(outputFilePath, std::ios::out | std::ios::trunc);
 
   if (out.bad())
     throw Exception("Can't open file to write");
 
   Data<> buffer;
-  Data<> tmpReference, reference;
+  Data<> tmpReference = {}, reference = {};
 
   AbstractPattern::EmitFunction function = std::function<void(const Data<>&)>([&](const Data<>& str) {
     tmpReference = str;
@@ -59,8 +55,9 @@ bool Analyzer::overwriteReferences(const LocalReference& file,
 
   while ((in.good() && out.good()) || !buffer.empty()) {
     for (const auto& pattern : patterns) {
-      if (pattern -> consume({in, buffer}, function) && !reference.empty()) {
-        buffer.replace(tmpReference, reference);
+      if (pattern -> consume({in, buffer}, function)) {
+        if (!reference.empty())
+          buffer.replace(tmpReference, reference);
 
         if (!buffer.write(out, buffer.begin(), buffer.end()))
           return false;

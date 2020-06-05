@@ -40,7 +40,7 @@ class Data {
      *
      * Complexity: O(n)
      */
-    std::string stringRepresentation() const {
+    std::string string() const {
       std::string result;
       return std::accumulate(store.begin(), store.end(), result, [](std::string result, uint8_t c) {
         return std::move(result) + std::string(1, c);
@@ -398,9 +398,13 @@ class Data {
      * Complexity: O(m), where m is size of the input string
      */
     std::ostream& write(std::ostream& out, const iterator& begin, const iterator& end) const {
-      //  TODO: add buf iterator in case of c++17
-      std::ostream_iterator<uint8_t> output_iterator(out);
-      std::copy(begin, end, output_iterator);
+      auto beginCopy = begin;
+
+      while (beginCopy != end) {
+        out.write((char *)&(*beginCopy), 1);
+        beginCopy++;
+      }
+
       return out;
     }
     /**

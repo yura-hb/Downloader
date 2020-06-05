@@ -10,6 +10,7 @@
 #include <vector>
 #include <list>
 #include <algorithm>
+
 #include "Models/LocalReference.hpp"
 #include "../Base/Exception.hpp"
 #include "../Base/Data.hpp"
@@ -49,6 +50,16 @@ class FileManager {
      *    - @param[in] - local reference to the folder
      */
     void clearDirectory(const LocalReference& reference) const;
+    /**
+     * @brief
+     *   Calls mv on the specific files
+     *
+     * @param[in] oldName - old file name
+     * @param[in] newName - new file name
+     *
+     * @return int - the result of the command
+     */
+    int rename(const std::string& oldName, const std::string& newName);
   private:
     // Disable copy constructor
     FileManager(FileManager &manager) {};

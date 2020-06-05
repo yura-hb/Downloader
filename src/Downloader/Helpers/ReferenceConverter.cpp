@@ -1,7 +1,9 @@
 #include "ReferenceConverter.hpp"
 
 const std::string ReferenceConverter::htmlFileContentType = "text/html";
+const std::string ReferenceConverter::htmlFileExtension = ".html";
 const std::string ReferenceConverter::cssFileContentType = "text/css";
+
 
 void ReferenceConverter::overwriteReferences(DownloadFileTree& tree, const std::string& mirrorDomain) {
   FileManager fileManager;
@@ -10,15 +12,30 @@ void ReferenceConverter::overwriteReferences(DownloadFileTree& tree, const std::
 
   while (std::get<0>(overwriteTuple) != "") {
     std::shared_ptr<Analyzer> analyzer = loadAnalyzer(std::get<1>(overwriteTuple));
+    std::unique_ptr<Reference> ref = nullptr;
 
-    if (analyzer != nullptr) {
-      LocalReference localRef(std::get<0>(overwriteTuple));
-      localRef = *dynamic_cast<LocalReference *>(localRef.addAbsoluteReference(mirrorDomain).get());
-      LocalReference tmpRef = *dynamic_cast<LocalReference *>(localRef.addFileExtension("old").get());
+    if (analyzer != nullptr && (ref = makeReference("/", std::get<0>(overwriteTuple), mirrorDomain)) != nullptr) {
 
-      analyzer -> overwriteReferences(localRef, tmpRef, [&] (const Data<>& ref) -> Data<> {
-        return Data<>("test");
-      });
+      try {
+        std::unique_ptr<Reference> localRef = ref -> addAbsoluteReference(mirrorDomain);
+        std::unique_ptr<Reference> tmpRef = localRef -> addFileExtension("old");
+
+        bool isValidReference = dynamic_cast<LocalReference *>(localRef.get()) != nullptr &&
+                                dynamic_cast<LocalReference *>(tmpRef.get()) != nullptr &&
+                                !localRef -> isDirectory() && !tmpRef -> isDirectory();
+
+        if (isValidReference) {
+          fileManager.rename(localRef -> getPath(), tmpRef -> getPath());
+
+          addHtmlFileExtensionIfNeeded(std::get<1>(overwriteTuple), localRef);
+
+          analyzer -> overwriteReferences(tmpRef -> getPath(), localRef -> getPath(), [&] (const Data<>& reference) -> Data<> {
+            return convertReference(ref, tree, mirrorDomain, reference);
+          });
+        }
+      } catch (const Exception& exc) {
+        Logger::logError(exc);
+      }
     }
 
     tree.setOverwritten(LocalReference(std::get<0>(overwriteTuple)));
@@ -57,7 +74,9 @@ std::vector<std::string> ReferenceConverter::loadReferences(const LocalReference
   return {};
 }
 
-std::unique_ptr<Reference> ReferenceConverter::makeReference(const std::string& directoryRef, const std::string& ref, const std::string& mirrorDomain) {
+std::unique_ptr<Reference> ReferenceConverter::makeReference(const std::string& directoryRef,
+                                                             const std::string& ref,
+                                                             const std::string& mirrorDomain) {
   URL url(ref);
 
   if (url.isValid()) {
@@ -74,7 +93,6 @@ std::unique_ptr<Reference> ReferenceConverter::makeReference(const std::string& 
 
   return nullptr;
 }
-
 std::shared_ptr<Analyzer> ReferenceConverter::loadAnalyzer(const Data<>& contentType) {
   std::shared_ptr<Analyzer> analyzer = nullptr;
 
@@ -85,4 +103,94 @@ std::shared_ptr<Analyzer> ReferenceConverter::loadAnalyzer(const Data<>& content
   }
 
   return analyzer;
+}
+
+Data<> ReferenceConverter::convertReference(const std::unique_ptr<Reference>& processingFile,
+                                            DownloadFileTree& tree,
+                                            const std::string& mirrorDomain,
+                                            const Data<>& ref) {
+  std::unique_ptr<Reference> reference = makeReference(processingFile -> getDirectoryPath(), ref.string(), mirrorDomain);
+
+  bool isConvertable = dynamic_cast<LocalReference *>(reference.get()) != nullptr;
+
+  if (isConvertable) {
+    State state;
+
+    try {
+      state = tree.loadState(*reference.get());
+    } catch (const Exception& exc) {
+      Logger::logError(exc);
+      return ref;
+    }
+
+    if (state.isDownloaded) {
+      std::string directoryPath = processingFile -> getDirectoryPath();
+      Data<> filePath = reference -> getPath();
+
+      if (filePath.beginsWith(directoryPath)) {
+        filePath.eraseFirst(directoryPath, filePath.begin());
+
+        addHtmlFileExtensionIfNeeded(state, filePath);
+
+        return filePath;
+      } else {
+        // In case, if it is root folder and the file without obsolete reference, then no changes needed
+        if (directoryPath == "/")
+          return filePath;
+        // In case, if the some file referencing the file using root reference,
+        // then simply move to the root reference, by adding .. and then add file path.
+        uint8_t depth = 0;
+
+        for (const auto& c: directoryPath)
+          if (c == '/')
+            depth++;
+
+        if (depth > 0)
+          depth--;
+
+        Data<> updatedFilePath;
+
+        for (uint8_t i = 0; i < depth; i++)
+          updatedFilePath.append("..");
+
+        updatedFilePath.append(filePath);
+
+        addHtmlFileExtensionIfNeeded(state, updatedFilePath);
+
+        return updatedFilePath;
+      }
+
+
+    } else {
+      // In case, if reference is not downloaded, create a link to it.
+      URL url;
+
+      url.protocol = url.http;
+      url.domain = mirrorDomain;
+      url.query = reference -> getPath();
+
+      return url.requestUrl();
+    }
+  }
+
+  return ref;
+}
+
+void ReferenceConverter::addHtmlFileExtensionIfNeeded(const State& state, Data<>& ref) {
+  Data<> contentType = state.contentType;
+
+  if (contentType.find(htmlFileContentType, contentType.begin()) != contentType.end() && !ref.endsWith(htmlFileExtension))
+    ref.append(htmlFileExtension);
+}
+
+void ReferenceConverter::addHtmlFileExtensionIfNeeded(const Data<> contentType, std::unique_ptr<Reference>& ref) {
+  Data<> refPath = ref -> getPath();
+
+
+  if (contentType.find(htmlFileContentType, contentType.begin()) != contentType.end() && !refPath.endsWith(htmlFileExtension)) {
+    Data<> fileExtension = htmlFileExtension;
+    fileExtension.popFirst();
+
+    ref = ref -> addFileExtension(fileExtension.string());
+  }
 }

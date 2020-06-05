@@ -48,6 +48,15 @@ void DownloadFileTree::setOverwritten(const Reference& ref) {
     tmp -> state.isOverwritten = true;
 }
 
+State DownloadFileTree::loadState(const Reference& ref) {
+  auto tmp = root;
+  find(tmp, ref);
+  if (tmp != root)
+    return tmp -> state;
+
+  return {};
+}
+
 std::string DownloadFileTree::nextDownloadReference() const {
   std::function<bool(const std::shared_ptr<Node>)> predicate = [](const std::shared_ptr<Node>& node) {
     return node -> isDownloadable();
@@ -101,7 +110,7 @@ void DownloadFileTree::find(std::shared_ptr<Node>& node, const Reference& ref) {
     if (tmp != root && tmp -> isLeaf)
       node = tmp;
     else
-      throw Exception("Reference doesn't points to the file");
+      throw Exception("Reference doesn't points to the file " + ref.getPath());
 
   } catch (const LockedReferenceException& exc) {
     std::cout << exc.what() << std::endl;
@@ -129,7 +138,7 @@ void DownloadFileTree::search(std::shared_ptr<Node>& node, const Reference& ref,
       std::advance(separatorIndex, 1);
     path.eraseSequence(begin, separatorIndex);
 
-    std::string name = component.stringRepresentation();
+    std::string name = component.string();
 
     if (name.empty())
       break;

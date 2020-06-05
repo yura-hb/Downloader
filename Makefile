@@ -54,7 +54,7 @@ run: compile
 	./$(PROGRAM_PATH) 2>&1
 
 debug: compile
-	gdb ./$(PROGRAM_PATH)
+	lldb ./$(PROGRAM_PATH)
 
 doc:
 	doxygen $(DOXYGEN_FILE)

@@ -14,6 +14,35 @@
 #include "../../FileManager/Models/Reference.hpp"
 #include "../../Base/Data.hpp"
 
+
+struct State {
+  /**
+   *  @brief
+   *    Validates if the file is downloaded, so the true statement is equivalent to that the
+   *    element is a file. However, it is not equivalent to the
+   */
+  bool isDownloaded = false;
+  /**
+   *  @brief
+   *    Validates if the directory is locked, so the directory can't have any child, under that path.
+   */
+  bool isLocked = false;
+  /**
+   *  @brief
+   *    Validates if the directory is failed, so the directory can't have any child, under that path.
+   */
+  bool isFailed = false;
+  /**
+   *  @brief
+   *   Flag, which indicates, that the references of file at the specific path were overwritten
+   */
+  bool isOverwritten = false;
+  /**
+   *  @brief
+   *    Content type of the file
+   */
+  std::string contentType = "";
+};
 /**
  *  @brief
  *    Help class to store locked and downloaded file references in the tree format.
@@ -58,6 +87,7 @@ struct DownloadFileTree {
      *
      *  Input:
      *    @param[in] ref - reference, containing the relative path from the current directory
+     *    @param[in] contentType - file content type
      */
     void setDownloaded(const Reference& ref, const std::string& contentType);
     /**
@@ -85,6 +115,15 @@ struct DownloadFileTree {
      *    @param[in] ref - reference, containing the relative path from the current directory
      */
     void setOverwritten(const Reference& ref);
+    /**
+     *
+     *  @param[in] ref - reference path to the State
+     *
+     *  @return Node state at the specific path
+     *
+     *  @throw Exception, in case, if the file is not found
+     */
+    State loadState(const Reference& ref);
     /**
      *  @brief
      *    Recursively traverses download tree, depending on the style and returns the relative path on the server.
@@ -126,35 +165,6 @@ struct DownloadFileTree {
         std::string description;
     };
     struct Node {
-      struct State {
-        /**
-         *  @brief
-         *    Validates if the file is downloaded, so the true statement is equivalent to that the
-         *    element is a file. However, it is not equivalent to the
-         */
-        bool isDownloaded = false;
-        /**
-         *  @brief
-         *    Validates if the directory is locked, so the directory can't have any child, under that path.
-         */
-        bool isLocked = false;
-        /**
-         *  @brief
-         *    Validates if the directory is failed, so the directory can't have any child, under that path.
-         */
-        bool isFailed = false;
-        /**
-         *  @brief
-         *   Flag, which indicates, that the references of file at the specific path were overwritten
-         */
-        bool isOverwritten = false;
-        /**
-         *  @brief
-         *    Content type of the file
-         */
-        std::string contentType = "";
-      };
-
       std::string name;
       bool isLeaf = false;
       std::vector<std::shared_ptr<Node>> children;

@@ -14,5 +14,5 @@ void Logger::logResponse(const Response& response) {
 }
 
 void Logger::logError(const Exception& response) {
-  std::cerr << "Error:" << std::endl << response.what();
+  std::cerr << "Error:" << std::endl << response.what() << std::endl;
 }

@@ -78,6 +78,12 @@ void FileManager::createRelativePathDirectories(const LocalReference& reference)
   }
 }
 
+int FileManager::rename(const std::string& oldName, const std::string& newName) {
+  std::ostringstream s;
+  s << "mv" << " '" << oldName << "' '" << newName << "'";
+  return system(s.str().c_str());
+}
+
 void FileManager::openDirectory(const LocalReference& reference, DIR *& dir) const {
   std::string path = reference.getPath();
   // In case of empty directory, check current

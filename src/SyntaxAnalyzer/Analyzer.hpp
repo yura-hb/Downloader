@@ -44,8 +44,8 @@ class Analyzer {
      * @throw Exception - in case, if the file or outputFile are directories.
      * @throw Exception - in case, if the file and outputFile have the same path
      */
-    virtual bool overwriteReferences(const LocalReference& file,
-                                     const LocalReference& outputFile,
+    virtual bool overwriteReferences(const std::string& inputFilePath,
+                                     const std::string& outputFilePath,
                                      const std::function<Data<>(Data<>)>& convertReferenceFunctor) const;
   protected:
     std::vector<std::shared_ptr<AbstractPattern>> patterns;

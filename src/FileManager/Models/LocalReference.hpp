@@ -41,8 +41,11 @@ struct LocalReference: public Reference {
      *
      *  Output:
      *    - @param[out] - unique pointer on the new reference object
+     *
+     *  Throws:
+     *    @throw - Exception, in case, if the file is the directory
      */
-    std::unique_ptr<Reference> addFileExtension(const std::string& str) const;
+    std::unique_ptr<Reference> addFileExtension(const std::string& str) const override;
     /**
      *  @brief
      *    Validates, if the path is the directory

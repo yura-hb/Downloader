@@ -39,7 +39,7 @@ Response PageMirror::download(const RemoteReference& ref, const LocalReference& 
   if (response.status.isFailed())
     downloadTree.setFailed(ref);
   else
-    downloadTree.setDownloaded(ref, contentType.stringRepresentation());
+    downloadTree.setDownloaded(ref, contentType.string());
 
   ReferenceConverter::analyze(ref, filepath, mirrorDomain, contentType, downloadTree);
 
@@ -104,7 +104,7 @@ void PageMirror::processRobotsFile(const LocalReference& ref) {
     data = data.subsequence(parameterIter, end);
 
     try {
-      downloadTree.add(LocalReference(data.stringRepresentation(), true), true, false);
+      downloadTree.add(LocalReference(data.string(), true), true, false);
     } catch (const Exception& exc) {
       Logger::logError(exc);
     }

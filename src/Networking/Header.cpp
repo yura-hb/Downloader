@@ -31,7 +31,7 @@ Header::Header(const Data<>& header) {
   if (separator == header.end())
     throw Exception("Incorrect format of the string");
 
-  auto headerName = header.subsequence(header.begin(), separator).stringRepresentation();
+  auto headerName = header.subsequence(header.begin(), separator).string();
   std::advance(separator, separatorString.size());
   auto headerParams = header.subsequence(separator, header.end());
 
@@ -54,5 +54,5 @@ Header::Header(const Data<>& header) {
 }
 
 std::string Header::description() const {
-  return store[static_cast<int>(header)] + ": " + parameters.stringRepresentation();
+  return store[static_cast<int>(header)] + ": " + parameters.string();
 }

@@ -31,7 +31,7 @@ void FileDownloader::sendRequest(const URL& url, Response& response, bool follow
     if (location.empty())
       throw Exception("Can't redirect as location is empty [" + url.requestUrl() + "] (Hint: Redirection)");
 
-    sendRequest(location.stringRepresentation(), response, false);
+    sendRequest(location.string(), response, false);
     return;
   }
 

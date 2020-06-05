@@ -44,7 +44,7 @@ uint32_t ChunkMerger::readHeader(std::ifstream& in) {
   Data<>::iterator end = tmp.end();
   std::advance(end, -(int)separator.size());
 
-  std::string chunkHeader = tmp.subsequence(tmp.begin(), end).stringRepresentation();
+  std::string chunkHeader = tmp.subsequence(tmp.begin(), end).string();
 
   try {
     chunkLength = std::stoul(chunkHeader, nullptr, 16);

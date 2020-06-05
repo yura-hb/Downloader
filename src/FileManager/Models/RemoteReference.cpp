@@ -10,6 +10,13 @@ std::unique_ptr<Reference> RemoteReference::addPath(const std::string& str) cons
   return std::make_unique<RemoteReference>(copy);
 }
 
+std::unique_ptr<Reference> RemoteReference::addFileExtension(const std::string& str) const {
+  if (isDirectory())
+    throw Exception("Can't add file extension to the directory");
+
+  return std::make_unique<RemoteReference>(path + "." + str);
+}
+
 bool RemoteReference::isDirectory() const {
   if (url.query.empty())
     return true;

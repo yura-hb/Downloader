@@ -35,6 +35,7 @@ struct Reference {
     virtual bool isDirectory() const = 0;
     virtual bool isRelative() const = 0;
     virtual std::unique_ptr<Reference> addAbsoluteReference(const std::string& str) const = 0;
+    virtual std::unique_ptr<Reference> addFileExtension(const std::string& str) const = 0;
     virtual std::unique_ptr<Reference> addPath(const std::string& str) const = 0;
     virtual URL requestUrl(const std::string& domain) const = 0;
 
