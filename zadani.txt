@@ -26,7 +26,7 @@ Cíl:
 
 	Downloader bude pracovat jenom s HTTP dotazy, a bude podporovat základní zpracování HTTP odezev. To jsou
 
- 	 1. Přesměrování s jedné stránky na druhou.
+ 	 1. Přesměrování s jedné stránky na druhou (Chýba 3xx).
   	 2. Zpracování dat v formátu chunku.
          3. Možnost vytvářet různé dotazy pomocí dodání HTTP headerů.
          4. Podpora robots.txt, které upřesňuje, které soubory lze stahnout s webové stránky.
@@ -38,7 +38,7 @@ Cíl:
          3. umožňuje omezit hloubku rekurzivního procházení (hodnotou, omezením na podporované URL).
          4. BFS a DFS procházení.
 
-        Všechny tyto položky budou vyřešený pomocí stromu, který representuje všechny soubory v nějaké lokální položce.
+        Všechny nutné položky budou vyřešený pomocí stromu(DownloadFileTree), který representuje všechny soubory v nějaké lokální položce.
         Uzlem stromu jsou struktury s jménem souboru nebo složky s meta informaci, třeba informaci, jestli nějaký soubor byl stahnut nebo ne.
         Omezení na hloubku stahovaní bude vzdálenost od kořene stromu.
 

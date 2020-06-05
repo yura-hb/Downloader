@@ -1,8 +1,8 @@
 .PHONY: doc
 
-CXX = ASAN_OPTIONS=detect_leaks=1 clang++
-LD = g++
-FLAGS = -std=c++14 -Wall -pedantic -g -fsanitize=address,leak -Wno-long-long
+LD = ASAN_OPTIONS=detect_leaks=1 clang++
+CXX = g++
+FLAGS = -std=c++14 -Wall -pedantic -g -fsanitize=address -Wno-long-long
 
 SRC_PATH = src
 OUTPUT_PATH = hayeuyur
