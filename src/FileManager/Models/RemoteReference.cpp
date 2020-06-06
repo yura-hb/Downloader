@@ -25,7 +25,7 @@ bool RemoteReference::isDirectory() const {
 
 bool RemoteReference::isRelative() const {
   return true;
-};
+}
 
 URL RemoteReference::requestUrl(const std::string& domain) const {
   return url;

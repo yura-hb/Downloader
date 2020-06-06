@@ -6,6 +6,7 @@
 #include <numeric>
 #include <string>
 #include <list>
+#include <memory>
 #include <functional>
 #include "../../Networking/URL.hpp"
 #include "../../Base/Exception.hpp"
