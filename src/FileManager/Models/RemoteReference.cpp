@@ -38,8 +38,12 @@ std::string RemoteReference::domain() const {
 std::string RemoteReference::filename() const {
   std::string filename = "";
 
-  if (isDirectory())
+  if (isDirectory()) {
     filename = "index.html";
+  } else {
+    LocalReference ref(url.query);
+    filename = ref.filename();
+  }
 
   if (!url.parameters.empty() && isDirectory())
     filename += "?" + url.parameters;

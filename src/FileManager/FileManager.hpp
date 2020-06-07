@@ -60,6 +60,15 @@ class FileManager {
      * @return int - the result of the command
      */
     int rename(const std::string& oldName, const std::string& newName);
+    /**
+     * @brief
+     *   Calls mv on the specific files
+     *
+     * @param[in] name - name
+     *
+     * @return int - the result of the command
+     */
+    int remove(const std::string& name);
   private:
     // Disable copy constructor
     FileManager(FileManager &manager) {};

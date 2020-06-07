@@ -13,6 +13,6 @@ void Logger::logResponse(const Response& response) {
   std::cout << std::endl;
 }
 
-void Logger::logError(const Exception& response) {
+void Logger::logError(const std::exception& response) {
   std::cerr << "Error:" << std::endl << response.what() << std::endl;
 }

@@ -84,6 +84,12 @@ int FileManager::rename(const std::string& oldName, const std::string& newName) 
   return system(s.str().c_str());
 }
 
+int FileManager::remove(const std::string& name) {
+  std::ostringstream s;
+  s << "rm " << "'" << name << "'";
+  return system(s.str().c_str());
+}
+
 void FileManager::openDirectory(const LocalReference& reference, DIR *& dir) const {
   std::string path = reference.getPath();
   // In case of empty directory, check current

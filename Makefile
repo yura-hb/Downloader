@@ -1,7 +1,7 @@
 .PHONY: doc
 
 LD = ASAN_OPTIONS=detect_leaks=1 clang++
-CXX = g++
+CXX = clang++
 FLAGS = -std=c++14 -Wall -pedantic -g -fsanitize=address -Wno-long-long
 
 SRC_PATH = src
@@ -23,7 +23,7 @@ PROGRAM_PATH = $(PROGRAM_NAME)
 DOC_PATH = doc
 DOXYGEN_FILE = doxygex.dox
 
-MODULES = $(OUTPUT_PATH)/main.o \
+MODULES = $(OUTPUT_PATH)/Configuration.o $(OUTPUT_PATH)/main.o $(OUTPUT_PATH)/ArgumentParser.o \
     \
     $(OUTPUT_PATH)/Data.o $(OUTPUT_PATH)/Exception.o $(OUTPUT_PATH)/Logger.o \
     \
@@ -51,10 +51,10 @@ compile: $(MODULES)
 	$(CXX) $(FLAGS) -o $(PROGRAM_PATH) $^
 
 run: compile
-	./$(PROGRAM_PATH) 2>&1
+	./$(PROGRAM_PATH) $(ARGS)
 
 debug: compile
-	gdb ./$(PROGRAM_PATH)
+	lldb ./$(PROGRAM_PATH)
 
 doc:
 	doxygen $(DOXYGEN_FILE)

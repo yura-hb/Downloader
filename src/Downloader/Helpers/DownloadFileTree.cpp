@@ -10,10 +10,9 @@ void DownloadFileTree::add(const Reference& ref, bool isLocked, bool isDownloade
       tmp -> state.isDownloaded = isDownloaded;
     }
   } catch (const LockedReferenceException& exc) {
-    // TODO: - Add support to logger
-    std::cout << exc.what() << std::endl;
+    Logger::logError(exc);
   } catch (const OutOfMaximalDepthException& exc) {
-    std::cout << exc.what() << std::endl;
+    Logger::logError(exc);
   }
 }
 
@@ -127,8 +126,8 @@ void DownloadFileTree::search(std::shared_ptr<Node>& node, const Reference& ref,
   uint8_t depth = 0;
 
   while (true) {
-    if (depth > this -> depth)
-      throw OutOfMaximalDepthException(this -> depth);
+    if (depth >= this -> depth && insertItemsDuringSearch)
+      throw OutOfMaximalDepthException(ref, this -> depth);
 
     auto begin = path.at(1), separatorIndex = path.find(separator, begin);
     Data<> component = path.subsequence(begin, separatorIndex);
