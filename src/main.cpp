@@ -1,7 +1,5 @@
 #include <iostream>
-
-#include "Downloader/PageMirror.hpp"
-#include "Downloader/Helpers/DownloadFileTree.hpp"
+#include "Base/ArgumentParser.hpp"
 
 int main(int argc, char *argv[]) {
  // FileDownloader downloader;
@@ -9,5 +7,5 @@ int main(int argc, char *argv[]) {
 
   //PageMirror mirror;
   //mirror.mirror(RemoteReference("http://testing-ground.scraping.pro"));
-  return 0;
+  return ArgumentParser::handle(argc, argv);;
 }

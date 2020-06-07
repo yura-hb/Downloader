@@ -368,7 +368,7 @@ class Data {
      *
      * Complexity: O(m), where m is size of the input string
      */
-    void append(const  std::string& str) {
+    void append(const std::string& str) {
       for (const auto& c: str)
         store.push_back(c);
     }
@@ -378,11 +378,26 @@ class Data {
      * Input:
      *   @param[in] str - data object, from which data is taken
      *
-     * Complexity: O(m), where m is size of the input string
+     * Complexity: O(m), where m is size of the input stream
      */
     void append(const Data<>& data) {
       for (const auto& byte: data.rawRepresentation())
         store.push_back(byte);
+    }
+    /**
+     * Insert elements at the specified position
+     *
+     * Input:
+     *   @param[in] data - data object, from which data is taken
+     *   @param[in] position - position to insert elements
+     *
+     * Complexity: O(m), where m is size of the input stream
+     */
+    void insert(const Data<>& data, const iterator& position) {
+      iterator copyPosition;
+
+      for (const auto& byte: data.rawRepresentation())
+        store.insert(copyPosition, byte);
     }
     /**
      * Writes data to the ostream from the specific sequence

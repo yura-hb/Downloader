@@ -57,9 +57,10 @@ std::string LocalReference::filename() const {
   size_t separatorPosition = 0;
   std::string separator = "/";
 
-  if (isDirectory() || (separatorPosition = path.rfind(separator)) != std::string::npos)
+  if (isDirectory())
     throw Exception("Is directory. [Hint: Local reference]");
 
+  separatorPosition = path.rfind(separator);
   separatorPosition += separator.size();
 
   return path.substr(separatorPosition);

@@ -28,11 +28,12 @@ class PageMirror: public FileDownloader {
     /**
      *  Input:
      *   @param[in] depth - the depth of the recursive download.
+     *   @param[in] style - the traverse style.
      *
      */
-    PageMirror(int maximalDepth = 100):
+    PageMirror(int maximalDepth = 100, DownloadFileTree::TraverseStyle style = DownloadFileTree::TraverseStyle::BREADTH_FIRST_SEARCH):
       FileDownloader(),
-      downloadTree(DownloadFileTree(maximalDepth, DownloadFileTree::TraverseStyle::DEPTH_FIRST_SEARCH)) {};
+      downloadTree(DownloadFileTree(maximalDepth, style)) {};
 
     virtual ~PageMirror() = default;
     /**

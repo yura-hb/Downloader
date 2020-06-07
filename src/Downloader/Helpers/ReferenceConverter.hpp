@@ -5,6 +5,7 @@
 
 #include "../../Base/Data.hpp"
 #include "../../Base/Logger.hpp"
+#include "../../Base/Configuration.hpp"
 
 #include "../../FileManager/FileManager.hpp"
 #include "../../FileManager/Models/RemoteReference.hpp"

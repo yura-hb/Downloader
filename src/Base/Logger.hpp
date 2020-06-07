@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <exception>
 
 #include "../Networking/Request.hpp"
 #include "../Networking/Response.hpp"
@@ -33,7 +34,7 @@ class Logger {
      *  Input:
      *    - @param[in] exception - exception to log
      */
-    static void logError(const Exception& response);
+    static void logError(const std::exception& response);
 };
 
 #endif

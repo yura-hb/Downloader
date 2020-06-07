@@ -6,6 +6,9 @@ const std::string ReferenceConverter::cssFileContentType = "text/css";
 
 
 void ReferenceConverter::overwriteReferences(DownloadFileTree& tree, const std::string& mirrorDomain) {
+  if (!Configuration::shared.overrideReferences)
+    return;
+
   FileManager fileManager;
 
   auto overwriteTuple = tree.nextOverwriteReference();
@@ -32,6 +35,9 @@ void ReferenceConverter::overwriteReferences(DownloadFileTree& tree, const std::
           analyzer -> overwriteReferences(tmpRef -> getPath(), localRef -> getPath(), [&] (const Data<>& reference) -> Data<> {
             return convertReference(ref, tree, mirrorDomain, reference);
           });
+
+          if (Configuration::shared.removedOriginFiles)
+            fileManager.remove(tmpRef -> getPath());
         }
       } catch (const Exception& exc) {
         Logger::logError(exc);
@@ -160,7 +166,6 @@ Data<> ReferenceConverter::convertReference(const std::unique_ptr<Reference>& pr
         return updatedFilePath;
       }
 
-
     } else {
       // In case, if reference is not downloaded, create a link to it.
       URL url;
@@ -177,6 +182,9 @@ Data<> ReferenceConverter::convertReference(const std::unique_ptr<Reference>& pr
 }
 
 void ReferenceConverter::addHtmlFileExtensionIfNeeded(const State& state, Data<>& ref) {
+  if (!Configuration::shared.fixHtmlPathes)
+    return;
+
   Data<> contentType = state.contentType;
 
   if (contentType.find(htmlFileContentType, contentType.begin()) != contentType.end() && !ref.endsWith(htmlFileExtension))
@@ -184,8 +192,10 @@ void ReferenceConverter::addHtmlFileExtensionIfNeeded(const State& state, Data<>
 }
 
 void ReferenceConverter::addHtmlFileExtensionIfNeeded(const Data<> contentType, std::unique_ptr<Reference>& ref) {
-  Data<> refPath = ref -> getPath();
+  if (!Configuration::shared.fixHtmlPathes)
+    return;
 
+  Data<> refPath = ref -> getPath();
 
   if (contentType.find(htmlFileContentType, contentType.begin()) != contentType.end() && !refPath.endsWith(htmlFileExtension)) {
     Data<> fileExtension = htmlFileExtension;

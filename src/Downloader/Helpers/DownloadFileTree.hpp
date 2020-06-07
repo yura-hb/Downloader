@@ -13,6 +13,7 @@
 
 #include "../../FileManager/Models/Reference.hpp"
 #include "../../Base/Data.hpp"
+#include "../../Base/Logger.hpp"
 
 
 struct State {
@@ -153,8 +154,10 @@ struct DownloadFileTree {
     };
     class OutOfMaximalDepthException: public std::exception {
       public:
-        OutOfMaximalDepthException(const uint8_t& maximalDepth) {
-          description = "The item is out of the maximal depth, can't add";
+        OutOfMaximalDepthException(const Reference& ref, const uint8_t& maximalDepth) {
+          description = "The item ";
+          description += ref.getPath();
+          description += " out of the allowed limit, skip download";
           description += " [ Limit: " + std::to_string(maximalDepth) + " ]";
         }
 
