@@ -40,7 +40,7 @@ class Data {
      *
      * Complexity: O(n)
      */
-    std::string stringRepresentation() const {
+    std::string string() const {
       std::string result;
       return std::accumulate(store.begin(), store.end(), result, [](std::string result, uint8_t c) {
         return std::move(result) + std::string(1, c);
@@ -107,7 +107,7 @@ class Data {
      */
     bool empty() const { return store.empty(); }
     /**
-     * Discussion:
+     * @brief
      *   Pops the first element from the data, if exists.
      *
      * Complexity: O(1)
@@ -117,39 +117,17 @@ class Data {
         store.pop_front();
     }
     /**
-     * Discussion:
-     *   Replaces all occurrences of the old sequence with the new sequence
+     * @brief
+     *   Pops the last element from the data, if exists.
      *
-     * Input:
-     *   @param[in] oldSequence - sequence of elements, which will be replaced
-     *   @param[in] newSequence - sequence of elements, which will replace
-     *
-     * Complexity: O(nm), where n is the size of the sequence, m is the size of the oldSequence
+     * Complexity: O(1)
      */
-    void replace(const Data& oldSequence, const Data& newSequence) {
-      auto iter = store.begin();
-      while (iter != store.end()) {
-        iter = eraseFirst(oldSequence, iter);
-
-        for (const auto& item: newSequence)
-          store.insert(iter, item);
-      }
+    void popLast() {
+      if (!empty())
+        store.pop_back();
     }
     /**
-     * Discussion:
-     *   Replaces all occurrences of the old sequence with the new sequence
-     *
-     * Input:
-     *   @param[in] oldSequence - string representation of data
-     *   @param[in] newSequence - sequence of elements, which will replace
-     *
-     * Complexity: O(nm), where n is the size of the sequence, m is the size of the oldSequence
-     */
-    void replace(const std::string& oldSequence, const Data<Comparator>& newSequence) {
-      replace(Data(oldSequence), newSequence);
-    }
-    /**
-     * Discussion:
+     * @brief
      *   Erases all occurrences of the sequence starting from position
      *
      * Input:
@@ -162,13 +140,13 @@ class Data {
       if (position >= size())
         return;
 
-      auto iter = store.begin();
-      std::advance(iter, position);
+      auto iter = at(position);
+
       while (iter != store.end())
         iter = eraseFirst(sequence, iter);
     }
     /**
-     * Discussion:
+     * @brief
      *   Erases data in the interval [begin, end)
      *
      * Input:
@@ -184,7 +162,7 @@ class Data {
       return store.erase(begin, end);
     }
     /**
-     * Discussion:
+     * @brief
      *   Erases first occurrence of the specic sequence and returns the iterator in the new sequence
      *
      * Input:
@@ -192,7 +170,7 @@ class Data {
      *   @param[in] position - iterator to the start position, from which search will begin
      *
      * Output:
-     *   @param[out] - iterator pointing to the position, where data subsequence was removed
+     *   @param[out] - iterator pointing to the position, where data subsequence was removed or end iterator
      *
      * Complexity: O(n)
      */
@@ -205,10 +183,40 @@ class Data {
         return eraseSequence(iter, sequenceEndIter);
       }
 
-      return iter;
+      return end();
     }
     /**
-     * Discussion:
+    * @brief
+    *   Replaces all occurrences of the old sequence with the new sequence
+    *
+    * Input:
+    *   @param[in] oldSequence - sequence of elements, which will be replaced
+    *   @param[in] newSequence - sequence of elements, which will replace
+    *
+    * Complexity: O(nm), where n is the size of the sequence, m is the size of the oldSequence
+    */
+    void replace(const Data<Comparator>& oldSequence, const Data<Comparator>& newSequence) {
+      iterator iter = store.begin();
+
+      while ((iter = eraseFirst(oldSequence, iter)) != store.end())
+        for (const auto& item: newSequence)
+          store.insert(iter, item);
+    }
+    /**
+     * @brief
+     *   Replaces all occurrences of the old sequence with the new sequence
+     *
+     * Input:
+     *   @param[in] oldSequence - string representation of data
+     *   @param[in] newSequence - sequence of elements, which will replace
+     *
+     * Complexity: O(nm), where n is the size of the sequence, m is the size of the oldSequence
+     */
+    void replace(const std::string& oldSequence, const Data<Comparator>& newSequence) {
+      replace(Data(oldSequence), newSequence);
+    }
+    /**
+     * @brief
      *   Validates, if the sequence begins with some sequence.
      *
      * Input:
@@ -231,7 +239,7 @@ class Data {
       return begin == sequence.end();
     }
     /**
-     * Discussion:
+     * @brief
      *   Validates, if the sequence begins with some sequence.
      *
      * Input:
@@ -254,7 +262,7 @@ class Data {
       return begin == sequence.store.rend();
     }
     /**
-     * Discussion:
+     * @brief
      *   Find first subsequence and returns the iterator to it
      *
      * Input:
@@ -286,7 +294,7 @@ class Data {
       return iter;
     }
     /**
-     * Discussion:
+     * @brief
      *   Find first subsequence and returns the iterator to it. Adds possibility to move iterator to the end of the found sequence.
      *
      * Input:
@@ -302,8 +310,11 @@ class Data {
     iterator find(const Data<Comparator>& sequence, iterator startPos, bool shouldAdvance) const {
       auto iter = find(sequence, startPos);
 
-      if (iter != store.end() && shouldAdvance)
-        std::advance(iter, sequence.size());
+      if (iter != store.end() && shouldAdvance) {
+        size_t size = 0;
+
+        while (size != sequence.size() && iter != store.end()) { iter++; size++; }
+      }
 
       return iter;
     }
@@ -357,7 +368,7 @@ class Data {
      *
      * Complexity: O(m), where m is size of the input string
      */
-    void append(const  std::string& str) {
+    void append(const std::string& str) {
       for (const auto& c: str)
         store.push_back(c);
     }
@@ -367,11 +378,26 @@ class Data {
      * Input:
      *   @param[in] str - data object, from which data is taken
      *
-     * Complexity: O(m), where m is size of the input string
+     * Complexity: O(m), where m is size of the input stream
      */
     void append(const Data<>& data) {
       for (const auto& byte: data.rawRepresentation())
         store.push_back(byte);
+    }
+    /**
+     * Insert elements at the specified position
+     *
+     * Input:
+     *   @param[in] data - data object, from which data is taken
+     *   @param[in] position - position to insert elements
+     *
+     * Complexity: O(m), where m is size of the input stream
+     */
+    void insert(const Data<>& data, const iterator& position) {
+      iterator copyPosition;
+
+      for (const auto& byte: data.rawRepresentation())
+        store.insert(copyPosition, byte);
     }
     /**
      * Writes data to the ostream from the specific sequence
@@ -387,13 +413,17 @@ class Data {
      * Complexity: O(m), where m is size of the input string
      */
     std::ostream& write(std::ostream& out, const iterator& begin, const iterator& end) const {
-      //  TODO: add buf iterator in case of c++17
-      std::ostream_iterator<uint8_t> output_iterator(out);
-      std::copy(begin, end, output_iterator);
+      auto beginCopy = begin;
+
+      while (beginCopy != end) {
+        out.write((char *)&(*beginCopy), 1);
+        beginCopy++;
+      }
+
       return out;
     }
     /**
-     * Discussion:
+     * @brief
      *   Reads the data until some sequence is found or some error occurs
      *
      * Input:
@@ -424,7 +454,7 @@ class Data {
       return in;
     }
     /**
-     * Discussion:
+     * @brief
      *   Reads the data of the specific size from the input file, in case, if some error occurs stop the read
      *
      * Input:
@@ -448,7 +478,7 @@ class Data {
       return in;
     }
     /**
-     * Discussion:
+     * @brief
      *   Converts each byte in char and outputs it to the stream. Returns true, if both objects have the same data
      *
      * Input:
@@ -468,7 +498,7 @@ class Data {
       return stream;
     }
     /**
-     * Discussion:
+     * @brief
      *   Compares each char of the strings object with the data object. Returns true, if both objects have the same data
      *
      * Input:
@@ -494,6 +524,20 @@ class Data {
     }
     bool operator == (const std::string& str) const {
       return str == *this;
+    }
+    bool operator == (const Data<Comparator>& data) {
+      if (size() == data.size()) {
+        auto i = begin();
+        auto j = data.begin();
+
+        while (data.cmp(*i, *j)) { i++; j++; }
+
+        if (i != end())
+          return false;
+
+        return true;
+      }
+      return false;
     }
   private:
     /**

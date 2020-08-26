@@ -40,7 +40,7 @@ struct Header {
     // - Content string
     Data<> parameters;
     /**
-     *  Discussion:
+     *  @brief
      *    Parses string and converts it in the header type and parameters.
      *    The format of the header is the next, Header: params\r\n.
      *
@@ -54,7 +54,7 @@ struct Header {
      */
     Header(const Data<>& header);
     /**
-     * Discussion:
+     * @brief
      *   Base construct, which is ready to be parsed to string
      *
      * Input:

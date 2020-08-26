@@ -15,11 +15,10 @@
 #include "../Networking/URL.hpp"
 #include "../Networking/HTTPClient.hpp"
 
-#include "../SyntaxAnalyzer/HTMLAnalyzer.hpp"
-
 #include "../FileManager/FileManager.hpp"
 
 #include "Helpers/DownloadFileTree.hpp"
+#include "Helpers/ReferenceConverter.hpp"
 
 /**
  *  Downloader, which will be responsible for mirroring the page and all it underlying sources.
@@ -29,13 +28,16 @@ class PageMirror: public FileDownloader {
     /**
      *  Input:
      *   @param[in] depth - the depth of the recursive download.
+     *   @param[in] style - the traverse style.
      *
      */
-    PageMirror(int maximalDepth = 1): FileDownloader(), maximalDepth(maximalDepth) {};
+    PageMirror(int maximalDepth = 100, DownloadFileTree::TraverseStyle style = DownloadFileTree::TraverseStyle::BREADTH_FIRST_SEARCH):
+      FileDownloader(),
+      downloadTree(DownloadFileTree(maximalDepth, style)) {};
 
     virtual ~PageMirror() = default;
     /**
-     * Discussion:
+     * @brief
      *   Download is taken in several steps.
      *
      *   1. Download the robots.txt file and extract from it all locked references
@@ -50,7 +52,7 @@ class PageMirror: public FileDownloader {
      */
     virtual void mirror(const RemoteReference& ref);
     /**
-     * Discussion:
+     * @brief
      *   Downloads specific file with setting references.
      *
      * Input:
@@ -59,7 +61,7 @@ class PageMirror: public FileDownloader {
      *
      */
     virtual Response download(const RemoteReference& ref,
-                          const LocalReference& filepath) const override;
+                              const LocalReference& filepath) override;
   protected:
     /**
      * Model for storing info about the Request and download position
@@ -69,27 +71,27 @@ class PageMirror: public FileDownloader {
       int depth = 0;
     };
     /**
-     * Discussion:
-     *   Maximum allowed depth for download, otherwise wouldn't download anything.
-     */
-    int maximalDepth = 1;
-    /**
-     * Discussion:
+     * @brief
      *   Load queue for requests
      */
     std::queue<Request> loadQueue;
     /**
-     * Discussion:
+     * @brief
+     *   As mirroring is done only be one site domain, need to hold mirror domain
+     */
+    std::string mirrorDomain;
+    /**
+     * @brief
      *   Download file tree
      */
     DownloadFileTree downloadTree;
     /**
-     * Discussion:
+     * @brief
      *   Prepares before mirroring the web site: sets the locked reference and downloads robots.txt
      */
     void prepare(const RemoteReference& ref);
     /**
-     * Discussion:
+     * @brief
      *   Processes robots.txt file and sets locked reference dict
      */
     void processRobotsFile(const LocalReference& ref);

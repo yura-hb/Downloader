@@ -3,6 +3,7 @@
 std::unique_ptr<Reference> LocalReference::addAbsoluteReference(const std::string& str) const {
   if (isRelative())
     return std::make_unique<LocalReference>(str + path, true);
+
   return std::make_unique<LocalReference>(str + "/" + path, true);
 }
 
@@ -14,12 +15,16 @@ std::unique_ptr<Reference> LocalReference::addPath(const std::string& str) const
 }
 
 std::unique_ptr<Reference> LocalReference::addFileExtension(const std::string& str) const {
+  if (isDirectory())
+    throw Exception("Can't add file extension to the directory");
+
   return std::make_unique<LocalReference>(path + "." + str);
 }
 
 bool LocalReference::isDirectory() const {
   if (path.empty())
     return true;
+
   return path.at(path.size() - 1) == '/';
 }
 
@@ -31,13 +36,31 @@ std::string LocalReference::getPath() const {
   return path;
 }
 
+std::string LocalReference::getDirectoryPath() const {
+  if (isDirectory())
+    return path;
+
+  auto components = loadComponents();
+
+  if (!components.empty())
+    components.pop_back();
+
+  std::string path = "";
+
+  for (const auto& component: components)
+    path += component + "/";
+
+  return path;
+}
+
 std::string LocalReference::filename() const {
   size_t separatorPosition = 0;
   std::string separator = "/";
 
-  if (isDirectory() || (separatorPosition = path.rfind(separator)) != std::string::npos)
+  if (isDirectory())
     throw Exception("Is directory. [Hint: Local reference]");
 
+  separatorPosition = path.rfind(separator);
   separatorPosition += separator.size();
 
   return path.substr(separatorPosition);
@@ -77,12 +100,22 @@ void LocalReference::simplify() {
 
     // In this case, remove previous reference
     if (component == "..") {
-      auto iter = result.rbegin();
-      if ((iter = std::find(result.rbegin(), result.rend(), '/')) != result.rend()) {
-        int offset = result.rend() - iter;
-        return std::string(result.begin(), result.begin() + offset);
+
+      if (result.empty() || result == "/")
+        return std::string();
+
+      auto firstPathSeparator = result.begin();
+      auto secondPathSeparator = result.begin();
+
+      while (secondPathSeparator != result.end()) {
+        firstPathSeparator = secondPathSeparator;
+        secondPathSeparator = std::find(secondPathSeparator, result.end(), '/');
+
+        if (secondPathSeparator != result.end())
+          secondPathSeparator++;
       }
-      return std::string();
+
+      return std::string(result.begin(), firstPathSeparator);
     }
     if (result == "/" && isRelative())
       return std::move(result) + component;
@@ -94,6 +127,8 @@ void LocalReference::simplify() {
   std::string prefix = isRelative() ? "/" : "";
   path = prefix + std::accumulate(components.begin(), components.end(), std::string(), accumulator);
 
-  if (path.at(path.size() - 1) == '/')
-    path.at(path.size() - 1) = isDirectoryPath ? '/' : ' ';
+  if (path.at(path.size() - 1) == '/' && isDirectoryPath)
+    path.at(path.size() - 1) = '/';
+  else
+    path.pop_back();
 }

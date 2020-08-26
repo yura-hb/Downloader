@@ -1,12 +1,9 @@
 #include "Attribute.hpp"
 
-std::vector<char> Attribute::whitespaces = { '\n', ' ', '\t', 12 };
+const std::vector<char> Attribute::whitespaces = { '\n', ' ', '\t', 12 };
 
 bool Attribute::consume(const Input& input, const EmitFunction& func) const {
-  if (input.second.size() < begin.size())
-    input.second.read(input.first, begin.size() - input.second.size());
-
-  if (input.second.size() < begin.size() || !input.second.beginsWith(begin))
+  if (!AbstractPattern::validateBegin(input))
     return false;
 
   std::string quoteSeparator = "";
@@ -20,14 +17,15 @@ bool Attribute::consume(const Input& input, const EmitFunction& func) const {
 
   auto linkBegin = input.second.find(quoteSeparator, input.second.begin(), true);
 
-  func(input.second.subsequence(linkBegin, --input.second.end()).stringRepresentation());
-
-  input.second = {};
+  func(input.second.subsequence(linkBegin, --input.second.end()));
 
   return true;
 }
 
 bool Attribute::readUntilSeparator(const Input& input) const {
+  if (input.second.endsWith(separator))
+    return true;
+
   while (input.first.good()) {
     input.second.read(input.first, 1);
 
@@ -39,6 +37,7 @@ bool Attribute::readUntilSeparator(const Input& input) const {
   }
   return true;
 }
+
 bool Attribute::readUntilQuote(const Input& input, bool isInitial, std::string& quote) const {
   std::string singleQuote = "'", doubleQuote = "\"";
 

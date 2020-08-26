@@ -129,20 +129,22 @@ bool Socket::isConnected() const {
 void Socket::logError(Socket::SocketError error, std::string info) const {
   switch (error) {
     case GAI_ERROR:
-      std::cerr << "Socket: Error during loading addrinfo " << info << std::endl;
+      Logger::logError(Exception( "Socket: Error during loading addrinfo " + info));
       break;
     case SOCKET_ERROR:
-      std::cerr << "Socket: Error during loading socket" << std::endl;
+      Logger::logError(Exception("Socket: Error during loading socket" + info));
       break;
     case CONNECT_ERROR:
-      std::cerr << "Socket: Error during connecting to the socket" << std::endl;
+      Logger::logError(Exception("Socket: Error during connecting to the socket" + info));
       break;
     case DISCONNECT_ERROR:
-      std::cerr << "Socket: Failed to connect" << std::endl;
+      Logger::logError(Exception("Socket: Failed to connect" + info));
       break;
     case SEND_ERROR:
-      std::cerr << "Socket: Failed to send  " << info << std::endl;
+      Logger::logError(Exception("Socket: Failed to send  " + info));
+      break;
     case DOWNLOAD_ERROR:
-      std::cerr << "Socket: Download failed" << info << std::endl;
+      Logger::logError(Exception("Socket: Download failed " + info));
+      break;
   }
 }

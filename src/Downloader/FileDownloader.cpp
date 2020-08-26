@@ -1,14 +1,16 @@
 #include "FileDownloader.hpp"
 
-Response FileDownloader::download(const RemoteReference& ref, const LocalReference& filepath) const {
+Response FileDownloader::download(const RemoteReference& ref, const LocalReference& filepath) {
   URL url(ref.requestUrl(""));
   Response response;
 
   try {
     sendRequest(url, response, true);
     save(response, filepath);
+
+    Logger::logResponse(response);
   } catch (const Exception& exc) {
-    std::cerr << exc.what() << std::endl << std::endl;
+    Logger::logError(exc);
   }
 
   return response;
@@ -29,7 +31,7 @@ void FileDownloader::sendRequest(const URL& url, Response& response, bool follow
     if (location.empty())
       throw Exception("Can't redirect as location is empty [" + url.requestUrl() + "] (Hint: Redirection)");
 
-    sendRequest(location.stringRepresentation(), response, false);
+    sendRequest(location.string(), response, false);
     return;
   }
 

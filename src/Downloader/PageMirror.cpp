@@ -6,28 +6,47 @@ const std::string PageMirror::disallowKey = "Disallow";
 
 void PageMirror::mirror(const RemoteReference& ref) {
   prepare(ref);
+  mirrorDomain = ref.domain();
   // TODO - Implement better solution
-  LocalReference saveRef = *dynamic_cast<LocalReference *>(LocalReference(ref.domain()).addPath(ref.getPath()).get());
+  std::unique_ptr<Reference> localRef = LocalReference(ref.domain()).addPath(ref.getPath());
+  downloadTree.add(LocalReference(ref.getPath()));
+
+  LocalReference saveRef = *dynamic_cast<LocalReference *>(localRef.get());
   download(ref, saveRef);
 
+  std::string downloadReference = "";
+
+  while ((downloadReference = downloadTree.nextDownloadReference()) != "") {
+    URL url;
+    url.domain = ref.domain();
+    url.query = downloadReference;
+
+    RemoteReference downloadRemoteReference(url);
+    std::unique_ptr<Reference> tmp = LocalReference(downloadRemoteReference.domain()).addPath(downloadRemoteReference.getPath());
+    LocalReference downloadSaveRef = *dynamic_cast<LocalReference *>(tmp.get());
+
+    download(downloadRemoteReference, downloadSaveRef);
+  }
+
+  ReferenceConverter::overwriteReferences(downloadTree, mirrorDomain);
 }
 
-Response PageMirror::download(const RemoteReference& ref, const LocalReference& filepath) const {
+Response PageMirror::download(const RemoteReference& ref, const LocalReference& filepath) {
   Response response = FileDownloader::download(ref, filepath);
 
-  for (const auto& header: response.headers)
-    std::cout << header.description() << std::endl;
+  const Data<> contentType = response.loadHeader(Header::_Header::CONTENT_TYPE);
 
-  if (response.loadHeader(Header::_Header::CONTENT_TYPE) == "text/html") {
-    HTMLAnalyzer analyzer;
-    std::vector<std::string> refs = analyzer.loadReferences(filepath);
-  }
+  if (response.status.isFailed())
+    downloadTree.setFailed(ref);
+  else
+    downloadTree.setDownloaded(ref, contentType.string());
+
+  ReferenceConverter::analyze(ref, filepath, mirrorDomain, contentType, downloadTree);
 
   return response;
 }
 
 void PageMirror::prepare(const RemoteReference& ref) {
-
   std::string domain = ref.domain();
 
   URL url;
@@ -39,8 +58,10 @@ void PageMirror::prepare(const RemoteReference& ref) {
 
   saveRef.simplify();
 
+  downloadTree.add(robotsReference, false, false);
+
   try {
-    FileDownloader::download(robotsReference, saveRef);
+    download(robotsReference, saveRef);
     processRobotsFile(saveRef);
   } catch (const Exception& exc) {
 
@@ -83,9 +104,9 @@ void PageMirror::processRobotsFile(const LocalReference& ref) {
     data = data.subsequence(parameterIter, end);
 
     try {
-      downloadTree.add(std::make_unique<LocalReference>(data.stringRepresentation(), true), true, false);
+      downloadTree.add(LocalReference(data.string(), true), true, false);
     } catch (const Exception& exc) {
-      std::cerr << exc.what() << std::endl;
+      Logger::logError(exc);
     }
 
     data = {};

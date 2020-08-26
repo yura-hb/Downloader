@@ -16,14 +16,14 @@ struct AbstractPattern {
     /**
      * Function, which emits range of the substring values
      */
-    using EmitFunction = std::function<void(const std::string& str)>;
+    using EmitFunction = std::function<void(const Data<>& str)>;
 
     AbstractPattern(const std::string& begin,
                     const std::string& separator,
                     const std::string& end): begin(begin), separator(separator), end(end) {}
     virtual ~AbstractPattern() = default;
     /**
-     *  Discussion:
+     *  @brief
      *    Consumes the bytes from the input stream, and in case, if the pattern matches fill calls emit function.
      *    Otherwise caches the bytes, in buffer.
      *
@@ -39,6 +39,15 @@ struct AbstractPattern {
     const std::string begin;
     const std::string separator;
     const std::string end;
+    /**
+     * @brief
+     *   Validates, if the input begins with the begin pattern
+     *
+     * @param[in] input - input model
+     *
+     * @return bool - when the input begins with the pattern, otherwise false
+     */
+    bool validateBegin(const Input& input) const;
 };
 
 #endif

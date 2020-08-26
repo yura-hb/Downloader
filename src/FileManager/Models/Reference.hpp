@@ -6,11 +6,12 @@
 #include <numeric>
 #include <string>
 #include <list>
+#include <memory>
 #include <functional>
 #include "../../Networking/URL.hpp"
 #include "../../Base/Exception.hpp"
 /**
- *  Discussion:
+ *  @brief
  *    In HTML and CSS there are several types of references:
  *      1. External link - link to the external source, which contains HTTP and HTTPs
  *      2. Hyperlinks - relative links to the source files
@@ -35,10 +36,12 @@ struct Reference {
     virtual bool isDirectory() const = 0;
     virtual bool isRelative() const = 0;
     virtual std::unique_ptr<Reference> addAbsoluteReference(const std::string& str) const = 0;
+    virtual std::unique_ptr<Reference> addFileExtension(const std::string& str) const = 0;
     virtual std::unique_ptr<Reference> addPath(const std::string& str) const = 0;
     virtual URL requestUrl(const std::string& domain) const = 0;
 
     virtual std::string getPath() const = 0;
+    virtual std::string getDirectoryPath() const = 0;
     virtual std::string filename() const = 0;
   protected:
     std::string path;

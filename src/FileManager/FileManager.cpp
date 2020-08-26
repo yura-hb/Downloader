@@ -3,9 +3,8 @@
 void FileManager::createFolder(const LocalReference& reference) const {
   int result;
 
-  // TODO: - Replace cerr with the specified logger
   if ((result = mkdir(reference.getPath().c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)) != 0)
-    std::cerr << "Fail during creating directory" << std::endl;
+    Logger::logError(Exception("Fail during creating directory"));
 
   // In case of error, try to open directory with the name
   if (result) {
@@ -50,11 +49,11 @@ void FileManager::createRelativePathDirectories(const LocalReference& reference)
 
   auto begin = list.begin();
   auto end = list.end();
-
   end--;
 
   while (begin != end) {
-    std::string path;
+    std::string path = "";
+
     // Create path
     for (auto it = list.begin(); it != begin; it++)
       path += *it + "/";
@@ -79,10 +78,22 @@ void FileManager::createRelativePathDirectories(const LocalReference& reference)
   }
 }
 
+int FileManager::rename(const std::string& oldName, const std::string& newName) {
+  std::ostringstream s;
+  s << "mv" << " '" << oldName << "' '" << newName << "'";
+  return system(s.str().c_str());
+}
+
+int FileManager::remove(const std::string& name) {
+  std::ostringstream s;
+  s << "rm " << "'" << name << "'";
+  return system(s.str().c_str());
+}
+
 void FileManager::openDirectory(const LocalReference& reference, DIR *& dir) const {
   std::string path = reference.getPath();
   // In case of empty directory, check current
-  path = path + path == "" ? "." : "";
+  path = path + (path == "" ? "." : "");
 
   dir = opendir(path.c_str());
 

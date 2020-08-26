@@ -13,7 +13,7 @@ Data<> Response::loadHeader(const Header::_Header& type) const {
 
 void Response::setStatus() {
   Data<> firstLine = response.subsequence(response.begin(), response.find(separator, response.begin()));
-  status = ResponseStatus(firstLine.stringRepresentation());
+  status = ResponseStatus(firstLine.string());
 }
 
 void Response::setHeaders() {

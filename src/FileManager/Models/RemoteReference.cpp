@@ -10,6 +10,13 @@ std::unique_ptr<Reference> RemoteReference::addPath(const std::string& str) cons
   return std::make_unique<RemoteReference>(copy);
 }
 
+std::unique_ptr<Reference> RemoteReference::addFileExtension(const std::string& str) const {
+  if (isDirectory())
+    throw Exception("Can't add file extension to the directory");
+
+  return std::make_unique<RemoteReference>(path + "." + str);
+}
+
 bool RemoteReference::isDirectory() const {
   if (url.query.empty())
     return true;
@@ -18,7 +25,7 @@ bool RemoteReference::isDirectory() const {
 
 bool RemoteReference::isRelative() const {
   return true;
-};
+}
 
 URL RemoteReference::requestUrl(const std::string& domain) const {
   return url;
@@ -31,8 +38,12 @@ std::string RemoteReference::domain() const {
 std::string RemoteReference::filename() const {
   std::string filename = "";
 
-  if (isDirectory())
+  if (isDirectory()) {
     filename = "index.html";
+  } else {
+    LocalReference ref(url.query);
+    filename = ref.filename();
+  }
 
   if (!url.parameters.empty() && isDirectory())
     filename += "?" + url.parameters;
@@ -46,4 +57,12 @@ std::string RemoteReference::getPath() const {
     return url.query + filename();
 
   return url.query;
+}
+
+std::string RemoteReference::getDirectoryPath() const {
+  if (isDirectory())
+    return url.query;
+
+  LocalReference ref(url.query);
+  return ref.getDirectoryPath();
 }

@@ -2,7 +2,7 @@
 #define __REMOTE_REFERENCE__
 
 #include <iostream>
-#include "Reference.hpp"
+#include "LocalReference.hpp"
 #include "../../Networking/URL.hpp"
 
 struct RemoteReference: public Reference {
@@ -11,7 +11,7 @@ struct RemoteReference: public Reference {
     RemoteReference(const URL& url): Reference(Type::EXTERNAL_LINK), url(url) {}
     ~RemoteReference() = default;
     /**
-     *  Discussion:
+     *  @brief
      *    Doesn't do anything, as not appliable on the links
      *
      *  Input:
@@ -22,7 +22,7 @@ struct RemoteReference: public Reference {
      */
     std::unique_ptr<Reference> addAbsoluteReference(const std::string& str) const override;
     /**
-     *  Discussion:
+     *  @brief
      *    Add path to the url query
      *
      *  Input:
@@ -33,7 +33,18 @@ struct RemoteReference: public Reference {
      */
     std::unique_ptr<Reference> addPath(const std::string& str) const override;
     /**
-     *  Discussion:
+     *  Input:
+     *    - @param[in] - some file extension path
+     *
+     *  Output:
+     *    - @param[out] - unique pointer on the new reference object
+     *
+     *  Throws:
+     *    @throw - Exception, in case, if the file is the directory
+     */
+    std::unique_ptr<Reference> addFileExtension(const std::string& str) const override;
+    /**
+     *  @brief
      *    Validates, if the query points to the directory
      *
      *  Output:
@@ -58,7 +69,7 @@ struct RemoteReference: public Reference {
      */
     std::string domain() const;
     /**
-     *  Discussion:
+     *  @brief
      *    Returns the filename from the URL.
      *    In case, if the current query is directory then the filename is index.html.
      *    In case, if there are some parameters add them to the filaname with standard ? separator.
@@ -72,6 +83,11 @@ struct RemoteReference: public Reference {
      *    - @param[out] - string representation of the url query as a path
      */
     std::string getPath() const override;
+    /**
+     *  Output:
+     *    - @param[out] - returns url query as a path
+     */
+    std::string getDirectoryPath() const override;
   private:
     URL url;
 };

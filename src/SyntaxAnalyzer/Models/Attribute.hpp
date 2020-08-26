@@ -8,10 +8,10 @@ struct Attribute: public AbstractPattern {
   public:
     Attribute(const std::string& begin, const std::string& separator, const std::string& end): AbstractPattern(begin, separator, end) {}
 
-    bool consume(const Input& input, const EmitFunction& func) const;
+    bool consume(const Input& input, const EmitFunction& func) const override;
 
   private:
-    static std::vector<char> whitespaces;
+    static const std::vector<char> whitespaces;
     /**
      *  Input:
      *    - @param[in] input - pair of input stream and buffer.

@@ -474,5 +474,73 @@
    "hayeuyur/PageMirror.o"
   ],
   "file": "src/Downloader/PageMirror.cpp"
+ },
+ {
+  "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
+  "arguments": [
+   "clang++",
+   "-std=c++14",
+   "-Wall",
+   "-pedantic",
+   "-g",
+   "-fsanitize=address,leak",
+   "-Wno-long-long",
+   "-c",
+   "src/Base/Logger.cpp",
+   "-o",
+   "hayeuyur/Logger.o"
+  ],
+  "file": "src/Base/Logger.cpp"
+ },
+ {
+  "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
+  "arguments": [
+   "clang++",
+   "-std=c++14",
+   "-Wall",
+   "-pedantic",
+   "-g",
+   "-fsanitize=address,leak",
+   "-Wno-long-long",
+   "-c",
+   "src/SyntaxAnalyzer/Models/HTMLAttribute.cpp",
+   "-o",
+   "hayeuyur/HTMLAttribute.o"
+  ],
+  "file": "src/SyntaxAnalyzer/Models/HTMLAttribute.cpp"
+ },
+ {
+  "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
+  "arguments": [
+   "clang++",
+   "-std=c++14",
+   "-Wall",
+   "-pedantic",
+   "-g",
+   "-fsanitize=address,leak",
+   "-Wno-long-long",
+   "-c",
+   "src/SyntaxAnalyzer/Models/BeginEndAttribute.cpp",
+   "-o",
+   "hayeuyur/BeginEndAttribute.o"
+  ],
+  "file": "src/SyntaxAnalyzer/Models/BeginEndAttribute.cpp"
+ },
+ {
+  "directory": "/Users/yura_hb/Documents/Workspace/C++/progtest/semestral_work/hayeuyur",
+  "arguments": [
+   "clang++",
+   "-std=c++14",
+   "-Wall",
+   "-pedantic",
+   "-g",
+   "-fsanitize=address,leak",
+   "-Wno-long-long",
+   "-c",
+   "src/Downloader/Helpers/ReferenceConverter.cpp",
+   "-o",
+   "hayeuyur/ReferenceConverter.o"
+  ],
+  "file": "src/Downloader/Helpers/ReferenceConverter.cpp"
  }
 ]

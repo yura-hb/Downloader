@@ -7,7 +7,7 @@
 class HTMLAnalyzer: public Analyzer {
   public:
     HTMLAnalyzer(): Analyzer(std::vector<std::shared_ptr<AbstractPattern>> {
-      std::make_shared<Attribute>("href", "=", ""),
+      std::make_shared<HTMLAttribute>("href", "=", ""),
       std::make_shared<Attribute>("src", "=", ""),
       std::make_shared<Comment>("<!--", "", "-->")
     }) {}
